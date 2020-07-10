@@ -1,0 +1,65 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:'+rootProject.kotlincore_version
+    implementation 'androidx.appcompat:appcompat:'+rootProject.appcompat_version
+    implementation 'com.google.android.material:material:'+rootProject.material_version
+    testImplementation 'junit:junit:'+rootProject.junit_version
+    androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version
+    androidTestImplementation 'androidx.test.espresso:espresso-core:'+rootProject.espresso_core
+
+    //Firebase
+    implementation 'com.google.firebase:firebase-firestore-ktx:'+rootProject.firebase_firestore_version
+    implementation 'com.google.firebase:firebase-analytics:'+rootProject.firebase_analytics_version
+
+    //corutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:'+rootProject.corutines_version
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:'+rootProject.corutines_play_services_version
+
+    //Koin DI
+    implementation "org.koin:koin-android:$koin_version"
+    testImplementation 'org.koin:koin-test:2.1.4'
+
+
+    //Debugging
+    implementation 'com.jakewharton.timber:timber:'+rootProject.timber_version
+
+
+
+
+
+    implementation project(':domain')
+}

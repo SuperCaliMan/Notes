@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "266006519733",
+    "firebase_url": "https://note-af5a7.firebaseio.com",
+    "project_id": "note-af5a7",
+    "storage_bucket": "note-af5a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266006519733:android:306aaae865d469312b83fc",
+        "android_client_info": {
+          "package_name": "com.supercaliman.note"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "266006519733-3447rih0ln0o6fh69275hal2cfbr2ms1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCbA2BJmsqlA_B5xIJcqAdrGTxa6ml_j4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "266006519733-3447rih0ln0o6fh69275hal2cfbr2ms1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

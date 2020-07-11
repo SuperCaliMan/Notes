@@ -45,7 +45,7 @@ class NotesFragment : Fragment() {
             noteListViewModel.getNotesList()
         }
 
-        noteListViewModel.LoadingLiveData.observe(viewLifecycleOwner, Observer { swipeContainer.isRefreshing = it })
+        noteListViewModel.LoadingLiveData.observe(viewLifecycleOwner, Observer { renderLoadingUi(it) })
 
         noteListViewModel.UiLiveData.observe(viewLifecycleOwner, Observer { it?.let { items -> renderUi(items) } })
 
@@ -67,6 +67,15 @@ class NotesFragment : Fragment() {
             adapterList.data = data
         }
 
+    }
+
+    private fun renderLoadingUi(isLoading:Boolean){
+        if(isLoading){
+            progressBar.visibility = View.VISIBLE
+        }else{
+            progressBar.visibility = View.GONE
+            swipeContainer.isRefreshing = false
+        }
     }
 
     private fun renderErrorUi(e:Exception){

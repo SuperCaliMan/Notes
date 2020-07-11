@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.supercaliman.note.R
+import com.supercaliman.note.ui.main.hideKeyboard
 import com.supercaliman.note.ui.main.readNotes.NoteListViewModel
 import kotlinx.android.synthetic.main.fragment_note_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -36,12 +37,12 @@ class NoteCreateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         txt_date.text = noteDetailViewModel.getDate()
+
+
         noteDetailViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { it?.let { renderErrorUi(it) } })
 
-        noteDetailViewModel.statusData.observe(viewLifecycleOwner, Observer { it?.let {
-            if(it){
-                view.findNavController().popBackStack()
-            }}
+        noteDetailViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer {
+            if (it) view.findNavController().popBackStack()
         })
     }
 
@@ -57,8 +58,14 @@ class NoteCreateFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when(item.itemId){
-            R.id.save -> { noteDetailViewModel.createNote(txt_title.text.toString(),txt_detail.text.toString()) }
-            android.R.id.home -> {requireView().findNavController().popBackStack()}
+            R.id.save -> {
+                hideKeyboard()
+                noteDetailViewModel.createNote(txt_title.text.toString(),txt_detail.text.toString())
+            }
+            android.R.id.home -> {
+                hideKeyboard()
+                requireView().findNavController().popBackStack()
+            }
         }
         return super.onOptionsItemSelected(item)
     }

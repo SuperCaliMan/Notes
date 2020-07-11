@@ -22,9 +22,9 @@ class NoteListViewModel(private var taskModel:GetNoteTaskUseCase) : ViewModel() 
     val UiLiveData: LiveData<List<UiNote>>
         get() = _uiLiveData
 
-    private val _LoadingLiveData = MediatorLiveData<Boolean>()
+    private val _loadingLiveData = MediatorLiveData<Boolean>()
     val LoadingLiveData: LiveData<Boolean>
-        get() = _LoadingLiveData
+        get() = _loadingLiveData
 
 
 
@@ -38,11 +38,12 @@ class NoteListViewModel(private var taskModel:GetNoteTaskUseCase) : ViewModel() 
             if(it is Result.Error) _errorLiveData.postValue(it.exception)
         }
 
-        _LoadingLiveData.removeSource(observable)
-        _LoadingLiveData.addSource(observable){
-            _LoadingLiveData.postValue(it == Result.Loading)
+        _loadingLiveData.removeSource(observable)
+        _loadingLiveData.addSource(observable){
+            _loadingLiveData.postValue(it == Result.Loading)
         }
 
+        _uiLiveData.removeSource(observable)
         _uiLiveData.addSource(observable){
             if( it is Result.Success){
                 _uiLiveData.postValue(it.data.map { note -> mapper.map(note) })

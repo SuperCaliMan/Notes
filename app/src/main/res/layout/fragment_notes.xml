@@ -38,4 +38,14 @@ android:layout_height="match_parent">
     android:clickable="true"
     tools:srcCompat="@drawable/abc_vector_test" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@+id/swipeContainer"
+        android:visibility="gone"
+        android:indeterminate="true"
+        app:layout_anchorGravity="center" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

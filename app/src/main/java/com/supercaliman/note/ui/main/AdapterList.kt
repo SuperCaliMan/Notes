@@ -1,13 +1,15 @@
 package com.supercaliman.note.ui.main
 
-import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.supercaliman.domain.UiNote
-import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
+import kotlin.random.Random
 
 class AdapterList():RecyclerView.Adapter<AdapterList.ItemViewHolder>(){
 
@@ -34,13 +36,17 @@ class AdapterList():RecyclerView.Adapter<AdapterList.ItemViewHolder>(){
     class ItemViewHolder(inflater: LayoutInflater, parent: ViewGroup):
         RecyclerView.ViewHolder(inflater.inflate(R.layout.card_list,parent,false)){
 
-        var mTitleView: TextView = itemView.findViewById(R.id.textView)
-        var mDataTextView: TextView = itemView.findViewById(R.id.textView2)
+        var card: View = itemView.findViewById(R.id.view2)
+        var mTitleView: TextView = itemView.findViewById(R.id.cardTitle)
+        var mDataTextView: TextView = itemView.findViewById(R.id.cardDate)
 
+        val colors = itemView.context.resources.getIntArray(R.array.colors_array)
 
         fun bind(data: UiNote) {
             mTitleView.text = data.title
             mDataTextView.text = data.date
+            card.setBackgroundColor(colors[data.title.length%(colors.size-1)])
+
 
         }
     }

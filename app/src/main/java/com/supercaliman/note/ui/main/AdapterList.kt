@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.supercaliman.domain.UiNote
+import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
 
 class AdapterList():RecyclerView.Adapter<AdapterList.ItemViewHolder>(){
@@ -28,6 +29,7 @@ class AdapterList():RecyclerView.Adapter<AdapterList.ItemViewHolder>(){
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
        holder.bind(data[position])
     }
+
 
     class ItemViewHolder(inflater: LayoutInflater, parent: ViewGroup):
         RecyclerView.ViewHolder(inflater.inflate(R.layout.card_list,parent,false)){

@@ -6,13 +6,25 @@ android:layout_width="match_parent"
 tools:context=".ui.main.readNotes.NotesFragment"
 android:layout_height="match_parent">
 
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/notelist"
+    <include
+        android:id="@+id/emptylist"
+        layout="@layout/empty_layout"
+        android:visibility="gone" />
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/swipeContainer"
     android:layout_width="match_parent"
-    android:layout_margin="16dp"
     android:layout_height="match_parent">
 
-</androidx.recyclerview.widget.RecyclerView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notelist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/floatingActionButton"

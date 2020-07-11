@@ -70,6 +70,13 @@ dependencies {
     //Debugging
     implementation 'com.jakewharton.timber:timber:'+rootProject.timber_version
 
+    //lottie
+    implementation 'com.airbnb.android:lottie:'+rootProject.lottie_version
+
+    //swipe to refresh
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:"+rootProject.swipe_layout
+
+
 
 
 

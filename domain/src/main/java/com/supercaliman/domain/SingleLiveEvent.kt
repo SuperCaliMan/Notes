@@ -1,49 +1,36 @@
-/*
- *  Copyright 2017 Google Inc.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
+package com.supercaliman.domain
 
 import android.util.Log
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
 
+
 /**
- * A lifecycle-aware observable that sends only new updates after subscription, used for events like
- * navigation and Snackbar messages.
- *
- *
- * This avoids a common problem with events: on configuration change (like rotation) an update
- * can be emitted if the observer is active. This LiveData only calls the observable if there's an
- * explicit call to setValue() or call().
- *
- *
- * Note that only one observer is going to be notified of changes.
+ * Created by Yossi Segev on 16/02/2018.
+ * This class is a Kotlin adaptions of the SingleLiveEvent by Google:
+ * https://github.com/googlesamples/android-architecture/blob/dev-todo-mvvm-live/todoapp/app/src/main/java/com/example/android/architecture/blueprints/todoapp/SingleLiveEvent.java
  */
-class SingleLiveEvent<T> : MutableLiveData<T>() {
-    private val pending = AtomicBoolean(false)
+class SingleLiveEvent<T> : MediatorLiveData<T>() {
+
+    companion object {
+        private const val TAG = "SingleLiveEvent"
+    }
+
+    private val mPending = AtomicBoolean(false)
 
     @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
+
         if (hasActiveObservers()) {
             Log.w(TAG, "Multiple observers registered but only one will be notified of changes.")
         }
+
         // Observe the internal MutableLiveData
-        super.observe(owner, Observer { t ->
-            if (pending.compareAndSet(true, false)) {
+        super.observe(owner, Observer<T> { t ->
+            if (mPending.compareAndSet(true, false)) {
                 observer.onChanged(t)
             }
         })
@@ -51,7 +38,7 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
 
     @MainThread
     override fun setValue(t: T?) {
-        pending.set(true)
+        mPending.set(true)
         super.setValue(t)
     }
 
@@ -60,10 +47,10 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
      */
     @MainThread
     fun call() {
-        value = null
+        this.value = null
     }
 
-    companion object {
-        private val TAG = "SingleLiveEvent"
+    fun reset() {
+        mPending.set(false)
     }
 }

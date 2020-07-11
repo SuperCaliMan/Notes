@@ -10,5 +10,5 @@ class CreateNoteTaskUseCase(private var repo:Repository){
 
 
 
-    suspend fun execute(data:Note):Result<Boolean> = repo.createNote(data)
+    suspend fun execute(data:Note)= repo.createNote(data)
 }

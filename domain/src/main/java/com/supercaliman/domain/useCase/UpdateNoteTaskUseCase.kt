@@ -10,6 +10,7 @@ class UpdateNoteTaskUseCase(private var repo:Repository) {
 
     private var result: MutableLiveData<Result<Boolean>> = MutableLiveData<Result<Boolean>>()
 
+    /*
     suspend fun execute(data:Note): MutableLiveData<Result<Boolean>> {
         try {
             val res = repo.updateNote(data)
@@ -19,4 +20,6 @@ class UpdateNoteTaskUseCase(private var repo:Repository) {
         }
         return result
     }
+
+     */
 }

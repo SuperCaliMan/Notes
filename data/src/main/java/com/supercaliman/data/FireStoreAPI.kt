@@ -20,10 +20,12 @@ class FireStoreAPI(private var db:FirebaseFirestore) {
     val collection = "Note"
 
    init {
+
        val setting = firestoreSettings {
            isPersistenceEnabled = true
        }
        db.firestoreSettings = setting
+
    }
 
     @Throws(FirebaseFirestoreException::class,Exception::class)

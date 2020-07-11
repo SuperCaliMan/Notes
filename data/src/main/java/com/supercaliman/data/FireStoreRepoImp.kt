@@ -9,53 +9,50 @@ import timber.log.Timber
 import java.lang.Exception
 
 class FireStoreRepoImp(private var api:FireStoreAPI):Repository{
-    override suspend fun getNotes(): Result<List<Note>> {
+    override suspend fun getNotes(): List<Note> {
         return try {
             val data = api.getNotes()
             Timber.v(data.toString())
-            Result.Success(data)
+            data
 
         }catch (e: FirebaseFirestoreException){
-            Result.Error(e)
+            throw e
 
         }catch (e: Exception){
-            Result.Error(e)
+            throw e
         }
     }
 
-    override suspend fun createNote(note: Note): Result<Boolean> {
-        return try {
+    override suspend fun createNote(note: Note) {
+        try {
             api.createNote(note)
-            Result.Success(true)
         }catch (e: FirebaseFirestoreException){
-            Result.Error(e)
+            throw e
 
         }catch (e: Exception){
-            Result.Error(e)
+            throw e
         }
     }
 
-    override suspend fun deleteNote(note: Note): Result<Boolean> {
-       return try {
+    override suspend fun deleteNote(note: Note){
+       try {
            api.deleteNote(note)
-           Result.Success(true)
+
        }catch (e: FirebaseFirestoreException){
-           Result.Error(e)
+           throw e
 
        }catch (e: Exception){
-           Result.Error(e)
+           throw e
        }
     }
 
-    override suspend fun updateNote(note: Note): Result<Boolean> {
-        return try {
+    override suspend fun updateNote(note: Note) {
+        try {
             api.updateNote(note)
-            Result.Success(true)
         }catch (e: FirebaseFirestoreException){
-            Result.Error(e)
-
+            throw e
         }catch (e: Exception){
-            Result.Error(e)
+            throw e
         }
     }
 }

@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/default_margin"
+    android:layout_marginEnd="@dimen/default_margin"
+    android:layout_marginTop="@dimen/default_margin"
     android:orientation="vertical">
 
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="@dimen/cardview_default_elevation"
+        android:elevation="@dimen/default_card_elevation"
 
         >
 
@@ -55,14 +58,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"
-        android:layout_weight="1"
-        android:background="@android:color/transparent"
-        android:backgroundTint="@android:color/transparent"
-        android:visibility="visible" />
 
 </LinearLayout>

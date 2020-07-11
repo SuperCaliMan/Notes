@@ -42,7 +42,7 @@
                 android:backgroundTint="#DF0B0B" />
 
             <EditText
-                android:id="@+id/editTextTextMultiLine"
+                android:id="@+id/txt_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"

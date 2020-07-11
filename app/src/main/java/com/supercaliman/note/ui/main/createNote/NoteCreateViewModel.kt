@@ -1,6 +1,6 @@
 package com.supercaliman.note.ui.main.createNote
 
-import SingleLiveEvent
+
 import android.content.Context
 import android.content.res.Configuration
 import androidx.lifecycle.LiveData
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.supercaliman.domain.Note
 import com.supercaliman.domain.Result
+import com.supercaliman.domain.SingleLiveEvent
 import com.supercaliman.domain.UiNote
 import com.supercaliman.domain.useCase.CreateNoteTaskUseCase
 import com.supercaliman.domain.useCase.GetNoteTaskUseCase
@@ -26,33 +27,26 @@ import java.util.*
 
 class NoteCreateViewModel(private var taskModel:CreateNoteTaskUseCase) : ViewModel() {
 
-    private var formatter = SimpleDateFormat("EEE d, yyyy", Locale.getDefault())
+    private val formatter = SimpleDateFormat("EEE d, yyyy", Locale.getDefault())
+    private val date = Calendar.getInstance().time
 
     private val _errorLiveData = SingleLiveEvent<Exception>()
     val errorLiveData: LiveData<Exception>
         get() = _errorLiveData
 
+    private val _statusData = MutableLiveData<Boolean>()
+    val statusData: LiveData<Boolean>
+        get() = _statusData
+
 
     fun getDate():String{
-        val date = Calendar.getInstance().time
+
         return formatter.format(date).toString()
     }
 
-    fun createNote(){
+    fun createNote(title:String,description:String){
         viewModelScope.launch {
-             val res =  taskModel.execute(
-                    Note(
-                    null,
-                    "titolo android",
-                "descrizione",
-                    Date(2020,7,10)
-                )
-            )
-
-            when(res){
-                is Result.Error -> _errorLiveData.postValue(res.exception)
-                is Result.Success -> print("ok")
-            }
+             taskModel.execute(Note(null, title, description, date))
         }
     }
 

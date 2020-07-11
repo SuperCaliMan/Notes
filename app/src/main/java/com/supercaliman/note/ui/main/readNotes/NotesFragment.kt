@@ -11,6 +11,7 @@ import com.supercaliman.domain.UiNote
 import com.supercaliman.note.R
 import com.supercaliman.note.ui.main.AdapterList
 import kotlinx.android.synthetic.main.fragment_notes.*
+import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.lang.Exception
@@ -27,6 +28,8 @@ class NotesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(false)
+        (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         return inflater.inflate(R.layout.fragment_notes, container, false)
     }
 
@@ -38,6 +41,12 @@ class NotesFragment : Fragment() {
         adapterList = AdapterList()
         notelist.adapter = adapterList
 
+        swipeContainer.setOnRefreshListener {
+            noteListViewModel.getNotesList()
+        }
+
+        noteListViewModel.LoadingLiveData.observe(viewLifecycleOwner, Observer { swipeContainer.isRefreshing = it })
+
         noteListViewModel.UiLiveData.observe(viewLifecycleOwner, Observer { it?.let { items -> renderUi(items) } })
 
         noteListViewModel.errorLiveData.observe(viewLifecycleOwner, Observer {  renderErrorUi(it) })
@@ -46,10 +55,15 @@ class NotesFragment : Fragment() {
 
     }
 
+
+
     private fun renderUi(data:List<UiNote>){
         if(data.isEmpty()){
             notelist.visibility = View.GONE
+            emptylist.visibility = View.VISIBLE
         }else{
+            notelist.visibility = View.VISIBLE
+            emptylist.visibility = View.GONE
             adapterList.data = data
         }
 
@@ -60,7 +74,7 @@ class NotesFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu,menu)
+        inflater.inflate(R.menu.option_menu,menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 }

@@ -4,14 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.supercaliman.domain.UiNote
+import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
-import kotlin.random.Random
 
-class AdapterList():RecyclerView.Adapter<AdapterList.ItemViewHolder>(){
+class AdapterList(val listener:BindingRecycleView):RecyclerView.Adapter<AdapterList.ItemViewHolder>(){
 
     var data:List<UiNote> = emptyList()
     set(value) {
@@ -33,14 +31,24 @@ class AdapterList():RecyclerView.Adapter<AdapterList.ItemViewHolder>(){
     }
 
 
-    class ItemViewHolder(inflater: LayoutInflater, parent: ViewGroup):
+
+    inner class ItemViewHolder(inflater: LayoutInflater, parent: ViewGroup):
         RecyclerView.ViewHolder(inflater.inflate(R.layout.card_list,parent,false)){
 
-        var card: View = itemView.findViewById(R.id.view2)
-        var mTitleView: TextView = itemView.findViewById(R.id.cardTitle)
-        var mDataTextView: TextView = itemView.findViewById(R.id.cardDate)
+        private var card: View = itemView.findViewById(R.id.view2)
+        private var mTitleView: TextView = itemView.findViewById(R.id.cardTitle)
+        private var mDataTextView: TextView = itemView.findViewById(R.id.cardDate)
 
-        val colors = itemView.context.resources.getIntArray(R.array.colors_array)
+        private val colors = itemView.context.resources.getIntArray(R.array.colors_array)
+
+        init {
+            itemView.setOnClickListener {
+                if(adapterPosition != RecyclerView.NO_POSITION) {
+                    listener.onItemClicked(adapterPosition)
+                    listener.getObjClicked(data[adapterPosition])
+                }
+            }
+        }
 
         fun bind(data: UiNote) {
             mTitleView.text = data.title

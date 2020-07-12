@@ -8,7 +8,7 @@ import java.lang.Exception
 
 class UpdateNoteTaskUseCase(private var repo:Repository) {
 
-    private var result: MutableLiveData<Result<Boolean>> = MutableLiveData<Result<Boolean>>()
+
 
     /*
     suspend fun execute(data:Note): MutableLiveData<Result<Boolean>> {

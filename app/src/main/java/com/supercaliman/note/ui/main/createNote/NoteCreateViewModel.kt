@@ -6,6 +6,7 @@ import com.supercaliman.domain.Note
 import com.supercaliman.domain.Result
 import com.supercaliman.domain.SingleLiveEvent
 import com.supercaliman.domain.useCase.CreateNoteTaskUseCase
+import com.supercaliman.domain.useCase.GetNoteTaskUseCase
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -46,7 +47,9 @@ class NoteCreateViewModel(private var taskModel:CreateNoteTaskUseCase) : ViewMod
 
 
 
-        viewModelScope.launch { taskModel.execute(Note(null, title, description, date)) }
+        viewModelScope.launch {
+            taskModel.execute(Note(null, title, description, date))
+        }
     }
 
 }

@@ -1,30 +1,26 @@
-package com.supercaliman.note.ui.main.createNote
+package com.supercaliman.note.ui.main.detailNoteUI
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.supercaliman.note.R
 import com.supercaliman.note.ui.main.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_note_detail.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
-import java.lang.Exception
 
 
-class NoteCreateFragment : Fragment() {
+class NoteDetailFragment : Fragment() {
 
-    private val noteDetailViewModel: NoteCreateViewModel by viewModel()
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
+    private val noteDetailViewModel : NoteDetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
         (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -34,21 +30,16 @@ class NoteCreateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        txt_date.text = noteDetailViewModel.getDate()
+        txt_title.isEnabled = false
+        txt_detail.isEnabled = false
 
 
-        noteDetailViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { it?.let { renderErrorUi(it) } })
+        noteDetailViewModel.dataLiveData.observe(viewLifecycleOwner, Observer { Timber.v(it.title) })
 
-        noteDetailViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer {
-            if (it) view.findNavController().popBackStack()
-        })
     }
 
-
-
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.option_menu,menu)
+        inflater.inflate(R.menu.detail_option_menu,menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -56,19 +47,15 @@ class NoteCreateFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when(item.itemId){
-            R.id.save -> {
-                hideKeyboard()
-                noteDetailViewModel.createNote(txt_title.text.toString(),txt_detail.text.toString())
-            }
             android.R.id.home -> {
                 hideKeyboard()
                 requireView().findNavController().popBackStack()
             }
+            R.id.edit -> {
+                txt_detail.isEnabled = true
+                txt_title.isEnabled = true
+            }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    fun renderErrorUi(e:Exception){
-        Timber.e(e)
     }
 }

@@ -8,18 +8,20 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.supercaliman.domain.UiNote
+import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
 import com.supercaliman.note.ui.main.AdapterList
+import com.supercaliman.note.ui.main.detailNoteUI.NoteDetailViewModel
 import kotlinx.android.synthetic.main.fragment_notes.*
-import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.lang.Exception
 
 
-class NotesFragment : Fragment() {
+class NotesFragment : Fragment(),BindingRecycleView {
 
     private val noteListViewModel: NoteListViewModel by viewModel()
+    private val detailViewModel:NoteDetailViewModel by viewModel()
     private lateinit var adapterList: AdapterList
 
 
@@ -38,7 +40,7 @@ class NotesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         notelist.layoutManager = LinearLayoutManager(context)
-        adapterList = AdapterList()
+        adapterList = AdapterList(this)
         notelist.adapter = adapterList
 
         swipeContainer.setOnRefreshListener {
@@ -56,6 +58,24 @@ class NotesFragment : Fragment() {
     }
 
 
+    override fun getObjClicked(data: UiNote) {
+        data.let {
+            detailViewModel.showDetail(data)
+            view?.findNavController()?.navigate(R.id.action_notesFragment_to_noteDetailFragment2)
+        }
+    }
+
+    override fun onItemClicked(position: Int) {
+
+    }
+
+    /*
+    override fun onResume() {
+        super.onResume()
+        noteListViewModel.getNotesList()
+    }
+
+ */
 
     private fun renderUi(data:List<UiNote>){
         if(data.isEmpty()){

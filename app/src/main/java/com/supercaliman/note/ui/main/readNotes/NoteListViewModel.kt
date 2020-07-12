@@ -54,6 +54,7 @@ class NoteListViewModel(private var taskModel:GetNoteTaskUseCase) : ViewModel() 
     }
 
 
+
     init {
         getNotesList()
     }

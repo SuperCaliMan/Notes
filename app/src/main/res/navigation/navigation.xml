@@ -16,10 +16,17 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_notesFragment_to_noteDetailFragment2"
+            app:destination="@id/noteDetailFragment2" />
     </fragment>
     <fragment
         android:id="@+id/noteDetailFragment"
         android:name="com.supercaliman.note.ui.main.createNote.NoteCreateFragment"
         android:label="fragment_note_detail"
         tools:layout="@layout/fragment_note_detail" />
+    <fragment
+        android:id="@+id/noteDetailFragment2"
+        android:name="com.supercaliman.note.ui.main.detailNoteUI.NoteDetailFragment"
+        android:label="NoteDetailFragment" />
 </navigation>

@@ -6,20 +6,24 @@ import android.view.*
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import com.supercaliman.domain.UiNote
 import com.supercaliman.note.R
 import com.supercaliman.note.hideKeyboard
 import com.supercaliman.note.showDialog
 import com.supercaliman.note.showKeyBoard
+import com.supercaliman.note.ui.main.createNote.NoteCreateViewModel
 import kotlinx.android.synthetic.main.fragment_note_detail.*
 import timber.log.Timber
 
 
 class NoteDetailFragment : Fragment() {
 
-    private val noteDetailViewModel : NoteDetailViewModel by viewModels()
+    private val noteDetailViewModel : NoteDetailViewModel by activityViewModels() //use this to get viewModel in Activity-scoped
+    private val noteCreateViewModel : NoteCreateViewModel by viewModels()
 
     private val positiveButtonClick = { dialog: DialogInterface, which: Int ->
         hideKeyboard()
@@ -59,7 +63,7 @@ class NoteDetailFragment : Fragment() {
         txt_detail.isEnabled = false
 
 
-        noteDetailViewModel.dataLiveData.observe(viewLifecycleOwner, Observer { Timber.v(it.title) })
+        noteDetailViewModel.dataLiveData.observe(viewLifecycleOwner, Observer { it?.let { renderUi(it) } })
 
     }
 
@@ -78,13 +82,19 @@ class NoteDetailFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> { onBackClick() }
             R.id.edit -> { setEditMode() }
-            R.id.editSave -> {Timber.v("save viemodel")}
+            R.id.editSave -> {noteCreateViewModel.createNote(txt_title.text.toString(),txt_detail.text.toString())}
             R.id.delete -> {Timber.v("delete viewModel")}
         }
         return super.onOptionsItemSelected(item)
     }
 
 
+    private fun renderUi(note:UiNote){
+        txt_title.setText(note.title)
+        txt_date.text = note.date
+        txt_detail.setText(note.description)
+
+    }
 
     private fun isInEditMode():Boolean = txt_title.isEnabled && txt_detail.isEnabled
 
@@ -98,7 +108,7 @@ class NoteDetailFragment : Fragment() {
 
     private fun onBackClick(){
         if(isInEditMode()){
-            showDialog(requireContext(),"Avviso","Vuoi davvero tornare indietro",positiveButtonClick,negativeButtonClick)
+            showDialog(requireContext(),"",getString(R.string.alert_msg),positiveButtonClick,negativeButtonClick)
         }else {
             hideKeyboard()
             requireView().findNavController().popBackStack()

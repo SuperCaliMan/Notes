@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +22,7 @@ import java.lang.Exception
 class NotesFragment : Fragment(),BindingRecycleView {
 
     private val noteListViewModel: NoteListViewModel by viewModel()
-    private val detailViewModel:NoteDetailViewModel by viewModel()
+    private val detailViewModel:NoteDetailViewModel by activityViewModels() //use this to get viewModel in Activity-scoped
     private lateinit var adapterList: AdapterList
 
 
@@ -98,6 +99,7 @@ class NotesFragment : Fragment(),BindingRecycleView {
         }
     }
 
+    //TODO add this method in separate class and infilate error layout
     private fun renderErrorUi(e:Exception){
         Timber.e(e)
     }

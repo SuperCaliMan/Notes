@@ -1,6 +1,9 @@
-package com.supercaliman.note.ui.main
+package com.supercaliman.note
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -15,6 +18,21 @@ fun Fragment.hideKeyboard(): Boolean {
     return (context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
         .hideSoftInputFromWindow((activity?.currentFocus ?: View(context)).windowToken, 0)
 }
+
+fun Fragment.showKeyBoard(){
+     (context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
+        .toggleSoftInput(InputMethodManager.SHOW_FORCED,0)
+}
+
+fun Fragment.showDialog(context: Context,title:String,message:String,positiveFun:(DialogInterface,Int)->Unit,negativeFun:(DialogInterface,Int)->Unit){
+    val builder = AlertDialog.Builder(context)
+    builder.setTitle(title)
+    builder.setMessage(message)
+    builder.setPositiveButton(android.R.string.yes, DialogInterface.OnClickListener(positiveFun))
+    builder.setNegativeButton(android.R.string.no, DialogInterface.OnClickListener(negativeFun))
+    builder.show()
+}
+
 
 fun EditText.hideKeyboard(): Boolean {
     return (context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)

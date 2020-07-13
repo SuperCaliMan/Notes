@@ -7,7 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.supercaliman.note.R
-import com.supercaliman.note.ui.main.hideKeyboard
+import com.supercaliman.note.hideKeyboard
+import com.supercaliman.note.showKeyBoard
 import kotlinx.android.synthetic.main.fragment_note_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -35,6 +36,8 @@ class NoteCreateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         txt_date.text = noteDetailViewModel.getDate()
+        txt_title.requestFocus()
+        showKeyBoard()
 
 
         noteDetailViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { it?.let { renderErrorUi(it) } })

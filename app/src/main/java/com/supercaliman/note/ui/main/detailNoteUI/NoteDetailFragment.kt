@@ -15,21 +15,23 @@ import com.supercaliman.note.R
 import com.supercaliman.note.hideKeyboard
 import com.supercaliman.note.showDialog
 import com.supercaliman.note.showKeyBoard
+import com.supercaliman.note.ui.main.SharedViewModel
 import com.supercaliman.note.ui.main.createNote.NoteCreateViewModel
 import kotlinx.android.synthetic.main.fragment_note_detail.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 
 class NoteDetailFragment : Fragment() {
 
-    private val noteDetailViewModel : NoteDetailViewModel by activityViewModels() //use this to get viewModel in Activity-scoped
-    private val noteCreateViewModel : NoteCreateViewModel by viewModels()
+    private val sharedViewModel : SharedViewModel by activityViewModels() //use this to get viewModel in Activity-scoped
+    private val noteDetailViewModel:NoteDetailViewModel by viewModels()
+    private lateinit var uiNote: UiNote;
 
     private val positiveButtonClick = { dialog: DialogInterface, which: Int ->
         hideKeyboard()
         requireView().findNavController().popBackStack()
         dialog.dismiss()
-
     }
 
     private val negativeButtonClick = { dialog: DialogInterface, which: Int ->
@@ -63,7 +65,7 @@ class NoteDetailFragment : Fragment() {
         txt_detail.isEnabled = false
 
 
-        noteDetailViewModel.dataLiveData.observe(viewLifecycleOwner, Observer { it?.let { renderUi(it) } })
+        sharedViewModel.dataLiveData.observe(viewLifecycleOwner, Observer { it?.let { renderUi(it) } })
 
     }
 
@@ -82,14 +84,15 @@ class NoteDetailFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> { onBackClick() }
             R.id.edit -> { setEditMode() }
-            R.id.editSave -> {noteCreateViewModel.createNote(txt_title.text.toString(),txt_detail.text.toString())}
-            R.id.delete -> {Timber.v("delete viewModel")}
+            R.id.editSave -> {noteDetailViewModel.update(txt_title.text.toString(),txt_detail.text.toString())}
+            R.id.delete -> {noteDetailViewModel.delete(uiNote)}
         }
         return super.onOptionsItemSelected(item)
     }
 
 
     private fun renderUi(note:UiNote){
+        uiNote = note;
         txt_title.setText(note.title)
         txt_date.text = note.date
         txt_detail.setText(note.description)

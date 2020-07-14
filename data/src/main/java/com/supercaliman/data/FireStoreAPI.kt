@@ -41,7 +41,7 @@ class FireStoreAPI(private var db:FirebaseFirestore) {
 
 
     @Throws(FirebaseFirestoreException::class,Exception::class)
-    suspend fun deleteNote(note: Note) =  db.collection(collection).document(note.uuid!!).delete().await()
+    suspend fun deleteNote(uuid: String) =  db.collection(collection).document(uuid).delete().await()
 
     @Throws(FirebaseFirestoreException::class,Exception::class)
 

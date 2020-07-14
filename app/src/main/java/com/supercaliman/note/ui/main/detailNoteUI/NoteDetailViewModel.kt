@@ -5,14 +5,18 @@ import com.supercaliman.domain.Note
 import com.supercaliman.domain.Result
 import com.supercaliman.domain.SingleLiveEvent
 import com.supercaliman.domain.UiNote
+import com.supercaliman.domain.useCase.CreateNoteTaskUseCase
 import com.supercaliman.domain.useCase.DeleteNoteTaskUseCase
 import com.supercaliman.domain.useCase.UpdateNoteTaskUseCase
 import kotlinx.coroutines.launch
+import org.koin.java.KoinJavaComponent.inject
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NoteDetailViewModel(): ViewModel() {
+class NoteDetailViewModel(private val updateNoteTaskUseCase: UpdateNoteTaskUseCase,private val deleteNoteTaskUseCase: DeleteNoteTaskUseCase): ViewModel() {
+
+    /*
 
     private val formatter = SimpleDateFormat("EEE d, yyyy", Locale.getDefault())
     private val date = Calendar.getInstance().time
@@ -29,13 +33,22 @@ class NoteDetailViewModel(): ViewModel() {
     val dataLiveData: LiveData<UiNote>
         get() = _dataLiveData
 
+     */
 
-    fun showDetail(data:UiNote){
-        _dataLiveData.postValue(data)
-    }
 
     fun update(title:String,description:String){
+        viewModelScope.launch {
+            updateNoteTaskUseCase.execute(Note("id",title,description,Calendar.getInstance().time))
+        }
+    }
 
+
+    fun delete(note:UiNote?){
+        let{
+            viewModelScope.launch {
+                deleteNoteTaskUseCase.execute(note?.uuid!!)
+            }
+        }
     }
 
     init {

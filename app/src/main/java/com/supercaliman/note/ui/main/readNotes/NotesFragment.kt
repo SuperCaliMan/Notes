@@ -12,6 +12,7 @@ import com.supercaliman.domain.UiNote
 import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
 import com.supercaliman.note.ui.main.AdapterList
+import com.supercaliman.note.ui.main.SharedViewModel
 import com.supercaliman.note.ui.main.detailNoteUI.NoteDetailViewModel
 import kotlinx.android.synthetic.main.fragment_notes.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,7 +23,7 @@ import java.lang.Exception
 class NotesFragment : Fragment(),BindingRecycleView {
 
     private val noteListViewModel: NoteListViewModel by viewModel()
-    private val detailViewModel:NoteDetailViewModel by activityViewModels() //use this to get viewModel in Activity-scoped
+    private val sharedViewModel:SharedViewModel by activityViewModels() //use this to get viewModel in Activity-scoped
     private lateinit var adapterList: AdapterList
 
 
@@ -60,10 +61,8 @@ class NotesFragment : Fragment(),BindingRecycleView {
 
 
     override fun getObjClicked(data: UiNote) {
-        data.let {
-            detailViewModel.showDetail(data)
-            view?.findNavController()?.navigate(R.id.action_notesFragment_to_noteDetailFragment2)
-        }
+        sharedViewModel.showDetail(data)
+        requireView().findNavController().navigate(R.id.action_notesFragment_to_noteDetailFragment2)
     }
 
     override fun onItemClicked(position: Int) {

@@ -12,6 +12,7 @@ class ModelMapperTask:Mapper<Note,UiNote> {
 
     override fun map(note: Note): UiNote {
        return UiNote(
+           note.uuid,
            note.title,
            note.description,
            formatter.format(note.date)

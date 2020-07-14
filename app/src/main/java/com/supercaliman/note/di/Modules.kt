@@ -6,6 +6,7 @@ import com.supercaliman.domain.useCase.CreateNoteTaskUseCase
 import com.supercaliman.domain.useCase.DeleteNoteTaskUseCase
 import com.supercaliman.domain.useCase.GetNoteTaskUseCase
 import com.supercaliman.domain.useCase.UpdateNoteTaskUseCase
+import com.supercaliman.note.ui.main.SharedViewModel
 import com.supercaliman.note.ui.main.createNote.NoteCreateViewModel
 import com.supercaliman.note.ui.main.detailNoteUI.NoteDetailViewModel
 import com.supercaliman.note.ui.main.readNotes.NoteListViewModel
@@ -22,13 +23,14 @@ val appModule = module {
 
     viewModel { NoteListViewModel(get()) }
     viewModel { NoteCreateViewModel(get()) }
-    viewModel { NoteDetailViewModel() }
+    viewModel { NoteDetailViewModel(get(),get()) }
+    viewModel { SharedViewModel() }
 
 
-
-    factory { GetNoteTaskUseCase(get()) }
-    factory { CreateNoteTaskUseCase(get()) }
     factory { UpdateNoteTaskUseCase(get()) }
     factory { DeleteNoteTaskUseCase(get()) }
+    factory { GetNoteTaskUseCase(get()) }
+    factory { CreateNoteTaskUseCase(get()) }
+
 
 }

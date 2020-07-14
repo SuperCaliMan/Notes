@@ -8,7 +8,7 @@ interface Repository {
 
     suspend fun createNote(note: Note)
 
-    suspend fun deleteNote(note: Note)
+    suspend fun deleteNote(uuid: String)
 
     suspend fun updateNote(note: Note)
 }

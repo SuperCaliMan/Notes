@@ -15,7 +15,7 @@ class CreateNoteTaskUseCase(private var repo:Repository){
 
 
 
-    private val result = MediatorLiveData<Result<List<Note>>>()
+    private val result = MediatorLiveData<Result<Boolean>>()
 
 
 
@@ -23,13 +23,14 @@ class CreateNoteTaskUseCase(private var repo:Repository){
         result.postValue(Result.Loading)
         try {
             repo.createNote(note)
+            result.postValue(Result.Success(true))
         }catch (e:Exception){
             Timber.w(e)
             result.postValue(Result.Error(e))
         }
     }
 
-    fun observe(): MutableLiveData<Result<List<Note>>> {
+    fun observe(): MutableLiveData<Result<Boolean>> {
         return result
     }
 }

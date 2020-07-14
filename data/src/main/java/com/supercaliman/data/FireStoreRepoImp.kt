@@ -34,9 +34,9 @@ class FireStoreRepoImp(private var api:FireStoreAPI):Repository{
         }
     }
 
-    override suspend fun deleteNote(note: Note){
+    override suspend fun deleteNote(uuid: String){
        try {
-           api.deleteNote(note)
+           api.deleteNote(uuid)
 
        }catch (e: FirebaseFirestoreException){
            throw e

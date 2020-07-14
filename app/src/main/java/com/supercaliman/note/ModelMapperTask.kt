@@ -10,12 +10,16 @@ class ModelMapperTask:Mapper<Note,UiNote> {
 
     private var formatter = SimpleDateFormat("EEE, d MMM yyyy", Locale.getDefault())
 
-    override fun map(note: Note): UiNote {
+    override fun map(data: Note): UiNote {
        return UiNote(
-           note.uuid,
-           note.title,
-           note.description,
-           formatter.format(note.date)
+           data.uuid,
+           data.title,
+           data.description,
+           formatter.format(data.date)
        )
+    }
+
+    fun sortUiList(list: List<Note>):List<Note>{
+        return list.sortedBy { it.date.time }
     }
 }

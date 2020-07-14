@@ -46,17 +46,13 @@ class NoteListViewModel(private var taskModel:GetNoteTaskUseCase) : ViewModel() 
         _uiLiveData.removeSource(observable)
         _uiLiveData.addSource(observable){
             if( it is Result.Success){
-                _uiLiveData.postValue(it.data.map { note -> mapper.map(note) })
+                _uiLiveData.postValue(
+                    mapper.sortUiList(it.data).map { note -> mapper.map(note)}
+                )
             }
         }
 
         viewModelScope.launch { taskModel.execute() }
-    }
-
-
-
-    init {
-        getNotesList()
     }
 
 

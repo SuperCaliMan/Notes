@@ -13,7 +13,6 @@ import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
 import com.supercaliman.note.ui.main.AdapterList
 import com.supercaliman.note.ui.main.SharedViewModel
-import com.supercaliman.note.ui.main.detailNoteUI.NoteDetailViewModel
 import kotlinx.android.synthetic.main.fragment_notes.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -69,13 +68,13 @@ class NotesFragment : Fragment(),BindingRecycleView {
 
     }
 
-    /*
+
     override fun onResume() {
         super.onResume()
         noteListViewModel.getNotesList()
     }
 
- */
+
 
     private fun renderUi(data:List<UiNote>){
         if(data.isEmpty()){

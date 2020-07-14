@@ -17,6 +17,7 @@ import com.supercaliman.note.showDialog
 import com.supercaliman.note.showKeyBoard
 import com.supercaliman.note.ui.main.SharedViewModel
 import com.supercaliman.note.ui.main.createNote.NoteCreateViewModel
+import com.supercaliman.note.ui.main.readNotes.NoteListViewModel
 import kotlinx.android.synthetic.main.fragment_note_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -25,18 +26,10 @@ import timber.log.Timber
 class NoteDetailFragment : Fragment() {
 
     private val sharedViewModel : SharedViewModel by activityViewModels() //use this to get viewModel in Activity-scoped
-    private val noteDetailViewModel:NoteDetailViewModel by viewModels()
-    private lateinit var uiNote: UiNote;
+    private lateinit var uiNote: UiNote
+    private val detailNoteViewModel:DetailNoteViewModel by viewModels()
 
-    private val positiveButtonClick = { dialog: DialogInterface, which: Int ->
-        hideKeyboard()
-        requireView().findNavController().popBackStack()
-        dialog.dismiss()
-    }
 
-    private val negativeButtonClick = { dialog: DialogInterface, which: Int ->
-        dialog.dismiss()
-    }
 
 
     override fun onCreateView(
@@ -52,9 +45,7 @@ class NoteDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-                onBackClick()
-        }
+        requireActivity().onBackPressedDispatcher.addCallback(this) { onBackClick() }
     }
 
 
@@ -84,8 +75,16 @@ class NoteDetailFragment : Fragment() {
         when(item.itemId){
             android.R.id.home -> { onBackClick() }
             R.id.edit -> { setEditMode() }
-            R.id.editSave -> {noteDetailViewModel.update(txt_title.text.toString(),txt_detail.text.toString())}
-            R.id.delete -> {noteDetailViewModel.delete(uiNote)}
+            R.id.editSave -> {
+                detailNoteViewModel.update(txt_title.text.toString(),txt_detail.text.toString(),uiNote.uuid)
+                hideKeyboard()
+                requireView().findNavController().popBackStack()
+            }
+            R.id.delete -> {
+                detailNoteViewModel.delete(uiNote.uuid)
+                hideKeyboard()
+                requireView().findNavController().popBackStack()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -96,8 +95,9 @@ class NoteDetailFragment : Fragment() {
         txt_title.setText(note.title)
         txt_date.text = note.date
         txt_detail.setText(note.description)
-
     }
+
+
 
     private fun isInEditMode():Boolean = txt_title.isEnabled && txt_detail.isEnabled
 
@@ -110,6 +110,16 @@ class NoteDetailFragment : Fragment() {
     }
 
     private fun onBackClick(){
+        val positiveButtonClick = { dialog: DialogInterface, which: Int ->
+            hideKeyboard()
+            requireView().findNavController().popBackStack()
+            dialog.dismiss()
+        }
+
+        val negativeButtonClick = { dialog: DialogInterface, which: Int ->
+            dialog.dismiss()
+        }
+
         if(isInEditMode()){
             showDialog(requireContext(),"",getString(R.string.alert_msg),positiveButtonClick,negativeButtonClick)
         }else {

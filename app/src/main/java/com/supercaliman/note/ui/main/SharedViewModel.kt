@@ -1,12 +1,12 @@
 package com.supercaliman.note.ui.main
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.supercaliman.domain.UiNote
 
 class SharedViewModel:ViewModel() {
-    private val _dataLiveData = MediatorLiveData<UiNote>()
+    private val _dataLiveData = MutableLiveData<UiNote>()
     val dataLiveData: LiveData<UiNote>
         get() = _dataLiveData
 

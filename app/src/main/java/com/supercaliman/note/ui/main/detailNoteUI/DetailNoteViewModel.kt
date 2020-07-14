@@ -1,7 +1,6 @@
 package com.supercaliman.note.ui.main.detailNoteUI
 
 
-import android.icu.text.CaseMap
 import androidx.lifecycle.*
 import com.supercaliman.domain.Note
 import com.supercaliman.domain.useCase.DeleteNoteTaskUseCase
@@ -9,7 +8,6 @@ import com.supercaliman.domain.useCase.UpdateNoteTaskUseCase
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import timber.log.Timber
 import java.util.*
 
 class DetailNoteViewModel(): ViewModel(),KoinComponent {

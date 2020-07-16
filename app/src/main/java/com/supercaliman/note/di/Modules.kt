@@ -1,5 +1,6 @@
 package com.supercaliman.note.di
 
+import androidx.lifecycle.SavedStateHandle
 import com.supercaliman.domain.useCase.CreateNoteTaskUseCase
 import com.supercaliman.domain.useCase.DeleteNoteTaskUseCase
 import com.supercaliman.domain.useCase.GetNoteTaskUseCase
@@ -13,7 +14,7 @@ import org.koin.dsl.module
 
 
 val appModule = module {
-    viewModel { NoteListViewModel(get()) }
+    viewModel {  NoteListViewModel(get()) }
     viewModel { NoteCreateViewModel(get()) }
     viewModel { SharedViewModel() }
     viewModel { DetailNoteViewModel() }

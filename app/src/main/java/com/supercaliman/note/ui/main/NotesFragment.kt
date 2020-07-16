@@ -15,13 +15,16 @@ import com.supercaliman.note.renderErrorUi
 import com.supercaliman.note.ui.main.ViewModels.SharedViewModel
 import com.supercaliman.note.ui.main.ViewModels.NoteListViewModel
 import kotlinx.android.synthetic.main.fragment_notes.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class NotesFragment : Fragment(),BindingRecycleView {
 
     private val noteListViewModel: NoteListViewModel by viewModel()
-    private val sharedViewModel: SharedViewModel by activityViewModels() //use this to get viewModel in Activity-scoped
+    //TODO: change with parameter viewmodel https://github.com/InsertKoinIO/koin/blob/master/koin-projects/docs/reference/koin-android/viewmodel.md
+    private val sharedViewModel: SharedViewModel by sharedViewModel() //use this to get viewModel in Activity-scoped
     private lateinit var adapterList: AdapterList
 
 

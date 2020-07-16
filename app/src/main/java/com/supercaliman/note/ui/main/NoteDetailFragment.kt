@@ -15,11 +15,12 @@ import com.supercaliman.note.*
 import com.supercaliman.note.ui.main.ViewModels.DetailNoteViewModel
 import com.supercaliman.note.ui.main.ViewModels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_note_detail.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class NoteDetailFragment : Fragment() {
 
-    private val sharedViewModel : SharedViewModel by activityViewModels() //use this to get viewModel in Activity-scoped
+    private val sharedViewModel : SharedViewModel by sharedViewModel() //use this to shared view model in different fragment
     private lateinit var uiNote: UiNote
     private val detailNoteViewModel: DetailNoteViewModel by viewModels()
 

@@ -29,8 +29,8 @@ class NoteListViewModel(private var taskModel:GetNoteTaskUseCase) : ViewModel() 
 
 
 
-    fun getNotesList() {
 
+    fun getNotesList() {
         val observable = taskModel.observe()
 
         _errorLiveData.removeSource(observable)

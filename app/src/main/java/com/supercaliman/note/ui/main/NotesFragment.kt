@@ -1,4 +1,4 @@
-package com.supercaliman.note.ui.main.readNotes
+package com.supercaliman.note.ui.main
 
 import android.os.Bundle
 import android.view.*
@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.supercaliman.domain.UiNote
 import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
-import com.supercaliman.note.ui.main.AdapterList
-import com.supercaliman.note.ui.main.SharedViewModel
+import com.supercaliman.note.ui.main.ViewModels.SharedViewModel
+import com.supercaliman.note.ui.main.ViewModels.NoteListViewModel
 import kotlinx.android.synthetic.main.fragment_notes.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -22,7 +22,7 @@ import java.lang.Exception
 class NotesFragment : Fragment(),BindingRecycleView {
 
     private val noteListViewModel: NoteListViewModel by viewModel()
-    private val sharedViewModel:SharedViewModel by activityViewModels() //use this to get viewModel in Activity-scoped
+    private val sharedViewModel: SharedViewModel by activityViewModels() //use this to get viewModel in Activity-scoped
     private lateinit var adapterList: AdapterList
 
 
@@ -43,10 +43,6 @@ class NotesFragment : Fragment(),BindingRecycleView {
         notelist.layoutManager = LinearLayoutManager(context)
         adapterList = AdapterList(this)
         notelist.adapter = adapterList
-
-        swipeContainer.setOnRefreshListener {
-            noteListViewModel.getNotesList()
-        }
 
         noteListViewModel.LoadingLiveData.observe(viewLifecycleOwner, Observer { renderLoadingUi(it) })
 
@@ -93,7 +89,6 @@ class NotesFragment : Fragment(),BindingRecycleView {
             progressBar.visibility = View.VISIBLE
         }else{
             progressBar.visibility = View.GONE
-            swipeContainer.isRefreshing = false
         }
     }
 

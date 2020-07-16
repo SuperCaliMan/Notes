@@ -1,4 +1,4 @@
-package com.supercaliman.note.ui.main
+package com.supercaliman.note.ui.main.ViewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

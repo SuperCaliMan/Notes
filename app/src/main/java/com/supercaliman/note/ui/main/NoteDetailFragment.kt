@@ -1,4 +1,4 @@
-package com.supercaliman.note.ui.main.detailNoteUI
+package com.supercaliman.note.ui.main
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -15,19 +15,16 @@ import com.supercaliman.note.R
 import com.supercaliman.note.hideKeyboard
 import com.supercaliman.note.showDialog
 import com.supercaliman.note.showKeyBoard
-import com.supercaliman.note.ui.main.SharedViewModel
-import com.supercaliman.note.ui.main.createNote.NoteCreateViewModel
-import com.supercaliman.note.ui.main.readNotes.NoteListViewModel
+import com.supercaliman.note.ui.main.ViewModels.DetailNoteViewModel
+import com.supercaliman.note.ui.main.ViewModels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_note_detail.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 
 class NoteDetailFragment : Fragment() {
 
     private val sharedViewModel : SharedViewModel by activityViewModels() //use this to get viewModel in Activity-scoped
     private lateinit var uiNote: UiNote
-    private val detailNoteViewModel:DetailNoteViewModel by viewModels()
+    private val detailNoteViewModel: DetailNoteViewModel by viewModels()
 
 
 
@@ -110,13 +107,13 @@ class NoteDetailFragment : Fragment() {
     }
 
     private fun onBackClick(){
-        val positiveButtonClick = { dialog: DialogInterface, which: Int ->
+        val positiveButtonClick = { dialog: DialogInterface, _: Int ->
             hideKeyboard()
             requireView().findNavController().popBackStack()
             dialog.dismiss()
         }
 
-        val negativeButtonClick = { dialog: DialogInterface, which: Int ->
+        val negativeButtonClick = { dialog: DialogInterface, _: Int ->
             dialog.dismiss()
         }
 

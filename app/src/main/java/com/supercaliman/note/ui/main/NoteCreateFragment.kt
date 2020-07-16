@@ -1,4 +1,4 @@
-package com.supercaliman.note.ui.main.createNote
+package com.supercaliman.note.ui.main
 
 import android.os.Bundle
 import android.view.*
@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import com.supercaliman.note.R
 import com.supercaliman.note.hideKeyboard
 import com.supercaliman.note.showKeyBoard
+import com.supercaliman.note.ui.main.ViewModels.NoteCreateViewModel
 import kotlinx.android.synthetic.main.fragment_note_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber

@@ -8,7 +8,7 @@ import java.util.*
 
 class ModelMapperTask:Mapper<Note,UiNote> {
 
-    private var formatter = SimpleDateFormat("EEE, d MMM yyyy", Locale.getDefault())
+    private var formatter = SimpleDateFormat("EEE, d MMM yyyy ", Locale.getDefault())
 
     override fun map(data: Note): UiNote {
        return UiNote(

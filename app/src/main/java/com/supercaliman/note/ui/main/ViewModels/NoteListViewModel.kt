@@ -1,4 +1,4 @@
-package com.supercaliman.note.ui.main.readNotes
+package com.supercaliman.note.ui.main.ViewModels
 
 
 import androidx.lifecycle.*

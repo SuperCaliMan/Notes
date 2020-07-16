@@ -6,7 +6,7 @@
     app:startDestination="@id/notesFragment">
     <fragment
         android:id="@+id/notesFragment"
-        android:name="com.supercaliman.note.ui.main.readNotes.NotesFragment"
+        android:name="com.supercaliman.note.ui.main.NotesFragment"
         android:label="fragment_notes"
         tools:layout="@layout/fragment_notes" >
         <action
@@ -22,11 +22,11 @@
     </fragment>
     <fragment
         android:id="@+id/noteDetailFragment"
-        android:name="com.supercaliman.note.ui.main.createNote.NoteCreateFragment"
+        android:name="com.supercaliman.note.ui.main.NoteCreateFragment"
         android:label="fragment_note_detail"
         tools:layout="@layout/fragment_note_detail" />
     <fragment
         android:id="@+id/noteDetailFragment2"
-        android:name="com.supercaliman.note.ui.main.detailNoteUI.NoteDetailFragment"
+        android:name="com.supercaliman.note.ui.main.NoteDetailFragment"
         android:label="NoteDetailFragment" />
 </navigation>

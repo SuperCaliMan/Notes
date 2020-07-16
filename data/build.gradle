@@ -51,15 +51,6 @@ dependencies {
 
     //Koin DI
     implementation "org.koin:koin-android:$koin_version"
-    testImplementation 'org.koin:koin-test:2.1.4'
-
-
-    //Debugging
-    implementation 'com.jakewharton.timber:timber:'+rootProject.timber_version
-
-
-
-
 
     implementation project(':domain')
 }

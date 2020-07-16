@@ -91,13 +91,6 @@ class NotesFragment : Fragment(),BindingRecycleView {
         }
     }
 
-    //TODO add this method in separate class and infilate error layout
-    /*
-    private fun renderErrorUi(e:Exception){
-        Timber.e(e)
-    }
-
-     */
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.option_menu,menu)

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.supercaliman.domain.Note
 import com.supercaliman.domain.Repository
 import com.supercaliman.domain.Result
-import timber.log.Timber
 import java.lang.Exception
 
 class UpdateNoteTaskUseCase(private var repo:Repository) {
@@ -21,7 +20,6 @@ class UpdateNoteTaskUseCase(private var repo:Repository) {
             repo.updateNote(note)
             result.postValue(Result.Success(true))
         }catch (e:Exception){
-            Timber.w(e)
             result.postValue(Result.Error(e))
         }
     }

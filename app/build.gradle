@@ -73,9 +73,6 @@ dependencies {
     //lottie
     implementation 'com.airbnb.android:lottie:'+rootProject.lottie_version
 
-    //swipe to refresh
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:"+rootProject.swipe_layout
-
 
 
 

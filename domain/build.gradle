@@ -35,18 +35,16 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$kotlincore_version"
+
+
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "com.google.android.material:material:$material_version"
+
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core"
 
-    //Koin DI
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    implementation "org.koin:koin-androidx-fragment:$koin_version"
 
-    //Debugging
-    implementation 'com.jakewharton.timber:timber:'+rootProject.timber_version
+
+
 }

@@ -11,10 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.supercaliman.domain.UiNote
-import com.supercaliman.note.R
-import com.supercaliman.note.hideKeyboard
-import com.supercaliman.note.showDialog
-import com.supercaliman.note.showKeyBoard
+import com.supercaliman.note.*
 import com.supercaliman.note.ui.main.ViewModels.DetailNoteViewModel
 import com.supercaliman.note.ui.main.ViewModels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_note_detail.*
@@ -54,6 +51,10 @@ class NoteDetailFragment : Fragment() {
 
 
         sharedViewModel.dataLiveData.observe(viewLifecycleOwner, Observer { it?.let { renderUi(it) } })
+
+        detailNoteViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer {  })
+
+        detailNoteViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { activity?.renderErrorUi(it) })
 
     }
 

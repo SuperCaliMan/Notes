@@ -7,7 +7,10 @@ import android.content.DialogInterface
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import java.lang.Exception
 
 fun Activity.hideKeyboard(): Boolean {
     return (getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
@@ -31,6 +34,10 @@ fun Fragment.showDialog(context: Context,title:String,message:String,positiveFun
     builder.setPositiveButton(android.R.string.yes, DialogInterface.OnClickListener(positiveFun))
     builder.setNegativeButton(android.R.string.no, DialogInterface.OnClickListener(negativeFun))
     builder.show()
+}
+
+fun FragmentActivity.renderErrorUi(e:Exception){
+    Toast.makeText(this,e.message,Toast.LENGTH_LONG).show()
 }
 
 

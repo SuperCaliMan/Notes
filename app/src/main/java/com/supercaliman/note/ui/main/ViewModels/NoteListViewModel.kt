@@ -19,7 +19,7 @@ class NoteListViewModel(private var taskModel:GetNoteTaskUseCase) : ViewModel() 
         get() = _errorLiveData
 
     private val _uiLiveData = MediatorLiveData<List<UiNote>>()
-    val UiLiveData: LiveData<List<UiNote>>
+    val uiLiveData: LiveData<List<UiNote>>
         get() = _uiLiveData
 
     private val _loadingLiveData = MediatorLiveData<Boolean>()

@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.supercaliman.note.R
 import com.supercaliman.note.hideKeyboard
+import com.supercaliman.note.renderErrorUi
 import com.supercaliman.note.showKeyBoard
 import com.supercaliman.note.ui.main.ViewModels.NoteCreateViewModel
 import kotlinx.android.synthetic.main.fragment_note_detail.*
@@ -41,7 +42,7 @@ class NoteCreateFragment : Fragment() {
         showKeyBoard()
 
 
-        noteDetailViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { it?.let { renderErrorUi(it) } })
+        noteDetailViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { it?.let { activity?.renderErrorUi(it) } })
 
         noteDetailViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer {
             if (it) view.findNavController().popBackStack()
@@ -70,9 +71,5 @@ class NoteCreateFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    fun renderErrorUi(e:Exception){
-        Timber.e(e)
     }
 }

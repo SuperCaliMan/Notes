@@ -11,20 +11,16 @@ import com.supercaliman.note.ui.main.ViewModels.NoteListViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-//TODO:Separate module in different submodule, each one in a single android module
+
 val appModule = module {
-
-
     viewModel { NoteListViewModel(get()) }
     viewModel { NoteCreateViewModel(get()) }
     viewModel { SharedViewModel() }
     viewModel { DetailNoteViewModel() }
 
-
     factory { UpdateNoteTaskUseCase(get()) }
     factory { DeleteNoteTaskUseCase(get()) }
     factory { GetNoteTaskUseCase(get()) }
     factory { CreateNoteTaskUseCase(get()) }
-
 
 }

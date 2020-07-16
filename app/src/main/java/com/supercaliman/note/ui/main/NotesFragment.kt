@@ -11,12 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.supercaliman.domain.UiNote
 import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
+import com.supercaliman.note.renderErrorUi
 import com.supercaliman.note.ui.main.ViewModels.SharedViewModel
 import com.supercaliman.note.ui.main.ViewModels.NoteListViewModel
 import kotlinx.android.synthetic.main.fragment_notes.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
-import java.lang.Exception
 
 
 class NotesFragment : Fragment(),BindingRecycleView {
@@ -46,9 +45,9 @@ class NotesFragment : Fragment(),BindingRecycleView {
 
         noteListViewModel.LoadingLiveData.observe(viewLifecycleOwner, Observer { renderLoadingUi(it) })
 
-        noteListViewModel.UiLiveData.observe(viewLifecycleOwner, Observer { it?.let { items -> renderUi(items) } })
+        noteListViewModel.uiLiveData.observe(viewLifecycleOwner, Observer { it?.let { items -> renderUi(items) } })
 
-        noteListViewModel.errorLiveData.observe(viewLifecycleOwner, Observer {  renderErrorUi(it) })
+        noteListViewModel.errorLiveData.observe(viewLifecycleOwner, Observer {  activity?.renderErrorUi(it) })
 
         floatingActionButton.setOnClickListener { view.findNavController().navigate(R.id.action_notesFragment_to_noteDetailFragment) }
 
@@ -93,9 +92,12 @@ class NotesFragment : Fragment(),BindingRecycleView {
     }
 
     //TODO add this method in separate class and infilate error layout
+    /*
     private fun renderErrorUi(e:Exception){
         Timber.e(e)
     }
+
+     */
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.option_menu,menu)

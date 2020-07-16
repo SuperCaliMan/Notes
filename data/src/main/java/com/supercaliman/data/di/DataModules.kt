@@ -6,6 +6,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.supercaliman.data.FireStoreAPI
 import com.supercaliman.data.FireStoreRepoImp
+import com.supercaliman.data.ModelMapper
 import com.supercaliman.domain.Repository
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -20,5 +21,7 @@ val dataModule = module{
         return@single FireStoreRepoImp(get())
     }
 
-    single { FireStoreAPI(get()) }
+
+    single { FireStoreAPI(get(),get()) }
+    factory { ModelMapper() }
 }

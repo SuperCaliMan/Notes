@@ -1,7 +1,3 @@
-cose da fare
-- aggiungere savestate
-- migrare con hilt
-
 
 # <p align="center">Notes</p>
 

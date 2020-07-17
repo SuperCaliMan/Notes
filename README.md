@@ -22,6 +22,7 @@ Work in progress 🚧
 --
 This app is work in progress, i will update app with most recent android libraries, some times in dev preview
 
+License 📄
 --
 
     Copyright 2020 Alberto Caliman

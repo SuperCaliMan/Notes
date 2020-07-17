@@ -4,9 +4,8 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.activity.addCallback
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -51,11 +50,15 @@ class NoteDetailFragment : Fragment() {
         txt_detail.isEnabled = false
 
 
-        sharedViewModel.dataLiveData.observe(viewLifecycleOwner, Observer { it?.let { renderUi(it) } })
+        sharedViewModel.dataLiveData.observe(
+            viewLifecycleOwner,
+            Observer { it?.let { renderUi(it) } })
 
-        detailNoteViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer {  })
+        detailNoteViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer { })
 
-        detailNoteViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { activity?.renderErrorUi(it) })
+        detailNoteViewModel.errorLiveData.observe(
+            viewLifecycleOwner,
+            Observer { activity?.renderErrorUi(it) })
 
     }
 
@@ -90,7 +93,7 @@ class NoteDetailFragment : Fragment() {
 
 
     private fun renderUi(note:UiNote){
-        uiNote = note;
+        uiNote = note
         txt_title.setText(note.title)
         txt_date.text = note.date
         txt_detail.setText(note.description)

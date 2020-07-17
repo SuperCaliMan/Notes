@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.supercaliman.domain.UiNote
 
-class SharedViewModel:ViewModel() {
+class SharedViewModel() : ViewModel() {
     private val _dataLiveData = MutableLiveData<UiNote>()
     val dataLiveData: LiveData<UiNote>
         get() = _dataLiveData
 
-    fun showDetail(data:UiNote){
+    fun showDetail(data: UiNote) {
         _dataLiveData.postValue(data)
     }
 }

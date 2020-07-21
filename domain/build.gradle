@@ -3,6 +3,9 @@ plugins {
     id 'kotlin-android'
 }
 
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
@@ -44,7 +47,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core"
 
-
+    //Hilt DI
+    implementation "com.google.dagger:hilt-android:"+rootProject.hilt_version
+    kapt "com.google.dagger:hilt-android-compiler:"+rootProject.hilt_version
 
 
 }

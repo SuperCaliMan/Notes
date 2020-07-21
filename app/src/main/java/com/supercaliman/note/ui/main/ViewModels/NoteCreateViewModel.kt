@@ -1,18 +1,21 @@
 package com.supercaliman.note.ui.main.ViewModels
 
 
-import androidx.lifecycle.*
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.supercaliman.domain.Note
 import com.supercaliman.domain.Result
 import com.supercaliman.domain.SingleLiveEvent
 import com.supercaliman.domain.useCase.CreateNoteTaskUseCase
-import com.supercaliman.domain.useCase.GetNoteTaskUseCase
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NoteCreateViewModel(private var taskModel:CreateNoteTaskUseCase) : ViewModel() {
+class NoteCreateViewModel @ViewModelInject constructor(private var taskModel: CreateNoteTaskUseCase) :
+    ViewModel() {
 
     private val formatter = SimpleDateFormat("EEE d, yyyy", Locale.getDefault())
     private val date = Calendar.getInstance().time

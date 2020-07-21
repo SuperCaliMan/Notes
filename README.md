@@ -1,5 +1,3 @@
-
-
 # <p align="center">Notes</p>
 
 <p align="center">
@@ -7,21 +5,24 @@
 <img alt="license" src="https://img.shields.io/github/license/hongbeomi/FindTaek?color=blue&logo=apache"/>
 </p>
 
-<p align="center">Notes application is sample app based on MVVM architecture.</p>
+<p align="center">Notes application is sample app based on MVVM architecture.</br>
+</p>
 
 <div align="center">
-  <img src="screen/home.jpg" width="300" height="550">
-  <img src="screen/detail.jpg" width="300" height="550"
+  <img src="screen/home.jpg" width="320" height="550">
+    <space></space>
+  <img src="screen/detail.jpg" width="350" height="550"
  </div>
 
+<br>
 
 
 Work in progress 🚧
---
+-------------------
 This app is work in progress, i will update app with most recent android libraries, some times in dev preview
 
 License 📄
---
+-------
 
     Copyright 2020 Alberto Caliman
 
@@ -36,4 +37,3 @@ License 📄
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-

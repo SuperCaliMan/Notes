@@ -1,23 +1,24 @@
 package com.supercaliman.note.ui.main.ViewModels
 
 
-import androidx.lifecycle.*
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.supercaliman.domain.Note
 import com.supercaliman.domain.Result
 import com.supercaliman.domain.SingleLiveEvent
 import com.supercaliman.domain.useCase.DeleteNoteTaskUseCase
 import com.supercaliman.domain.useCase.UpdateNoteTaskUseCase
 import kotlinx.coroutines.launch
-import org.koin.core.KoinComponent
-import org.koin.core.inject
-import java.lang.Exception
 import java.util.*
 
-class DetailNoteViewModel(): ViewModel(),KoinComponent {
+class DetailNoteViewModel @ViewModelInject constructor(
+    private var deleteTaskModel: DeleteNoteTaskUseCase,
+    private var updateTaskModel: UpdateNoteTaskUseCase
+) : ViewModel() {
 
-
-    private val deleteTaskModel:DeleteNoteTaskUseCase by inject()
-    private val updateTaskModel:UpdateNoteTaskUseCase by inject()
 
     private val _loadingLiveData = MediatorLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean>

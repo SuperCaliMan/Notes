@@ -6,24 +6,23 @@ import android.view.*
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.supercaliman.domain.UiNote
 import com.supercaliman.note.*
 import com.supercaliman.note.ui.main.ViewModels.DetailNoteViewModel
-import com.supercaliman.note.ui.main.ViewModels.SharedViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_note_detail.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
+@AndroidEntryPoint
 class NoteDetailFragment : Fragment() {
 
-    private val sharedViewModel : SharedViewModel by sharedViewModel() //use this to shared view model in different fragment
+    //private val sharedViewModel : SharedViewModel by viewModels() //use this to shared view model in different fragment
     private lateinit var uiNote: UiNote
     private val detailNoteViewModel: DetailNoteViewModel by viewModels()
-
-
 
 
     override fun onCreateView(
@@ -38,10 +37,8 @@ class NoteDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         requireActivity().onBackPressedDispatcher.addCallback(this) { onBackClick() }
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,16 +46,19 @@ class NoteDetailFragment : Fragment() {
         txt_title.isEnabled = false
         txt_detail.isEnabled = false
 
+        setFragmentResultListener("data") { key, bundle ->
+            val res = bundle.getSerializable("data") as UiNote
+            renderUi(res)
+        }
 
-        sharedViewModel.dataLiveData.observe(
-            viewLifecycleOwner,
-            Observer { it?.let { renderUi(it) } })
+
 
         detailNoteViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer { })
 
         detailNoteViewModel.errorLiveData.observe(
             viewLifecycleOwner,
             Observer { activity?.renderErrorUi(it) })
+
 
     }
 
@@ -98,7 +98,6 @@ class NoteDetailFragment : Fragment() {
         txt_date.text = note.date
         txt_detail.setText(note.description)
     }
-
 
 
     private fun isInEditMode():Boolean = txt_title.isEnabled && txt_detail.isEnabled

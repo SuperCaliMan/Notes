@@ -3,7 +3,6 @@ package com.supercaliman.data
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.supercaliman.domain.Note
 import com.supercaliman.domain.Repository
-import java.lang.Exception
 
 class FireStoreRepoImp(private var api:FireStoreAPI):Repository{
     @Throws(FirebaseFirestoreException::class)
@@ -34,7 +33,6 @@ class FireStoreRepoImp(private var api:FireStoreAPI):Repository{
     override suspend fun deleteNote(uuid: String){
        try {
            api.deleteNote(uuid)
-
        }catch (e: FirebaseFirestoreException){
            throw e
 

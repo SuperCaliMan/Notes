@@ -9,17 +9,18 @@ import com.supercaliman.domain.UiNote
 import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
 
-class AdapterList(val listener:BindingRecycleView):RecyclerView.Adapter<AdapterList.ItemViewHolder>(){
+class AdapterList(val listener: BindingRecycleView<UiNote>) :
+    RecyclerView.Adapter<AdapterList.ItemViewHolder>() {
 
-    var data:List<UiNote> = emptyList()
-    set(value) {
-        field =value
-        notifyDataSetChanged()
-    }
+    var data: List<UiNote> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-       val inflater = LayoutInflater.from(parent.context)
-        return ItemViewHolder(inflater,parent)
+        val inflater = LayoutInflater.from(parent.context)
+        return ItemViewHolder(inflater, parent)
     }
 
     override fun getItemCount(): Int {
@@ -44,7 +45,6 @@ class AdapterList(val listener:BindingRecycleView):RecyclerView.Adapter<AdapterL
         init {
             itemView.setOnClickListener {
                 if(adapterPosition != RecyclerView.NO_POSITION) {
-                    listener.onItemClicked(adapterPosition)
                     listener.getObjClicked(data[adapterPosition])
                 }
             }

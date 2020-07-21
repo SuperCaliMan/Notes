@@ -4,21 +4,20 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.supercaliman.domain.Repository
 import com.supercaliman.domain.Result
-import java.lang.Exception
+import javax.inject.Inject
 
-class DeleteNoteTaskUseCase(private var repo:Repository) {
+class DeleteNoteTaskUseCase @Inject constructor(private var repo: Repository) {
 
     private val result = MediatorLiveData<Result<Boolean>>()
 
 
-
-    suspend fun execute(uuid: String){
+    suspend fun execute(uuid: String) {
         result.postValue(Result.Loading)
 
         try {
             repo.deleteNote(uuid)
             result.postValue(Result.Success(true))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             result.postValue(Result.Error(e))
         }
     }

@@ -1,16 +1,20 @@
 package com.supercaliman.note.ui.main.ViewModels
 
 
-import androidx.lifecycle.*
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.supercaliman.domain.Result
 import com.supercaliman.domain.SingleLiveEvent
 import com.supercaliman.domain.UiNote
 import com.supercaliman.domain.useCase.GetNoteTaskUseCase
 import com.supercaliman.note.ModelMapperTask
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
-class NoteListViewModel(private var taskModel:GetNoteTaskUseCase) : ViewModel() {
+class NoteListViewModel @ViewModelInject constructor(private var taskModel: GetNoteTaskUseCase) :
+    ViewModel() {
 
     private val mapper = ModelMapperTask()
 
@@ -34,23 +38,24 @@ class NoteListViewModel(private var taskModel:GetNoteTaskUseCase) : ViewModel() 
         val observable = taskModel.observe()
 
         _errorLiveData.removeSource(observable)
-        _errorLiveData.addSource(observable){
-            if(it is Result.Error) _errorLiveData.postValue(it.exception)
+        _errorLiveData.addSource(observable) {
+            if (it is Result.Error) _errorLiveData.postValue(it.exception)
         }
 
         _loadingLiveData.removeSource(observable)
-        _loadingLiveData.addSource(observable){
+        _loadingLiveData.addSource(observable) {
             _loadingLiveData.postValue(it == Result.Loading)
         }
 
         _uiLiveData.removeSource(observable)
-        _uiLiveData.addSource(observable){
-            if( it is Result.Success){
+        _uiLiveData.addSource(observable) {
+            if (it is Result.Success) {
                 _uiLiveData.postValue(
-                    mapper.sortUiList(it.data).map { note -> mapper.map(note)}
+                    mapper.sortUiList(it.data).map { note -> mapper.map(note) }
                 )
             }
         }
+
 
         viewModelScope.launch { taskModel.execute() }
     }

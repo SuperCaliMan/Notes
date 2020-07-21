@@ -1,9 +1,4 @@
 package com.supercaliman.domain
-
-import java.sql.Blob
-import java.sql.Time
-import java.sql.Timestamp
-import java.time.LocalDateTime
 import java.util.*
 
 

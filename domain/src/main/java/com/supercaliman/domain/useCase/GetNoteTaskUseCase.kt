@@ -12,10 +12,8 @@ class GetNoteTaskUseCase @Inject constructor(private var repo: Repository) {
 
     private val result = MediatorLiveData<Result<List<Note>>>()
 
-
     suspend fun execute() {
         result.postValue(Result.Loading)
-
         try {
             val res = repo.getNotes()
             result.postValue(Result.Success(res))

@@ -18,8 +18,7 @@ class FireStoreAPI @Inject constructor(
 ) {
 
     private val COLLECTION = "Note"
-
-    private var db: FirebaseFirestore
+    private val db: FirebaseFirestore
 
     init {
         FirebaseApp.initializeApp(context)
@@ -28,7 +27,6 @@ class FireStoreAPI @Inject constructor(
             isPersistenceEnabled = true
         }
         db.firestoreSettings = setting
-
     }
 
 

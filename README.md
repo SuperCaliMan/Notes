@@ -1,20 +1,8 @@
-# <p align="center">Notes</p>
-
-<p align="center">
-<img alt="api" src="https://img.shields.io/badge/API-21%2B-green?logo=android"/>
-<img alt="license" src="https://img.shields.io/github/license/hongbeomi/FindTaek?color=blue&logo=apache"/>
-</p>
-
-<p align="center">Notes application is sample app based on MVVM architecture.</br>
-</p>
-
 <div align="center">
-  <img src="screen/home.jpg" width="320" height="550">
-    <space></space>
-  <img src="screen/detail.jpg" width="350" height="550"
+  <img src="screen/notes.png" height="600" width="619">
  </div>
-
 <br>
+<p align="center">Notes application is sample app based on MVVM architecture.</p>
 
 
 Work in progress 🚧

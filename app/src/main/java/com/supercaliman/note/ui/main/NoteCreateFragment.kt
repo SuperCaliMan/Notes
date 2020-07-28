@@ -41,7 +41,10 @@ class NoteCreateFragment : Fragment() {
         noteDetailViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { it?.let { activity?.renderErrorUi(it) } })
 
         noteDetailViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer {
-            if (it) view.findNavController().popBackStack()
+            if (it) {
+                hideKeyboard()
+                view.findNavController().popBackStack()
+            }
         })
     }
 

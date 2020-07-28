@@ -18,6 +18,4 @@ object RepositoryModule {
     fun getRepository(api: FireStoreAPI): Repository {
         return FireStoreRepoImp(api)
     }
-
-
 }

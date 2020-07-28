@@ -37,7 +37,7 @@ class NoteDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this) { onBackClick() }
+        requireActivity().onBackPressedDispatcher.addCallback(this) { onBackPress() }
     }
 
 
@@ -75,8 +75,12 @@ class NoteDetailFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            android.R.id.home -> { onBackClick() }
-            R.id.edit -> { setEditMode() }
+            android.R.id.home -> {
+                onBackPress()
+            }
+            R.id.edit -> {
+                setEditMode()
+            }
             R.id.editSave -> {
                 detailNoteViewModel.update(txt_title.text.toString(),txt_detail.text.toString(),uiNote.uuid)
                 hideKeyboard()
@@ -110,7 +114,7 @@ class NoteDetailFragment : Fragment() {
         showKeyBoard()
     }
 
-    private fun onBackClick(){
+    private fun onBackPress() {
         val positiveButtonClick = { dialog: DialogInterface, _: Int ->
             hideKeyboard()
             requireView().findNavController().popBackStack()

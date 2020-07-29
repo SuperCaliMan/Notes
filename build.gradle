@@ -15,7 +15,6 @@ buildscript {
         computeVersionCode = { ->
             return (versionMajor * 1000000) + (versionMinor * 100000) + (versionPatch * 10000) + Integer.valueOf(System.env.BUILD_NUMBER ?: 0)
         }
-
         // App version
         versionName = computeVersionName()
         versionCode = computeVersionCode()

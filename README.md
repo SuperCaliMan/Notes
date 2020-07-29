@@ -5,12 +5,21 @@
 <p align="center">Notes application is sample app based on MVVM architecture.</p>
 
 
+
 Work in progress 🚧
 -------------------
-This app is work in progress, i will update app with most recent android libraries, some times in dev preview
+This app is work in progress.
+
+Build 🛠
+-------------------
+App has following modules
+1. App: contains view and viewModel
+1. Data: contains repository and web api
+1. Domain: contains use case and POJO objects
+
 
 License 📄
--------
+-------------------
 
     Copyright 2020 Alberto Caliman
 

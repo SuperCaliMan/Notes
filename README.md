@@ -1,27 +1,25 @@
-
-
-# <p align="center">Notes</p>
-
-<p align="center">
-<img alt="api" src="https://img.shields.io/badge/API-21%2B-green?logo=android"/>
-<img alt="license" src="https://img.shields.io/github/license/hongbeomi/FindTaek?color=blue&logo=apache"/>
-</p>
-
-<p align="center">Notes application is sample app based on MVVM architecture.</p>
-
 <div align="center">
-  <img src="screen/home.jpg" width="300" height="550">
-  <img src="screen/detail.jpg" width="300" height="550"
+  <img src="screen/notes.png" height="600" width="619">
  </div>
+<br>
+<p align="center">Notes application is sample app based on MVVM architecture.</p>
 
 
 
 Work in progress 🚧
---
-This app is work in progress, i will update app with most recent android libraries, some times in dev preview
+-------------------
+This app is work in progress.
+
+Build 🛠
+-------------------
+App has following modules
+1. App: contains view and viewModel
+1. Data: contains repository and web api
+1. Domain: contains use case and POJO objects
+
 
 License 📄
---
+-------------------
 
     Copyright 2020 Alberto Caliman
 
@@ -36,4 +34,3 @@ License 📄
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-

@@ -18,8 +18,4 @@ class ModelMapperTask:Mapper<Note,UiNote> {
            formatter.format(data.date)
        )
     }
-
-    fun sortUiList(list: List<Note>):List<Note>{
-        return list.sortedBy { it.date.time }
-    }
 }

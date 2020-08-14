@@ -3,7 +3,10 @@ package com.supercaliman.note.ui.main
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,24 +15,20 @@ import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
 import com.supercaliman.note.renderErrorUi
 import com.supercaliman.note.ui.main.ViewModels.NoteListViewModel
-import com.supercaliman.note.ui.main.ViewModels.SharedViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_notes.*
-import org.koin.android.viewmodel.ext.android.sharedViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
 
+@AndroidEntryPoint
+class NotesFragment : Fragment(), BindingRecycleView<UiNote> {
 
-class NotesFragment : Fragment(),BindingRecycleView {
-
-    private val noteListViewModel: NoteListViewModel by viewModel()
-    val sharedViewModel: SharedViewModel by sharedViewModel()
+    private val noteListViewModel: NoteListViewModel by viewModels()
     private lateinit var adapterList: AdapterList
-
-
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         setHasOptionsMenu(false)
         (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         return inflater.inflate(R.layout.fragment_notes, container, false)
@@ -39,36 +38,36 @@ class NotesFragment : Fragment(),BindingRecycleView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        noteListViewModel.getNotesList()
+
         notelist.layoutManager = LinearLayoutManager(context)
         adapterList = AdapterList(this)
         notelist.adapter = adapterList
 
-        noteListViewModel.LoadingLiveData.observe(viewLifecycleOwner, Observer { renderLoadingUi(it) })
+        noteListViewModel.LoadingLiveData.observe(
+            viewLifecycleOwner,
+            Observer { renderLoadingUi(it) })
 
-        noteListViewModel.uiLiveData.observe(viewLifecycleOwner, Observer { it?.let { items -> renderUi(items) } })
+        noteListViewModel.uiLiveData.observe(
+            viewLifecycleOwner,
+            Observer { it?.let { items -> renderUi(items) } })
 
-        noteListViewModel.errorLiveData.observe(viewLifecycleOwner, Observer {  activity?.renderErrorUi(it) })
+        noteListViewModel.errorLiveData.observe(
+            viewLifecycleOwner,
+            Observer { activity?.renderErrorUi(it) })
 
-        floatingActionButton.setOnClickListener { view.findNavController().navigate(R.id.action_notesFragment_to_noteDetailFragment) }
+        floatingActionButton.setOnClickListener {
+            view.findNavController().navigate(R.id.action_notesFragment_to_noteCreateFragment)
+        }
 
     }
 
 
     override fun getObjClicked(data: UiNote) {
-        sharedViewModel.showDetail(data)
-        requireView().findNavController().navigate(R.id.action_notesFragment_to_noteDetailFragment2)
+        setFragmentResult("data", bundleOf("data" to data))
+        requireView().findNavController().navigate(R.id.action_notesFragment_to_detailFragment)
     }
-
-    override fun onItemClicked(position: Int) {
-
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        noteListViewModel.getNotesList()
-    }
-
 
 
     private fun renderUi(data:List<UiNote>){

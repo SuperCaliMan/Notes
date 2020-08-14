@@ -3,6 +3,10 @@ plugins {
     id 'kotlin-android'
 }
 
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
+
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
@@ -49,8 +53,11 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:'+rootProject.corutines_version
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:'+rootProject.corutines_play_services_version
 
-    //Koin DI
-    implementation "org.koin:koin-android:$koin_version"
+
+
+    //Hilt DI
+    implementation "com.google.dagger:hilt-android:"+rootProject.hilt_version
+    kapt "com.google.dagger:hilt-android-compiler:"+rootProject.hilt_version
 
     implementation project(':domain')
 }

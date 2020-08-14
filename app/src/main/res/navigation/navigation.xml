@@ -10,23 +10,19 @@
         android:label="fragment_notes"
         tools:layout="@layout/fragment_notes" >
         <action
-            android:id="@+id/action_notesFragment_to_noteDetailFragment"
-            app:destination="@id/noteDetailFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            android:id="@+id/action_notesFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
         <action
-            android:id="@+id/action_notesFragment_to_noteDetailFragment2"
-            app:destination="@id/noteDetailFragment2" />
+            android:id="@+id/action_notesFragment_to_noteCreateFragment"
+            app:destination="@id/noteCreateFragment" />
     </fragment>
     <fragment
-        android:id="@+id/noteDetailFragment"
+        android:id="@+id/noteCreateFragment"
         android:name="com.supercaliman.note.ui.main.NoteCreateFragment"
         android:label="fragment_note_detail"
         tools:layout="@layout/fragment_note_detail" />
     <fragment
-        android:id="@+id/noteDetailFragment2"
+        android:id="@+id/detailFragment"
         android:name="com.supercaliman.note.ui.main.NoteDetailFragment"
         android:label="NoteDetailFragment" />
 </navigation>

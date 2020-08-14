@@ -1,11 +1,11 @@
 package com.supercaliman.domain
 
-import java.util.*
+import java.io.Serializable
 
 
 data class UiNote(
-    var uuid:String? = null,
-    var title:String = "",
-    var description:String = "",
+    var uuid: String? = null,
+    var title: String = "",
+    var description: String = "",
     var date: String = ""
-)
+) : Serializable

@@ -5,24 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import com.supercaliman.domain.Note
 import com.supercaliman.domain.Repository
 import com.supercaliman.domain.Result
-import java.lang.Exception
+import javax.inject.Inject
 
-class CreateNoteTaskUseCase(private var repo:Repository){
-
-
-
+class CreateNoteTaskUseCase @Inject constructor(private var repo: Repository) {
 
 
     private val result = MediatorLiveData<Result<Boolean>>()
 
 
-
-    suspend fun execute(note:Note){
+    suspend fun execute(note: Note) {
         result.postValue(Result.Loading)
         try {
             repo.createNote(note)
             result.postValue(Result.Success(true))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             result.postValue(Result.Error(e))
         }
     }

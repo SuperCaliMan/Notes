@@ -41,53 +41,37 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.core:core-ktx:$kotlincore_version"
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation 'androidx.recyclerview:recyclerview:'+rootProject.recyclerview_version
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
-    testImplementation "junit:junit:$junit_version"
+    implementation Kotlin.stdlib
+    implementation AndroidX.coreKtx
+    implementation AndroidX.appcompat
+    implementation AndroidX.constraintLayout
+    implementation AndroidX.recyclerView
+    implementation Lifecycle.extensions
+    implementation Lifecycle.livedata
+    implementation Material.core
+    implementation AndroidX.legacySupport
     androidTestImplementation "androidx.test.ext:junit:$junit_android_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core"
 
 
     //fragment androidx
-    implementation "androidx.fragment:fragment:"+rootProject.androidx_fragment
-    implementation "androidx.fragment:fragment-ktx:"+rootProject.androidx_fragment
-
-
-
+    implementation AndroidX.fragment
+    implementation AndroidX.fragmentKtx
 
     //navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:"+rootProject.nav_version
-    implementation "androidx.navigation:navigation-ui-ktx:"+rootProject.nav_version
-
+    implementation Navigation.fragment
+    implementation Navigation.uiKtx
 
     //Debugging
-    implementation 'com.jakewharton.timber:timber:'+rootProject.timber_version
+    implementation Debug.timber
 
     //lottie
-    implementation 'com.airbnb.android:lottie:'+rootProject.lottie_version
-
+    implementation Animation.lottie
 
     //Hilt DI
-    implementation "com.google.dagger:hilt-android:"+rootProject.hilt_version
-    kapt "com.google.dagger:hilt-android-compiler:"+rootProject.hilt_version
-    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01'
-    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha01'
-
-
-
-
-
-
-
+    implementation Di.hiltAndroid
+    kapt Di.hiltCompiler
+    implementation Di.hiltViewModel
+    kapt Di.hiltAndroidX
 
 
 

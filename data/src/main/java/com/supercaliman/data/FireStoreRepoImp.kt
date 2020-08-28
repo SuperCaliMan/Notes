@@ -7,8 +7,7 @@ class FireStoreRepoImp(private var api:FireStoreAPI):Repository{
 
     override suspend fun getNotes(): List<Note> {
         return try {
-            val data = api.getNotes()
-            data
+            api.getNotes()
         }catch (e: Exception){
             throw e
         }

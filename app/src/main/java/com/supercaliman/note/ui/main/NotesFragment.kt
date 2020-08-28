@@ -24,7 +24,6 @@ class NotesFragment : Fragment(), BindingRecycleView<UiNote> {
     private val noteListViewModel: NoteListViewModel by viewModels()
     private lateinit var adapterList: AdapterList
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -46,7 +46,7 @@ class NoteDetailFragment : Fragment() {
         txt_title.isEnabled = false
         txt_detail.isEnabled = false
 
-        setFragmentResultListener("data") { key, bundle ->
+        setFragmentResultListener("data") { _, bundle ->
             val res = bundle.getSerializable("data") as UiNote
             renderUi(res)
         }

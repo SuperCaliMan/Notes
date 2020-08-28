@@ -32,8 +32,6 @@ class NoteListViewModel @ViewModelInject constructor(private var taskModel: GetN
 
 
 
-
-
     fun getNotesList() {
         val observable = taskModel.observe()
 

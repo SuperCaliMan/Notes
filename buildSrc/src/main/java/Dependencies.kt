@@ -1,5 +1,5 @@
 object Versions {
-    const val kotlin = "1.4.0"
+    const val kotlin = "1.4.10"
     const val hilt = "2.28-alpha"
     const val hiltx = "1.0.0-alpha02"
     const val lifecycle = "2.2.0"

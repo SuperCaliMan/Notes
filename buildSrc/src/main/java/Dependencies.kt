@@ -1,5 +1,5 @@
 object Versions {
-    const val kotlin = "1.4.10"
+    const val kotlin = "1.4.0"
     const val hilt = "2.28-alpha"
     const val hiltx = "1.0.0-alpha02"
     const val lifecycle = "2.2.0"
@@ -18,7 +18,8 @@ object Versions {
     const val espressoCore = "3.2.0"
     const val junit = "4.13"
     const val junitAndroid = "1.1.1"
-    const val compose = "1.0.0-alpha01"
+    const val playServices = "1.8.1"
+    const val compose = "1.0.0-alpha03"
 
 }
 
@@ -52,16 +53,34 @@ object Navigation {
 
 object Compose {
     const val core = "androidx.compose.ui:ui:${Versions.compose}"
+
+    // Tooling support (Previews, etc.)
+    const val tooling = "androidx.ui:ui-tooling:${Versions.compose}"
+
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
     const val foundation = "androidx.compose.foundation:foundation:${Versions.compose}"
-    const val layout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
-    const val material = "androidx.compose.material:material:${Versions.compose}"
+
+    // Material design icons
+    const val icon = "androidx.compose.material:material-icons-core:${Versions.compose}"
     const val materialIconsExtended =
         "androidx.compose.material:material-icons-extended:${Versions.compose}"
-    const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
+
+    // Integration with observables
+    const val rxjava = "androidx.compose.runtime:runtime-rxjava2:${Versions.compose}"
     const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
-    const val tooling = "androidx.ui:ui-tooling:${Versions.compose}"
+    const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
+
+    // Shape, colors
+    const val layout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
+    const val material = "androidx.compose.material:material:${Versions.compose}"
+
+    //Test
     const val test = "androidx.compose.test:test-core:${Versions.compose}"
     const val uiTest = "androidx.ui:ui-test:${Versions.compose}"
+
+    //stuff
+
+
 }
 
 object Material {
@@ -82,6 +101,11 @@ object Di {
     const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
     const val hiltViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.hiltx}"
     const val hiltAndroidX = "androidx.hilt:hilt-compiler:${Versions.hiltx}"
+}
+
+object PlayService {
+    const val core = "com.google.android.play:core-ktx:${Versions.playServices}"
+
 }
 
 

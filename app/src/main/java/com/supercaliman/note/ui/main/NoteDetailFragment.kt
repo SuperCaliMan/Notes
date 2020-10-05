@@ -3,6 +3,7 @@ package com.supercaliman.note.ui.main
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -14,7 +15,6 @@ import com.supercaliman.domain.UiNote
 import com.supercaliman.note.*
 import com.supercaliman.note.ui.main.ViewModels.DetailNoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_note_detail.*
 
 
 @AndroidEntryPoint
@@ -22,9 +22,12 @@ class NoteDetailFragment : Fragment() {
 
     //private val sharedViewModel : SharedViewModel by viewModels() //use this to shared view model in different fragment
     private lateinit var uiNote: UiNote
+    private lateinit var txtTitle: TextView
+    private lateinit var txtDetail: TextView
+    private lateinit var txtDate: TextView
+
+
     private val detailNoteViewModel: DetailNoteViewModel by viewModels()
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,8 +46,11 @@ class NoteDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        txt_title.isEnabled = false
-        txt_detail.isEnabled = false
+        txtTitle = view.findViewById<TextView>(R.id.txt_title);
+        txtDetail = view.findViewById<TextView>(R.id.txt_detail)
+        txtDate = view.findViewById<TextView>(R.id.txt_date)
+        txtTitle.isEnabled = false
+        txtDetail.isEnabled = false
 
         setFragmentResultListener("data") { _, bundle ->
             val res = bundle.getSerializable("data") as UiNote
@@ -82,7 +88,11 @@ class NoteDetailFragment : Fragment() {
                 setEditMode()
             }
             R.id.editSave -> {
-                detailNoteViewModel.update(txt_title.text.toString(),txt_detail.text.toString(),uiNote.uuid)
+                detailNoteViewModel.update(
+                    txtTitle.text.toString(),
+                    txtDetail.text.toString(),
+                    uiNote.uuid
+                )
                 hideKeyboard()
                 requireView().findNavController().popBackStack()
             }
@@ -96,20 +106,20 @@ class NoteDetailFragment : Fragment() {
     }
 
 
-    private fun renderUi(note:UiNote){
+    private fun renderUi(note: UiNote) {
         uiNote = note
-        txt_title.setText(note.title)
-        txt_date.text = note.date
-        txt_detail.setText(note.description)
+        txtTitle.text = note.title
+        txtDate.text = note.date
+        txtDetail.text = note.description
     }
 
 
-    private fun isInEditMode():Boolean = txt_title.isEnabled && txt_detail.isEnabled
+    private fun isInEditMode(): Boolean = txtTitle.isEnabled && txtDetail.isEnabled
 
-    private fun setEditMode(){
-        txt_detail.isEnabled = true
-        txt_title.isEnabled = true
-        txt_title.requestFocus()
+    private fun setEditMode() {
+        txtDetail.isEnabled = true
+        txtTitle.isEnabled = true
+        txtTitle.requestFocus()
         requireActivity().invalidateOptionsMenu()
         showKeyBoard()
     }

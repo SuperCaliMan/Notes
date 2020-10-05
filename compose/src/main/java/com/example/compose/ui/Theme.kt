@@ -1,20 +1,24 @@
 package com.example.compose.ui
 
-import androidx.compose.Composable
-import androidx.ui.material.MaterialTheme
-import androidx.ui.material.darkColorPalette
-import androidx.ui.material.lightColorPalette
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
-private val DarkColorPalette = darkColorPalette(
+
+private val DarkColorPalette = darkColors(
     primary = purple200,
     primaryVariant = purple700,
     secondary = teal200,
+    onBackground = Color.Black
 )
 
-private val LightColorPalette = lightColorPalette(
+private val LightColorPalette = lightColors(
     primary = purple500,
     primaryVariant = purple700,
-    secondary = teal200
+    secondary = teal200,
+
 
     /* Other default colors to override
     background = Color.White,
@@ -27,7 +31,7 @@ private val LightColorPalette = lightColorPalette(
 )
 
 @Composable
-fun NoteTheme(darkTheme: Boolean = true, content: @Composable() () -> Unit) {
+fun NoteTheme(darkTheme: Boolean = false, content: @Composable() () -> Unit) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {

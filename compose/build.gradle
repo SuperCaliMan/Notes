@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -29,14 +32,16 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        useIR = true
     }
     buildFeatures {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion "${compose_version}"
-        kotlinCompilerVersion '1.3.70-dev-withExperimentalGoogleExtensions-20200424'
+        kotlinCompilerExtensionVersion Versions.compose
+        kotlinCompilerVersion Versions.kotlin
     }
+
 }
 
 dependencies {
@@ -45,10 +50,45 @@ dependencies {
     implementation AndroidX.coreKtx
     implementation AndroidX.appcompat
     implementation Material.core
-    implementation "androidx.ui:ui-layout:$compose_version"
-    implementation "androidx.ui:ui-material:$compose_version"
-    implementation "androidx.ui:ui-tooling:$compose_version"
+
+    //compose
+    implementation Compose.core
+    implementation Compose.tooling
+    implementation Compose.foundation
+    implementation Compose.icon
+    implementation Compose.materialIconsExtended
+    implementation Compose.runtimeLivedata
+    implementation Compose.runtime
+    implementation Compose.rxjava
+    implementation Compose.layout
+    implementation Compose.material
+
+
+    //Hilt
+    implementation Di.hiltAndroid
+    kapt Di.hiltCompiler
+    implementation Di.hiltViewModel
+    kapt Di.hiltAndroidX
+
+
+
+    //AndroidX
+
+    implementation AndroidX.fragment
+    implementation AndroidX.fragmentKtx
+    implementation AndroidX.coreKtx
+
+    //livedata
+    implementation Lifecycle.extensions
+    implementation Lifecycle.livedata
+    implementation Lifecycle.viewmodel
+
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+
+    implementation project(":domain")
+    implementation project(":data")
 }

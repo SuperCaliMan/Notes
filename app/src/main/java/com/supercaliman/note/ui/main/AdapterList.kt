@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.supercaliman.domain.UiNote
-import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
 
-class AdapterList(val listener: BindingRecycleView<UiNote>) :
+class AdapterList() :
     RecyclerView.Adapter<AdapterList.ItemViewHolder>() {
 
     var data: List<UiNote> = emptyList()
@@ -32,20 +31,21 @@ class AdapterList(val listener: BindingRecycleView<UiNote>) :
     }
 
 
+    inner class ItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
+        RecyclerView.ViewHolder(inflater.inflate(R.layout.card_list, parent, false)) {
 
-    inner class ItemViewHolder(inflater: LayoutInflater, parent: ViewGroup):
-        RecyclerView.ViewHolder(inflater.inflate(R.layout.card_list,parent,false)){
+        private val colors = itemView.context.resources.getIntArray(R.array.colors_array)
+
 
         private var card: View = itemView.findViewById(R.id.view2)
         private var mTitleView: TextView = itemView.findViewById(R.id.cardTitle)
         private var mDataTextView: TextView = itemView.findViewById(R.id.cardDate)
 
-        private val colors = itemView.context.resources.getIntArray(R.array.colors_array)
 
         init {
             itemView.setOnClickListener {
-                if(adapterPosition != RecyclerView.NO_POSITION) {
-                    listener.getObjClicked(data[adapterPosition])
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    //listener.getObjClicked(data[adapterPosition])
                 }
             }
         }
@@ -54,8 +54,6 @@ class AdapterList(val listener: BindingRecycleView<UiNote>) :
             mTitleView.text = data.title
             mDataTextView.text = data.date
             card.setBackgroundColor(colors[data.title.length%(colors.size-1)])
-
-
         }
     }
 }

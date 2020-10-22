@@ -9,15 +9,23 @@ import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
     primary = purple200,
-    primaryVariant = purple700,
     secondary = teal200,
-    onBackground = Color.Black
+    onSecondary = Color.White,
+    background = Color.Black,
+    onBackground = Color.White,
+    surface = Color.Black,
+    onSurface = Color.White,
+    error = red300,
+    onError = red300
 )
 
 private val LightColorPalette = lightColors(
     primary = purple500,
     primaryVariant = purple700,
     secondary = teal200,
+    error = red300,
+    onError = red300,
+    onSecondary = Color.White
 
 
     /* Other default colors to override
@@ -40,7 +48,7 @@ fun NoteTheme(darkTheme: Boolean = false, content: @Composable() () -> Unit) {
 
     MaterialTheme(
         colors = colors,
-        typography = typography,
+        typography = customTypography,
         shapes = shapes,
         content = content
     )

@@ -26,9 +26,10 @@ buildscript {
         targetSdkVersion = 29
 
         //testing libraries
-        espresso_core = "3.2.0"
-        junit_version = "4.13"
+        espresso_core = "3.3.0"
+        junit_version = "4.13.1"
         junit_android_version ="1.1.1"
+        kotlin_version = '1.4.10'
     }
 
 

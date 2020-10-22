@@ -27,3 +27,26 @@ val typography = Typography(
     )
     */
 )
+
+val customTypography = Typography(
+    subtitle1 = TextStyle(
+        fontFamily = Euclid,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp
+    ),
+    body1 = TextStyle(
+        fontFamily = Euclid,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    ),
+    h6 = TextStyle(
+        fontFamily = Euclid,
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp
+    ),
+    h5 = TextStyle(
+        fontFamily = Euclid,
+        fontWeight = FontWeight.Light,
+        fontSize = 20.sp
+    )
+)

@@ -5,7 +5,8 @@
     <application>
         <activity
             android:name=".MainComposeActivity"
-            android:label="@string/title_activity_main_compose"></activity>
+            android:label="@string/title_activity_main_compose"
+            android:theme="@style/Theme.Note" />
     </application>
 
 </manifest>

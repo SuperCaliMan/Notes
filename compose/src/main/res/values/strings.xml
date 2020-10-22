@@ -1,3 +1,9 @@
 <resources>
-    <string name="title_activity_main_compose">My Compose App</string>
+    <string name="title_activity_main_compose">Notes</string>
+    <string name="no_data">There is no note, press \"+\" button to add new note</string>
+    <string name="warning">Oh no!</string>
+    <string name="close">Close</string>
+    <string name="new_note">Nuova nota</string>
+    <string name="insert_title">Insert title</string>
+    <string name="insert_description">Insert description</string>
 </resources>

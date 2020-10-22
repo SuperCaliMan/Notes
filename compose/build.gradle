@@ -66,14 +66,23 @@ dependencies {
 
     //Hilt
     implementation Di.hiltAndroid
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt Di.hiltCompiler
     implementation Di.hiltViewModel
     kapt Di.hiltAndroidX
 
+    //Navigation
+    //navigation
+    implementation Navigation.fragment
+    implementation Navigation.uiKtx
+
+    //Debugging
+    implementation Debug.timber
+
 
 
     //AndroidX
-
     implementation AndroidX.fragment
     implementation AndroidX.fragmentKtx
     implementation AndroidX.coreKtx
@@ -83,10 +92,11 @@ dependencies {
     implementation Lifecycle.livedata
     implementation Lifecycle.viewmodel
 
+    //lottie
+    implementation Animation.lottie
 
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation 'junit:junit:'+rootProject.junit_version
+    androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version
 
 
     implementation project(":domain")

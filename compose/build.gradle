@@ -66,8 +66,6 @@ dependencies {
 
     //Hilt
     implementation Di.hiltAndroid
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt Di.hiltCompiler
     implementation Di.hiltViewModel
     kapt Di.hiltAndroidX

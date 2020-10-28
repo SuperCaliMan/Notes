@@ -8,7 +8,6 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.ex.detailScreen
 import com.example.compose.NoteViewModel
 import com.example.compose.ui.NoteTheme
 import com.example.compose.ui.isDarkTheme

@@ -48,10 +48,12 @@ dependencies {
     //Firebase
     implementation Firebase.firestoreKtx
     implementation Firebase.firebaseAnalytics
+    implementation Firebase.config
 
     //corutine
     implementation Coroutines.android
     implementation Coroutines.playServices
+
 
 
 

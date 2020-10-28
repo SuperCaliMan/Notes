@@ -1,4 +1,4 @@
-package com.ex
+package com.example.compose.detail
 
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.ScrollableColumn
@@ -23,7 +23,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.compose.NoteViewModel
 import com.example.compose.R
-import com.example.compose.detail.StateScreen
 import com.example.compose.ui.Dimension
 import com.example.compose.ui.progressBar
 import com.example.compose.ui.renderError
@@ -99,10 +98,6 @@ fun bodyDetail(isReadable: Boolean, note: UiNote?, onSaveListener: OnSaveListene
                 isErrorValue = isInvalid,
                 modifier = Modifier.fillMaxWidth()
                     .padding(top = Dimension.defaultMargin),
-                //.preferredHeight(100.dp)
-                //.fillMaxHeight(),
-                //backgroundColor = MaterialTheme.colors.background,
-                //activeColor = MaterialTheme.colors.background,
                 keyboardType = KeyboardType.Text,
             )
             OutlinedTextField(value = description.value, onValueChange = {
@@ -113,8 +108,6 @@ fun bodyDetail(isReadable: Boolean, note: UiNote?, onSaveListener: OnSaveListene
                 modifier = Modifier.fillMaxWidth()
                     .padding(top = Dimension.defaultMargin, bottom = Dimension.defaultMargin)
                     .fillMaxHeight(),
-                //backgroundColor = MaterialTheme.colors.background,
-                //activeColor = MaterialTheme.colors.background,
                 keyboardType = KeyboardType.Text
             )
         } else {
@@ -153,8 +146,7 @@ fun appBar(
 ) {
     TopAppBar(
         backgroundColor = MaterialTheme.colors.surface,
-        elevation = 6.dp,
-        //modifier = Modifier.clip(shape = RoundedCornerShape(bottomRightPercent = 50,bottomLeftPercent = 50)), //clip edge app bar
+        elevation = 0.dp,
         navigationIcon = {
             Icon(Icons.Default.ArrowBack, modifier =
             Modifier
@@ -181,37 +173,38 @@ fun appBar(
         actions = {
             when (stateUi) {
                 StateScreen.INSERT -> {
-                    Icon(Icons.Default.Save, modifier = Modifier
-                        .padding(end = Dimension.defaultMargin)
-                        .clickable {
-                            onSave()
-                        })
+                    IconButton(
+                        onClick = { onSave() },
+                        icon = { Icon(Icons.Default.Save) }
+                    )
                 }
                 StateScreen.READ -> {
-                    Icon(Icons.Default.Edit, modifier = Modifier
-                        .padding(end = Dimension.defaultMargin)
-                        .clickable {
+                    IconButton(
+                        onClick = {
                             viewModel.setEditMode()
-                        })
-                    Icon(Icons.Default.Delete, modifier = Modifier
-                        .padding(end = Dimension.defaultMargin)
-                        .clickable {
+                        },
+                        icon = { Icon(Icons.Default.Edit) }
+                    )
+                    IconButton(
+                        onClick = {
                             viewModel.delete(note?.uuid)
                             backStack()
-                        })
+                        },
+                        icon = { Icon(Icons.Default.Delete) }
+                    )
                 }
                 StateScreen.EDIT -> {
-                    Icon(Icons.Default.Undo, modifier = Modifier
-                        .padding(end = Dimension.defaultMargin)
-                        .clickable {
-                            viewModel.prevMode()
-                        })
-                    Icon(Icons.Default.Save, modifier = Modifier
-                        .padding(end = Dimension.defaultMargin)
-                        .clickable {
+                    IconButton(
+                        onClick = { viewModel.prevMode() },
+                        icon = { Icon(Icons.Default.Undo) }
+                    )
+                    IconButton(
+                        onClick = {
                             viewModel.updateNote()
                             backStack()
-                        })
+                        },
+                        icon = { Icon(Icons.Default.Save) }
+                    )
                 }
             }
         }

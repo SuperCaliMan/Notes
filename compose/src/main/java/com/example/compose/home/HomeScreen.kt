@@ -1,6 +1,7 @@
 package com.example.compose.home
 
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.RowScope.align
@@ -8,27 +9,36 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Bedtime
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.outlined.Bedtime
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.airbnb.lottie.LottieDrawable
 import com.example.compose.NoteViewModel
 import com.example.compose.R
+import com.example.compose.ui.*
 import com.example.compose.ui.Dimension
-import com.example.compose.ui.colorsArray
-import com.example.compose.ui.progressBar
-import com.example.compose.ui.renderError
 import com.supercaliman.domain.UiNote
 
 @Composable
-fun homeScreen(viewModel: NoteViewModel, onItemClick: (UiNote) -> Unit, fabAction: () -> Unit) {
+fun homeScreen(
+    viewModel: NoteViewModel,
+    newFeature: Boolean,
+    onItemClick: (UiNote) -> Unit,
+    fabAction: () -> Unit
+) {
     val data: List<UiNote> by viewModel.uiLiveData.observeAsState(listOf())
     val errorData: Exception? by viewModel.errorStatus.observeAsState()
     val loading: Boolean by viewModel.loadingStatus.observeAsState(true)
@@ -37,16 +47,19 @@ fun homeScreen(viewModel: NoteViewModel, onItemClick: (UiNote) -> Unit, fabActio
         renderError(it)
     }
 
+
     Scaffold(
-        topBar = { appBarHome() },
+        topBar = { appBarHome(newFeature) },
         floatingActionButton = {
             if (!loading) {
-                FloatingActionButton(
-                    backgroundColor = MaterialTheme.colors.secondary,
+                ExtendedFloatingActionButton(
                     onClick = {
                         fabAction()
                     },
-                    icon = { Icon(asset = Icons.Default.Add) }
+                    icon = { Icon(asset = Icons.Outlined.Edit) },
+                    text = { Text(text = "Compose") },
+                    backgroundColor = MaterialTheme.colors.surface,
+                    contentColor = MaterialTheme.colors.secondary
                 )
             }
         },
@@ -80,11 +93,14 @@ private fun noteList(
             lottieAnimation(
                 modifier = Modifier.fillMaxWidth()
             )
-            Text(
-                stringResource(R.string.no_data),
-                modifier = Modifier.padding(bottom = Dimension.largeMargin)
-                    .align(Alignment.CenterVertically)
-            )
+            ProvideEmphasis(EmphasisAmbient.current.medium) {
+                Text(
+                    stringResource(R.string.no_data),
+                    modifier = Modifier.padding(bottom = Dimension.largeMargin)
+                        .align(Alignment.CenterVertically),
+                    style = MaterialTheme.typography.body1
+                )
+            }
         }
 
     } else {
@@ -118,14 +134,46 @@ private fun lottieAnimation(modifier: Modifier) {
 }
 
 @Composable
-private fun appBarHome() {
+private fun appBarHome(newFeature: Boolean) {
+    val state = remember { mutableStateOf(false) }
+
+    if (newFeature && state.value) {
+        showMessageDialog("Yep", "it's a new Feature 🎉")
+    }
+
     TopAppBar(
         backgroundColor = MaterialTheme.colors.surface,
         elevation = 0.dp,
+        navigationIcon = {
+            if (newFeature) {
+                IconButton(
+                    onClick = {
+                        state.value = true
+                    },
+                    icon = { Icon(Icons.Default.Menu) }
+                )
+            }
+        },
         title = {
             Text(
                 stringResource(R.string.title_activity_main_compose),
                 style = MaterialTheme.typography.h5
+            )
+        },
+        actions = {
+            val isDarkTheme = isDarkTheme(ContextAmbient.current)
+            IconButton(
+                onClick = {
+                    if (isDarkTheme) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    } else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                },
+                icon = {
+                    if (isDarkTheme) {
+                        Icon(Icons.Default.Bedtime)
+                    } else Icon(Icons.Outlined.Bedtime)
+
+                }
             )
         }
     )

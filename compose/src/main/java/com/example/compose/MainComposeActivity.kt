@@ -8,8 +8,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
+
 }
+
+
 

@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.compose.NoteViewModel
 import com.example.compose.R
+import com.example.compose.RemoteParamsVM
 import com.example.compose.detail.DetailFragment
 import com.example.compose.detail.StateScreen
 import com.example.compose.ui.NoteTheme
@@ -29,8 +30,9 @@ class HomeFragment : Fragment() {
             setContent {
                 NoteTheme(isDarkTheme(this@HomeFragment.requireContext())) {
                     val viewModel: NoteViewModel by viewModels()
+                    val remoteParamsVM: RemoteParamsVM by viewModels()
                     viewModel.getNotesList()
-                    myApp(viewModel)
+                    myApp(viewModel, remoteParamsVM)
                 }
             }
         }
@@ -38,9 +40,10 @@ class HomeFragment : Fragment() {
 
 
     @Composable
-    fun myApp(viewModel: NoteViewModel) {
+    fun myApp(viewModel: NoteViewModel, remoteParamsVM: RemoteParamsVM) {
         homeScreen(
             viewModel = viewModel,
+            newFeature = remoteParamsVM.getNewFeature(),
             onItemClick = {
                 val bundle = bundleOf(DetailFragment.PANEL_MODE to StateScreen.READ)
                 bundle.putSerializable(DetailFragment.NOTE, it)

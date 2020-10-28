@@ -66,7 +66,36 @@ fun showErrorDialog(msg: String) {
                 }
             })
     }
+}
 
+@Composable
+fun showMessageDialog(title: String, msg: String) {
+    val showingDialog = remember { mutableStateOf(true) }
+    if (showingDialog.value) {
+        AlertDialog(
+            onDismissRequest = {
+                showingDialog.value = false
+            },
+            text = {
+                Text(text = msg, style = MaterialTheme.typography.subtitle1)
+            },
+            title = {
+                Text(text = title, style = MaterialTheme.typography.h5)
+            },
+            buttons = {
+                Row(
+                    horizontalArrangement = Arrangement.End,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = stringResource(R.string.close),
+                        modifier = Modifier.padding(Dimension.defaultMargin).clickable(onClick = {
+                            showingDialog.value = false
+                        })
+                    )
+                }
+            })
+    }
 }
 
 

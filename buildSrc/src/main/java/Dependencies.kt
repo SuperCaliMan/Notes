@@ -9,7 +9,7 @@ object Versions {
     const val legacySupport = "1.0.0"
     const val navigation = "2.3.0"
     const val timber = "4.7.1"
-    const val firestore = "21.4.3"
+    const val firestore = "21.4.0"
     const val firebase_analytics = "17.4.3"
     const val lottie = "3.4.1"
     const val corutines = "1.3.9"
@@ -20,6 +20,9 @@ object Versions {
     const val junitAndroid = "1.1.1"
     const val playServices = "1.8.1"
     const val compose = "1.0.0-alpha03"
+    const val firebase_config = "19.1.0"
+    const val gson = "2.8.6"
+    const val moshi = "1.11.0"
 
 }
 
@@ -101,11 +104,17 @@ object Di {
     const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
     const val hiltViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.hiltx}"
     const val hiltAndroidX = "androidx.hilt:hilt-compiler:${Versions.hiltx}"
+    const val hiltFragment = "androidx.fragment:fragment-ktx:${Versions.hiltx}"
 }
 
 object PlayService {
     const val core = "com.google.android.play:core-ktx:${Versions.playServices}"
 
+}
+
+object Serialization {
+    const val gson = "  implementation 'com.google.code.gson:gson:${Versions.gson}'"
+    const val moshi = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
 }
 
 
@@ -124,6 +133,7 @@ object Firebase {
     const val firestoreKtx = "com.google.firebase:firebase-firestore-ktx:${Versions.firestore}"
     const val firebaseAnalytics =
         "com.google.firebase:firebase-analytics:${Versions.firebase_analytics}"
+    const val config = "com.google.firebase:firebase-config-ktx:${Versions.firebase_config}"
 }
 
 

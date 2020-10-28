@@ -18,7 +18,7 @@ class NoteViewModel @ViewModelInject constructor(
     private var getNoteUseCase: GetNoteTaskUseCase,
     private var createNoteUseCase: CreateNoteTaskUseCase,
     private var deleteNoteTaskUseCase: DeleteNoteTaskUseCase,
-    private var updateNoteTaskUseCase: UpdateNoteTaskUseCase
+    private var updateNoteTaskUseCase: UpdateNoteTaskUseCase,
 ) : ViewModel() {
     private val mapper = UiModelMapper()
 
@@ -125,6 +125,7 @@ class NoteViewModel @ViewModelInject constructor(
     fun setEditMode() = _stateScreen.postValue(StateScreen.EDIT)
 
     fun prevMode() = _stateScreen.postValue(StateScreen.READ)
+
 
     fun delete(uuid: String?) {
 

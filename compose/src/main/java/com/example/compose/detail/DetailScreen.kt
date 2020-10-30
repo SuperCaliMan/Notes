@@ -1,9 +1,7 @@
 package com.example.compose.detail
 
-import androidx.compose.foundation.Icon
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,6 +28,11 @@ import com.supercaliman.domain.UiNote
 
 interface OnSaveListener {
     fun onSave(title: String, description: String)
+}
+
+object Params {
+    const val PANEL_MODE = "500"
+    const val NOTE = "501"
 }
 
 @Composable
@@ -112,7 +115,7 @@ fun bodyDetail(isReadable: Boolean, note: UiNote?, onSaveListener: OnSaveListene
             )
         } else {
             note?.let {
-                ProvideEmphasis(emphasis = EmphasisAmbient.current.medium) {
+                ProvideEmphasis(emphasis = AmbientEmphasisLevels.current.medium) {
                     Text(
                         text = it.date, style = MaterialTheme.typography.subtitle2,
                         modifier = Modifier.padding(top = Dimension.largeMargin)
@@ -148,12 +151,12 @@ fun appBar(
         backgroundColor = MaterialTheme.colors.surface,
         elevation = 0.dp,
         navigationIcon = {
-            Icon(Icons.Default.ArrowBack, modifier =
-            Modifier
-                .padding(start = Dimension.defaultMargin)
-                .clickable {
+            IconButton(
+                onClick = {
                     backStack()
-                })
+                },
+                icon = { Icon(Icons.Default.ArrowBack) }
+            )
         },
         title = {
             when (stateUi) {

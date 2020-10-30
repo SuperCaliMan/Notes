@@ -21,7 +21,7 @@ buildscript {
 
 
         compileSdkVersion = 29
-        buildToolsVersion = "30.0.0"
+        buildToolsVersion = "30.0.2"
         minSdkVersion = 23
         targetSdkVersion = 29
 
@@ -29,19 +29,16 @@ buildscript {
         espresso_core = "3.3.0"
         junit_version = "4.13.1"
         junit_android_version ="1.1.1"
-        kotlin_version = '1.4.10'
     }
-
-
     repositories {
         google()
         jcenter()
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.0-alpha12'
+        classpath 'com.android.tools.build:gradle:4.2.0-alpha14'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         classpath 'com.google.gms:google-services:4.3.4'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10'
         classpath "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
 
     }
@@ -51,7 +48,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
 }
 

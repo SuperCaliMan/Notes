@@ -23,6 +23,7 @@ class NoteViewModel @ViewModelInject constructor(
     private val mapper = UiModelMapper()
 
     private lateinit var noteDetail: Note
+    var paramsNote: UiNote? = null
 
     private val _errorLiveData = SingleLiveEvent<Exception>()
     val errorStatus: LiveData<Exception>
@@ -41,10 +42,13 @@ class NoteViewModel @ViewModelInject constructor(
         noteDetail = Note(uuid, title = title, description, date)
     }
 
-
     private val _stateScreen = MutableLiveData<StateScreen>()
     val stateScreen: LiveData<StateScreen>
         get() = _stateScreen
+
+    init {
+        getNotesList()
+    }
 
     fun saveNote() {
         val observable = createNoteUseCase.observe()
@@ -91,8 +95,8 @@ class NoteViewModel @ViewModelInject constructor(
 
 
         viewModelScope.launch {
-            val date = Calendar.getInstance().time
-            val note = Note(noteDetail.uuid, noteDetail.title, noteDetail.description, date)
+            noteDetail.date = Calendar.getInstance().time
+            val note = noteDetail
             noteDetail.uuid?.let { updateNoteTaskUseCase.execute(note = note) }
         }
     }
@@ -115,6 +119,7 @@ class NoteViewModel @ViewModelInject constructor(
             if (it is Result.Success) {
                 _uiLiveData.postValue(
                     it.data.sortedBy { data -> data.date.time }.map { note -> mapper.map(note) }
+                        .reversed()
                 )
             }
         }
@@ -124,7 +129,7 @@ class NoteViewModel @ViewModelInject constructor(
 
     fun setEditMode() = _stateScreen.postValue(StateScreen.EDIT)
 
-    fun prevMode() = _stateScreen.postValue(StateScreen.READ)
+    fun prevMode() = _stateScreen.postValue(StateScreen.INSERT)
 
 
     fun delete(uuid: String?) {

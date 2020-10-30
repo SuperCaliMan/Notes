@@ -6,4 +6,5 @@
     <string name="new_note">Nuova nota</string>
     <string name="insert_title">Insert title</string>
     <string name="insert_description">Insert description</string>
+    <string name="animation_screen">Animation</string>
 </resources>

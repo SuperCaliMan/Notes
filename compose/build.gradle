@@ -42,6 +42,14 @@ android {
         kotlinCompilerVersion Versions.kotlin
     }
 
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            jvmTarget = "1.8"
+            freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
+        }
+    }
+
+
 }
 
 dependencies {
@@ -52,16 +60,11 @@ dependencies {
     implementation Material.core
 
     //compose
-    implementation Compose.core
     implementation Compose.tooling
-    implementation Compose.foundation
-    implementation Compose.icon
     implementation Compose.materialIconsExtended
     implementation Compose.runtimeLivedata
-    implementation Compose.runtime
-    implementation Compose.rxjava
-    implementation Compose.layout
     implementation Compose.material
+    implementation Compose.navigation
 
 
     //Hilt
@@ -70,24 +73,9 @@ dependencies {
     implementation Di.hiltViewModel
     kapt Di.hiltAndroidX
 
-    //Navigation
-    //navigation
-    implementation Navigation.fragment
-    implementation Navigation.uiKtx
-
     //Debugging
     implementation Debug.timber
 
-
-
-    //AndroidX
-    implementation AndroidX.fragment
-    implementation AndroidX.fragmentKtx
-    implementation AndroidX.coreKtx
-
-    //livedata
-    implementation Lifecycle.extensions
-    implementation Lifecycle.livedata
     implementation Lifecycle.viewmodel
 
     //lottie

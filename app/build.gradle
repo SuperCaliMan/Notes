@@ -44,37 +44,19 @@ dependencies {
     implementation Kotlin.stdlib
     implementation AndroidX.coreKtx
     implementation AndroidX.appcompat
-    implementation AndroidX.constraintLayout
-    implementation AndroidX.recyclerView
-    implementation Lifecycle.extensions
-    implementation Lifecycle.livedata
     implementation Material.core
     implementation AndroidX.legacySupport
     androidTestImplementation "androidx.test.ext:junit:$junit_android_version"
     androidTestImplementation "androidx.test:runner:1.3.0"
 
 
-    //fragment androidx
-    implementation AndroidX.fragment
-    implementation AndroidX.fragmentKtx
-
-    //navigation
-    implementation Navigation.fragment
-    implementation Navigation.uiKtx
-
-    //Debugging
     implementation Debug.timber
-
-    //lottie
-    implementation Animation.lottie
 
     //Hilt DI
     implementation Di.hiltAndroid
     kapt Di.hiltCompiler
     implementation Di.hiltViewModel
     kapt Di.hiltAndroidX
-
-    implementation PlayService.core
 
     implementation project(":compose")
     implementation project(":domain")

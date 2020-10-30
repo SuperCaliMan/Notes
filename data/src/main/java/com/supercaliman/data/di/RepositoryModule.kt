@@ -1,7 +1,7 @@
 package com.supercaliman.data.di
 
 
-import com.google.gson.GsonBuilder
+import com.squareup.moshi.Moshi
 import com.supercaliman.data.FireStoreAPI
 import com.supercaliman.data.FireStoreRepoImp
 import com.supercaliman.data.RemoteConfigImp
@@ -27,9 +27,6 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun getRemoteConfig(): RemoteConfigApp {
-        val gsn = GsonBuilder().create()
-        return RemoteConfigImp(
-            gsn
-        )
+        return RemoteConfigImp(Moshi.Builder().build())
     }
 }

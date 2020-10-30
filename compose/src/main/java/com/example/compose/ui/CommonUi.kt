@@ -5,15 +5,16 @@ import android.content.res.Configuration
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
 import com.example.compose.R
 
 
@@ -69,7 +70,7 @@ fun showErrorDialog(msg: String) {
 }
 
 @Composable
-fun showMessageDialog(title: String, msg: String) {
+fun showMessageDialog(title: String, msg: String, onClose: () -> Unit) {
     val showingDialog = remember { mutableStateOf(true) }
     if (showingDialog.value) {
         AlertDialog(
@@ -91,10 +92,32 @@ fun showMessageDialog(title: String, msg: String) {
                         text = stringResource(R.string.close),
                         modifier = Modifier.padding(Dimension.defaultMargin).clickable(onClick = {
                             showingDialog.value = false
+                            onClose()
                         })
                     )
                 }
             })
+    }
+}
+
+@Composable
+fun AppDrawer(
+    navController: NavController,
+    closeDrawer: () -> Unit
+) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        Spacer(Modifier.preferredHeight(24.dp))
+        Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
+        TextButton(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = {
+                navController.navigate(Routing.ANIMATION)
+                closeDrawer()
+            }
+        ) {
+            Text(stringResource(R.string.animation_screen))
+        }
+
     }
 }
 

@@ -2,15 +2,15 @@ package com.example.compose.home
 
 
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.RowScope.align
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bedtime
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Bedtime
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.runtime.Composable
@@ -25,9 +25,12 @@ import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
 import com.airbnb.lottie.LottieDrawable
 import com.example.compose.NoteViewModel
 import com.example.compose.R
+import com.example.compose.detail.StateScreen
 import com.example.compose.ui.*
 import com.example.compose.ui.Dimension
 import com.supercaliman.domain.UiNote
@@ -35,13 +38,13 @@ import com.supercaliman.domain.UiNote
 @Composable
 fun homeScreen(
     viewModel: NoteViewModel,
-    newFeature: Boolean,
-    onItemClick: (UiNote) -> Unit,
-    fabAction: () -> Unit
+    navController: NavController,
+    // scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
     val data: List<UiNote> by viewModel.uiLiveData.observeAsState(listOf())
     val errorData: Exception? by viewModel.errorStatus.observeAsState()
     val loading: Boolean by viewModel.loadingStatus.observeAsState(true)
+    viewModel.getNotesList()
 
     errorData?.let {
         renderError(it)
@@ -49,12 +52,16 @@ fun homeScreen(
 
 
     Scaffold(
-        topBar = { appBarHome(newFeature) },
+        //scaffoldState = scaffoldState,
+        topBar = {
+            appBarHome()
+        },
         floatingActionButton = {
             if (!loading) {
                 ExtendedFloatingActionButton(
                     onClick = {
-                        fabAction()
+                        viewModel.paramsNote = null
+                        navController.navigate(Routing.DETAIL_SCREEN + "/${StateScreen.INSERT}")
                     },
                     icon = { Icon(asset = Icons.Outlined.Edit) },
                     text = { Text(text = "Compose") },
@@ -69,7 +76,10 @@ fun homeScreen(
             } else {
                 noteList(
                     items = data,
-                    onItemClick = onItemClick
+                    onItemClick = {
+                        viewModel.paramsNote = it
+                        navController.navigate(Routing.DETAIL_SCREEN + "/${StateScreen.READ}")
+                    }
                 )
             }
         }
@@ -93,11 +103,11 @@ private fun noteList(
             lottieAnimation(
                 modifier = Modifier.fillMaxWidth()
             )
-            ProvideEmphasis(EmphasisAmbient.current.medium) {
+            ProvideEmphasis(AmbientEmphasisLevels.current.medium) {
                 Text(
                     stringResource(R.string.no_data),
                     modifier = Modifier.padding(bottom = Dimension.largeMargin)
-                        .align(Alignment.CenterVertically),
+                        .align(Alignment.CenterHorizontally),
                     style = MaterialTheme.typography.body1
                 )
             }
@@ -134,26 +144,16 @@ private fun lottieAnimation(modifier: Modifier) {
 }
 
 @Composable
-private fun appBarHome(newFeature: Boolean) {
+private fun appBarHome() {
     val state = remember { mutableStateOf(false) }
 
-    if (newFeature && state.value) {
-        showMessageDialog("Yep", "it's a new Feature 🎉")
+    if (state.value) {
+        showMessageDialog("Yep", "it's a new Feature 🎉", onClose = { state.value = false })
     }
 
     TopAppBar(
         backgroundColor = MaterialTheme.colors.surface,
         elevation = 0.dp,
-        navigationIcon = {
-            if (newFeature) {
-                IconButton(
-                    onClick = {
-                        state.value = true
-                    },
-                    icon = { Icon(Icons.Default.Menu) }
-                )
-            }
-        },
         title = {
             Text(
                 stringResource(R.string.title_activity_main_compose),
@@ -197,8 +197,9 @@ private fun noteCard(note: UiNote, click: (UiNote) -> Unit) {
         ) {
         Row {
             Box(
-                backgroundColor = colorsArray[note.title.length % colorsArray.size],
-                modifier = Modifier.preferredSize(15.dp, 100.dp),
+                modifier = Modifier
+                    .preferredSize(15.dp, 100.dp)
+                    .background(colorsArray[note.title.length % colorsArray.size]),
             )
             Column(
                 modifier = Modifier.padding(
@@ -208,7 +209,7 @@ private fun noteCard(note: UiNote, click: (UiNote) -> Unit) {
 
             ) {
                 Text(note.title, style = MaterialTheme.typography.h6)
-                ProvideEmphasis(EmphasisAmbient.current.medium) {
+                ProvideEmphasis(AmbientEmphasisLevels.current.medium) {
                     Text(
                         note.date,
                         modifier = Modifier.padding(

@@ -2,11 +2,12 @@ package com.supercaliman.data
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
-import com.google.gson.Gson
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 import com.supercaliman.domain.RemoteConfigApp
 import javax.inject.Inject
 
-class RemoteConfigImp @Inject constructor(private val gson: Gson) : RemoteConfigApp {
+class RemoteConfigImp @Inject constructor(private val moshi: Moshi) : RemoteConfigApp {
 
     override fun isNewFeature(): Boolean =
         read<Boolean>(ConfigParam.NEW_FEATURE, Boolean::class.java) ?: NEW_FEATURE
@@ -25,7 +26,7 @@ class RemoteConfigImp @Inject constructor(private val gson: Gson) : RemoteConfig
     }
 
 
-    private fun <T> read(param: ConfigParam, returnType: Class<T>): T? {
+    private inline fun <reified T> read(param: ConfigParam, returnType: Class<T>): T? {
         val value: Any? = when (returnType) {
             String::class.java -> config.getString(param.key)
             Boolean::class.java -> config.getBoolean(param.key)
@@ -35,19 +36,13 @@ class RemoteConfigImp @Inject constructor(private val gson: Gson) : RemoteConfig
             Float::class.java -> config.getDouble(param.key).toFloat()
             else -> {
                 val json = config.getString(param.key)
-                json.takeIf { it.isNotBlank() }?.let { gson.jsonToObjectOrNull(json, returnType) }
+                val adapter: JsonAdapter<T> = moshi.adapter(T::class.java)
+                json.takeIf { it.isNotBlank() }?.let { adapter.nullSafe().fromJson(json) }
             }
         }
         @Suppress("UNCHECKED_CAST")
         return (value as? T)
     }
-
-    private fun <T> Gson.jsonToObjectOrNull(json: String?, clazz: Class<T>): T? =
-        try {
-            fromJson(json, clazz)
-        } catch (ignored: Exception) {
-            null
-        }
 
     private companion object {
         /**

@@ -19,7 +19,7 @@ object Versions {
     const val junit = "4.13"
     const val junitAndroid = "1.1.1"
     const val playServices = "1.8.1"
-    const val compose = "1.0.0-alpha03"
+    const val compose = "1.0.0-alpha06"
     const val firebase_config = "19.1.0"
     const val gson = "2.8.6"
     const val moshi = "1.11.0"
@@ -60,6 +60,10 @@ object Compose {
     // Tooling support (Previews, etc.)
     const val tooling = "androidx.ui:ui-tooling:${Versions.compose}"
 
+    //Compiler
+    const val compiler = "androidx.compose.compiler:compiler:${Versions.compose}"
+
+
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
     const val foundation = "androidx.compose.foundation:foundation:${Versions.compose}"
 
@@ -80,6 +84,10 @@ object Compose {
     //Test
     const val test = "androidx.compose.test:test-core:${Versions.compose}"
     const val uiTest = "androidx.ui:ui-test:${Versions.compose}"
+
+    //Navigation
+    private const val nav_compose_version = "1.0.0-alpha01"
+    const val navigation = "androidx.navigation:navigation-compose:$nav_compose_version"
 
     //stuff
 

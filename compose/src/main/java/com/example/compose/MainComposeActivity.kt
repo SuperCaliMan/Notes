@@ -3,27 +3,24 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.platform.setContent
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.detail.Params
 import com.example.compose.detail.StateScreen
 import com.example.compose.detail.detailScreen
 import com.example.compose.home.homeScreen
+import com.example.compose.home.newHomeScreen
 import com.example.compose.ui.NoteTheme
-import com.example.compose.ui.Routing.Companion.DETAIL_SCREEN
-import com.example.compose.ui.Routing.Companion.HOME_SCREEN
+import com.example.compose.ui.Screen
 import com.example.compose.ui.isDarkTheme
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 
 @AndroidEntryPoint
 class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
 
-    val viewModel: NoteViewModel by viewModels()
+    private val viewModel: NoteViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,20 +28,19 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
             NoteTheme(isDarkTheme(this)) {
                 val navController = rememberNavController()
                 val remoteParamsVM: RemoteParamsVM by viewModels()
-                Timber.d("It's a new Feature: ${remoteParamsVM.getNewFeature()}")
-                NavHost(navController, startDestination = HOME_SCREEN) {
-                    composable(HOME_SCREEN) {
+                NavHost(
+                    navController,
+                    startDestination = if (remoteParamsVM.getNewFeature()) Screen.NewHome.route else Screen.Home.route
+                ) {
+                    composable(Screen.Home.route) {
                         homeScreen(
                             viewModel = viewModel,
                             navController = navController
                         )
                     }
                     composable(
-                        DETAIL_SCREEN + "/{${Params.PANEL_MODE}}",
-                        arguments = listOf(
-                            navArgument(Params.PANEL_MODE) {
-                                type = NavType.EnumType(StateScreen::class.java)
-                            })
+                        Screen.Detail.route + "/{${Params.PANEL_MODE}}?${Params.NOTE}={${Params.NOTE}}",
+                        arguments = Screen.Detail.params
                     ) {
                         detailScreen(
                             viewModel,
@@ -52,7 +48,13 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
                             backStack = {
                                 navController.popBackStack()
                             },
-                            note = viewModel.paramsNote
+                            uuid = it.arguments?.getString(Params.NOTE)
+                        )
+                    }
+                    composable(Screen.NewHome.route) {
+                        newHomeScreen(
+                            viewModel = viewModel,
+                            navController = navController
                         )
                     }
                 }

@@ -9,11 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -23,7 +20,6 @@ import com.example.compose.NoteViewModel
 import com.example.compose.R
 import com.example.compose.ui.Dimension
 import com.example.compose.ui.progressBar
-import com.example.compose.ui.renderError
 import com.supercaliman.domain.UiNote
 
 interface OnSaveListener {
@@ -40,13 +36,14 @@ fun detailScreen(
     viewModel: NoteViewModel,
     initialState: StateScreen,
     backStack: () -> Unit,
-    note: UiNote?
+    uuid: String?
 ) {
-    val state: StateScreen by viewModel.stateScreen.observeAsState(initialState)
     val loading: Boolean by viewModel.loadingStatus.observeAsState(false)
-    val error: Exception? by viewModel.errorStatus.observeAsState()
-    error?.let {
-        renderError(error = it)
+    val note: UiNote? by viewModel.uiNote.observeAsState(null)
+    val state = remember { mutableStateOf(initialState) }
+
+    uuid?.let {
+        viewModel.getNote(uuid)
     }
 
     val onSaveObj = object : OnSaveListener {
@@ -54,6 +51,7 @@ fun detailScreen(
             viewModel.createNote(note?.uuid, title = title, description)
         }
     }
+
 
     Scaffold(
         topBar = {
@@ -67,10 +65,14 @@ fun detailScreen(
             if (loading) {
                 progressBar()
             } else {
-                when (state) {
-                    StateScreen.READ -> bodyDetail(true, note, onSaveObj)
+                when (state.value) {
+                    StateScreen.READ -> {
+                        bodyDetail(true, note, onSaveObj)
+                    }
                     StateScreen.INSERT -> bodyDetail(false, null, onSaveObj)
-                    StateScreen.EDIT -> bodyDetail(false, note, onSaveObj)
+                    StateScreen.EDIT -> {
+                        bodyDetail(false, note, onSaveObj)
+                    }
                 }
             }
         }
@@ -79,13 +81,19 @@ fun detailScreen(
 
 
 @Composable
-fun bodyDetail(isReadable: Boolean, note: UiNote?, onSaveListener: OnSaveListener) {
+fun bodyDetail(
+    isReadable: Boolean = false,
+    note: UiNote?,
+    onSaveListener: OnSaveListener
+) {
     val title =
         remember { mutableStateOf(TextFieldValue(text = if (note?.title != null) note.title else "")) }
     val description =
         remember { mutableStateOf(TextFieldValue(if (note?.description != null) note.description else "")) }
     onSaveListener.onSave(title.value.text, description.value.text)
+
     val isInvalid = title.value.text.count() > 10
+
     ScrollableColumn(
         modifier = Modifier.fillMaxSize().padding(horizontal = Dimension.defaultMargin),
     ) {
@@ -142,7 +150,7 @@ fun bodyDetail(isReadable: Boolean, note: UiNote?, onSaveListener: OnSaveListene
 @Composable
 fun appBar(
     viewModel: NoteViewModel,
-    stateUi: StateScreen,
+    appBarState: MutableState<StateScreen>,
     note: UiNote?,
     backStack: () -> Unit,
     onSave: () -> Unit
@@ -159,8 +167,11 @@ fun appBar(
             )
         },
         title = {
-            when (stateUi) {
-                StateScreen.EDIT -> Text("", style = MaterialTheme.typography.h5)
+            when (appBarState.value) {
+                StateScreen.EDIT -> Text(
+                    stringResource(R.string.update_note),
+                    style = MaterialTheme.typography.h5
+                )
                 StateScreen.INSERT -> Text(
                     stringResource(R.string.new_note),
                     style = MaterialTheme.typography.h5
@@ -174,7 +185,7 @@ fun appBar(
             }
         },
         actions = {
-            when (stateUi) {
+            when (appBarState.value) {
                 StateScreen.INSERT -> {
                     IconButton(
                         onClick = { onSave() },
@@ -184,7 +195,7 @@ fun appBar(
                 StateScreen.READ -> {
                     IconButton(
                         onClick = {
-                            viewModel.setEditMode()
+                            appBarState.value = StateScreen.EDIT
                         },
                         icon = { Icon(Icons.Default.Edit) }
                     )
@@ -198,7 +209,9 @@ fun appBar(
                 }
                 StateScreen.EDIT -> {
                     IconButton(
-                        onClick = { viewModel.prevMode() },
+                        onClick = {
+                            appBarState.value = StateScreen.READ
+                        },
                         icon = { Icon(Icons.Default.Undo) }
                     )
                     IconButton(

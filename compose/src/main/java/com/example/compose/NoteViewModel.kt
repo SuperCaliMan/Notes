@@ -1,8 +1,10 @@
 package com.example.compose
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
-import com.example.compose.detail.StateScreen
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.supercaliman.domain.Note
 import com.supercaliman.domain.Result
 import com.supercaliman.domain.SingleLiveEvent
@@ -23,7 +25,6 @@ class NoteViewModel @ViewModelInject constructor(
     private val mapper = UiModelMapper()
 
     private lateinit var noteDetail: Note
-    var paramsNote: UiNote? = null
 
     private val _errorLiveData = SingleLiveEvent<Exception>()
     val errorStatus: LiveData<Exception>
@@ -32,6 +33,10 @@ class NoteViewModel @ViewModelInject constructor(
     private val _uiLiveData = MediatorLiveData<List<UiNote>>()
     val uiLiveData: LiveData<List<UiNote>>
         get() = _uiLiveData
+
+    private val _uiNote = MediatorLiveData<UiNote>()
+    val uiNote: LiveData<UiNote>
+        get() = _uiNote
 
     private val _loadingLiveData = MediatorLiveData<Boolean>()
     val loadingStatus: LiveData<Boolean>
@@ -42,12 +47,36 @@ class NoteViewModel @ViewModelInject constructor(
         noteDetail = Note(uuid, title = title, description, date)
     }
 
-    private val _stateScreen = MutableLiveData<StateScreen>()
-    val stateScreen: LiveData<StateScreen>
-        get() = _stateScreen
-
     init {
         getNotesList()
+    }
+
+    fun getNote(uuid: String?) {
+        val observable = getNoteUseCase.observeNote()
+
+        _errorLiveData.removeSource(observable)
+        _errorLiveData.addSource(observable) {
+            if (it is Result.Error) _errorLiveData.postValue(it.exception)
+        }
+
+        _loadingLiveData.removeSource(observable)
+        _loadingLiveData.addSource(observable) {
+            _loadingLiveData.postValue(it == Result.Loading)
+        }
+
+        _uiNote.removeSource(observable)
+        _uiNote.addSource(observable) {
+            if (it is Result.Success) {
+                _uiNote.postValue(mapper.map(it.data))
+            }
+        }
+
+        uuid?.let { id ->
+            viewModelScope.launch {
+                getNoteUseCase.getNote(id)
+            }
+        }
+
     }
 
     fun saveNote() {
@@ -123,14 +152,8 @@ class NoteViewModel @ViewModelInject constructor(
                 )
             }
         }
-        viewModelScope.launch { getNoteUseCase.execute() }
+        viewModelScope.launch { getNoteUseCase.getNotes() }
     }
-
-
-    fun setEditMode() = _stateScreen.postValue(StateScreen.EDIT)
-
-    fun prevMode() = _stateScreen.postValue(StateScreen.INSERT)
-
 
     fun delete(uuid: String?) {
 

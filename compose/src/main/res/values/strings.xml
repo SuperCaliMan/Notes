@@ -3,8 +3,9 @@
     <string name="no_data">There is no note, press + button to add new note</string>
     <string name="warning">Oh no!</string>
     <string name="close">Close</string>
-    <string name="new_note">Nuova nota</string>
+    <string name="new_note">New note</string>
     <string name="insert_title">Insert title</string>
     <string name="insert_description">Insert description</string>
     <string name="animation_screen">Animation</string>
+    <string name="update_note">Update note</string>
 </resources>

@@ -2,7 +2,6 @@ package com.supercaliman.domain
 
 import java.io.Serializable
 
-
 data class UiNote(
     var uuid: String? = null,
     var title: String = "",

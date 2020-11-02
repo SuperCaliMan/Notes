@@ -31,13 +31,19 @@ class FireStoreAPI @Inject constructor(
 
     @Throws(Exception::class)
     suspend fun getNotes(): List<Note> =
-        db.collection(COLLECTION).get().await().map { mapper.map(it) }
+        db.collection(COLLECTION).get().await().map { mapper.mapNoteCollection(it) }
 
     @Throws(Exception::class)
     suspend fun deleteNote(uuid: String) = db.collection(COLLECTION).document(uuid).delete().await()
 
     @Throws(Exception::class)
     suspend fun createNote(note: Note) = db.collection(COLLECTION).add(note).await()
+
+    @Throws(Exception::class)
+    suspend fun getNote(uuid: String): Note {
+        val data = db.collection(COLLECTION).document(uuid).get().await()
+        return mapper.mapNote(data)
+    }
 
     @Throws(Exception::class)
     suspend fun updateNote(note: Note) =

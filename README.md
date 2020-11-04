@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="screen/notes.png" height="600" width="619">
+  <img src="screen/notes.png">
  </div>
 <br>
 <p align="center">Notes application is sample app based on MVVM architecture.</p>

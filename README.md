@@ -12,10 +12,6 @@ This app is work in progress.
 
 Build 🛠
 -------------------
-App has following modules
-1. App: contains views and viewModels
-1. Data: contains repository and web api
-1. Domain: contains use cases and POJO objects
 
 
 License 📄

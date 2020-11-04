@@ -111,7 +111,7 @@ fun AppDrawer(
         TextButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
-                navController.navigate(Screen.NewHome.route)
+                navController.navigate(Screen.Animation.route)
                 closeDrawer()
             }
         ) {

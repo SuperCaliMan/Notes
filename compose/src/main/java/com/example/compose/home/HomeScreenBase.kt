@@ -103,7 +103,10 @@ fun noteList(
         Surface(Modifier.fillMaxSize()) {
             LazyColumnFor(
                 items,
-                contentPadding = PaddingValues(top = Dimension.defaultMargin)
+                contentPadding = PaddingValues(
+                    top = Dimension.defaultMargin,
+                    bottom = Dimension.largeMargin * 2
+                )
             ) {
                 noteCard(it, onItemClick)
             }

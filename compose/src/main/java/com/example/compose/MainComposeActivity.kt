@@ -6,6 +6,7 @@ import androidx.compose.ui.platform.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.animation.animationScreen
 import com.example.compose.detail.Params
 import com.example.compose.detail.StateScreen
 import com.example.compose.detail.detailScreen
@@ -57,6 +58,7 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
                             navController = navController
                         )
                     }
+                    composable(Screen.Animation.route) { animationScreen() }
                 }
             }
         }

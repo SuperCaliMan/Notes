@@ -21,4 +21,5 @@ sealed class Screen(val route: String, var params: List<NamedNavArgument>) {
     )
 
     object NewHome : Screen("NEW_HOME", listOf())
+    object Animation : Screen("ANIMATION", listOf())
 }

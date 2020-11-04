@@ -14,8 +14,6 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.res.stringResource
@@ -115,12 +113,6 @@ fun newHomeScreen(
 
 @Composable
 fun newAppBarHome() {
-    val state = remember { mutableStateOf(false) }
-
-    if (state.value) {
-        showMessageDialog("Yep", "it's a new Feature 🎉", onClose = { state.value = false })
-    }
-
     TopAppBar(
         backgroundColor = MaterialTheme.colors.surface,
         elevation = 0.dp,

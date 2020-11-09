@@ -51,7 +51,7 @@ class NoteListViewModel @ViewModelInject constructor(private var taskModel: GetN
         _uiLiveData.addSource(observable) {
             if (it is Result.Success) {
                 _uiLiveData.postValue(
-                    it.data.sortedBy { it.date.time }.map { note -> mapper.map(note) }
+                    it.data.sortedBy { it.date.time }.map { note -> mapper.map(note) }.reversed()
                 )
             }
         }

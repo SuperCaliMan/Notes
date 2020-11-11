@@ -37,27 +37,29 @@ android {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:'+rootProject.kotlincore_version
-    implementation 'androidx.appcompat:appcompat:'+rootProject.appcompat_version
-    implementation 'com.google.android.material:material:'+rootProject.material_version
+    implementation Kotlin.stdlib
+    implementation AndroidX.coreKtx
+    implementation AndroidX.appcompat
+    implementation Material.core
     testImplementation 'junit:junit:'+rootProject.junit_version
     androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version
-    androidTestImplementation 'androidx.test.espresso:espresso-core:'+rootProject.espresso_core
 
     //Firebase
-    implementation 'com.google.firebase:firebase-firestore-ktx:'+rootProject.firebase_firestore_version
-    implementation 'com.google.firebase:firebase-analytics:'+rootProject.firebase_analytics_version
+    implementation Firebase.firestoreKtx
+    implementation Firebase.firebaseAnalytics
+    implementation Firebase.config
 
     //corutine
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:'+rootProject.corutines_version
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:'+rootProject.corutines_play_services_version
+    implementation Coroutines.android
+    implementation Coroutines.playServices
 
+    //Moshi
+    implementation Serialization.moshi
 
 
     //Hilt DI
-    implementation "com.google.dagger:hilt-android:"+rootProject.hilt_version
-    kapt "com.google.dagger:hilt-android-compiler:"+rootProject.hilt_version
+    implementation Di.hiltAndroid
+    kapt Di.hiltCompiler
 
     implementation project(':domain')
 }

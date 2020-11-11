@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import com.supercaliman.domain.UiNote
 import com.supercaliman.note.*
@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.fragment_note_detail.*
 @AndroidEntryPoint
 class NoteDetailFragment : Fragment() {
 
-    //private val sharedViewModel : SharedViewModel by viewModels() //use this to shared view model in different fragment
     private lateinit var uiNote: UiNote
     private val detailNoteViewModel: DetailNoteViewModel by viewModels()
 
@@ -46,18 +45,17 @@ class NoteDetailFragment : Fragment() {
         txt_title.isEnabled = false
         txt_detail.isEnabled = false
 
-        setFragmentResultListener("data") { key, bundle ->
+        setFragmentResultListener("data") { _, bundle ->
             val res = bundle.getSerializable("data") as UiNote
             renderUi(res)
         }
 
 
-
-        detailNoteViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer { })
+        //detailNoteViewModel.loadingLiveData.observe(viewLifecycleOwner, { })
 
         detailNoteViewModel.errorLiveData.observe(
-            viewLifecycleOwner,
-            Observer { activity?.renderErrorUi(it) })
+            viewLifecycleOwner
+        ) { activity?.renderErrorUi(it) }
 
 
     }

@@ -2,14 +2,17 @@ package com.supercaliman.data
 
 import com.supercaliman.domain.Note
 import com.supercaliman.domain.Repository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 
-class FireStoreRepoImp(private var api:FireStoreAPI):Repository{
+class FireStoreRepoImp(private var api: FireStoreAPI) : Repository {
 
-    override suspend fun getNotes(): List<Note> {
+    @ExperimentalCoroutinesApi
+    override suspend fun getNotes(): Flow<List<Note>> {
         return try {
             val data = api.getNotes()
             data
-        }catch (e: Exception){
+        } catch (e: Exception) {
             throw e
         }
     }

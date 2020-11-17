@@ -7,9 +7,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.supercaliman.core.SegmentHelper
+import com.supercaliman.core.TrackActions
 import com.supercaliman.domain.UiNote
 import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
@@ -17,6 +18,8 @@ import com.supercaliman.note.renderErrorUi
 import com.supercaliman.note.ui.main.ViewModels.NoteListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_notes.*
+import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class NotesFragment : Fragment(), BindingRecycleView<UiNote> {
@@ -24,6 +27,8 @@ class NotesFragment : Fragment(), BindingRecycleView<UiNote> {
     private val noteListViewModel: NoteListViewModel by viewModels()
     private lateinit var adapterList: AdapterList
 
+    @Inject
+    lateinit var segment: SegmentHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +43,7 @@ class NotesFragment : Fragment(), BindingRecycleView<UiNote> {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        segment.trackScreen(TrackActions.homeOpen)
 
         noteListViewModel.getNotesList()
 
@@ -52,6 +58,7 @@ class NotesFragment : Fragment(), BindingRecycleView<UiNote> {
         noteListViewModel.errorLiveData.observe(viewLifecycleOwner) { activity?.renderErrorUi(it) }
 
         floatingActionButton.setOnClickListener {
+            segment.trackEvent(TrackActions.createNewNote)
             view.findNavController().navigate(R.id.action_notesFragment_to_noteCreateFragment)
         }
 
@@ -60,6 +67,7 @@ class NotesFragment : Fragment(), BindingRecycleView<UiNote> {
 
     override fun getObjClicked(data: UiNote) {
         setFragmentResult("data", bundleOf("data" to data))
+        segment.trackEvent(TrackActions.goToDetail, mapOf("uuid" to data.uuid!!))
         requireView().findNavController().navigate(R.id.action_notesFragment_to_detailFragment)
     }
 

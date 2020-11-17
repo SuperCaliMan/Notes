@@ -13,10 +13,12 @@ import com.supercaliman.domain.useCase.GetNoteTaskUseCase
 import com.supercaliman.note.ModelMapperTask
 import kotlinx.coroutines.launch
 
+
 class NoteListViewModel @ViewModelInject constructor(private var taskModel: GetNoteTaskUseCase) :
     ViewModel() {
 
     private val mapper = ModelMapperTask()
+
 
     private val _errorLiveData = SingleLiveEvent<Exception>()
     val errorLiveData: LiveData<Exception>
@@ -29,9 +31,6 @@ class NoteListViewModel @ViewModelInject constructor(private var taskModel: GetN
     private val _loadingLiveData = MediatorLiveData<Boolean>()
     val LoadingLiveData: LiveData<Boolean>
         get() = _loadingLiveData
-
-
-
 
 
     fun getNotesList() {
@@ -48,10 +47,10 @@ class NoteListViewModel @ViewModelInject constructor(private var taskModel: GetN
         }
 
         _uiLiveData.removeSource(observable)
-        _uiLiveData.addSource(observable) {
-            if (it is Result.Success) {
+        _uiLiveData.addSource(observable) { data ->
+            if (data is Result.Success) {
                 _uiLiveData.postValue(
-                    it.data.sortedBy { it.date.time }.map { note -> mapper.map(note) }.reversed()
+                    data.data.sortedBy { it.date.time }.map { note -> mapper.map(note) }.reversed()
                 )
             }
         }

@@ -1,10 +1,10 @@
 package com.supercaliman.domain
 
-import java.sql.ResultSet
+import kotlinx.coroutines.flow.Flow
 
 interface Repository {
 
-    suspend fun getNotes():List<Note>
+    suspend fun getNotes(): Flow<List<Note>>
 
     suspend fun createNote(note: Note)
 

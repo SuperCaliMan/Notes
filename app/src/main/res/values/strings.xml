@@ -4,7 +4,7 @@
     <string name="insert_your_note_here">Insert your note here&#8230;</string>
     <string name="save">save</string>
     <string name="no_data">There is no note, press \"+\" button to add new note</string>
-    <string name="title">To do</string>
+    <string name="title">Title</string>
     <string name="alert_msg">Discard change?</string>
     <string name="title_activity_login">LoginActivity</string>
     <!-- Strings used for fragments for navigation -->

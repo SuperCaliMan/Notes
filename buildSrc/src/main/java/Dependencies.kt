@@ -1,5 +1,5 @@
 object Versions {
-    const val kotlin = "1.4.0"
+    const val kotlin = "1.4.10"
     const val hilt = "2.28-alpha"
     const val hiltx = "1.0.0-alpha02"
     const val lifecycle = "2.2.0"
@@ -23,6 +23,7 @@ object Versions {
     const val firebase_config = "19.1.0"
     const val gson = "2.8.6"
     const val moshi = "1.11.0"
+    const val segment = "4.+"
 
 }
 
@@ -41,6 +42,11 @@ object Coroutines {
     const val playServices =
         "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${Versions.corutines_play_services}"
 
+}
+
+object Analytics {
+    const val segment = "com.segment.analytics.android:analytics:${Versions.segment}"
+    const val segmentFirebase = "com.segment.analytics.android.integrations:firebase:+@aar"
 }
 
 object Lifecycle {

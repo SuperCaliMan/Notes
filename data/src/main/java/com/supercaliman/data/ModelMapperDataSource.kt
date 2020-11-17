@@ -1,14 +1,13 @@
 package com.supercaliman.data
 
-import com.google.firebase.firestore.QueryDocumentSnapshot
-
+import com.google.firebase.firestore.DocumentSnapshot
 import com.supercaliman.domain.Mapper
 import com.supercaliman.domain.Note
 import javax.inject.Inject
 
-class ModelMapperFirestore @Inject constructor() : Mapper<QueryDocumentSnapshot, Note> {
+class ModelMapperDataSource @Inject constructor() : Mapper<DocumentSnapshot, Note> {
 
-    override fun map(data: QueryDocumentSnapshot): Note {
+    override fun map(data: DocumentSnapshot): Note {
         return Note(
             data.id,
             data["title"].toString(),

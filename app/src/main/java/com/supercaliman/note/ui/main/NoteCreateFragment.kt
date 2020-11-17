@@ -5,8 +5,9 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import com.supercaliman.core.SegmentHelper
+import com.supercaliman.core.TrackActions
 import com.supercaliman.note.R
 import com.supercaliman.note.hideKeyboard
 import com.supercaliman.note.renderErrorUi
@@ -14,16 +15,21 @@ import com.supercaliman.note.showKeyBoard
 import com.supercaliman.note.ui.main.ViewModels.NoteCreateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_note_detail.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NoteCreateFragment : Fragment() {
 
     private val noteDetailViewModel: NoteCreateViewModel by viewModels()
 
+    @Inject
+    lateinit var segmentHelper: SegmentHelper
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
         (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -36,11 +42,13 @@ class NoteCreateFragment : Fragment() {
         txt_date.text = noteDetailViewModel.getDate()
         txt_title.requestFocus()
         showKeyBoard()
+        segmentHelper.trackScreen(TrackActions.createOpen)
 
+        noteDetailViewModel.errorLiveData.observe(
+            viewLifecycleOwner,
+            { it?.let { activity?.renderErrorUi(it) } })
 
-        noteDetailViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { it?.let { activity?.renderErrorUi(it) } })
-
-        noteDetailViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer {
+        noteDetailViewModel.loadingLiveData.observe(viewLifecycleOwner, {
             if (it) {
                 hideKeyboard()
                 view.findNavController().popBackStack()
@@ -62,10 +70,21 @@ class NoteCreateFragment : Fragment() {
         when(item.itemId){
             R.id.save -> {
                 hideKeyboard()
-                noteDetailViewModel.createNote(txt_title.text.toString(),txt_detail.text.toString())
+                segmentHelper.trackEvent(
+                    TrackActions.saveNote,
+                    mapOf(
+                        "title" to txt_title.text.toString(),
+                        "description" to txt_detail.text.toString()
+                    )
+                )
+                noteDetailViewModel.createNote(
+                    txt_title.text.toString(),
+                    txt_detail.text.toString()
+                )
             }
             android.R.id.home -> {
                 hideKeyboard()
+                segmentHelper.trackEvent(TrackActions.createToHome)
                 requireView().findNavController().popBackStack()
             }
         }

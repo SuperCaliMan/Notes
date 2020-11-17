@@ -10,11 +10,14 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.findNavController
+import com.supercaliman.core.SegmentHelper
+import com.supercaliman.core.TrackActions
 import com.supercaliman.domain.UiNote
 import com.supercaliman.note.*
 import com.supercaliman.note.ui.main.ViewModels.DetailNoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_note_detail.*
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -22,6 +25,9 @@ class NoteDetailFragment : Fragment() {
 
     private lateinit var uiNote: UiNote
     private val detailNoteViewModel: DetailNoteViewModel by viewModels()
+
+    @Inject
+    lateinit var segment: SegmentHelper
 
 
     override fun onCreateView(
@@ -50,7 +56,7 @@ class NoteDetailFragment : Fragment() {
             renderUi(res)
         }
 
-
+        segment.trackScreen(TrackActions.detailOpen)
         //detailNoteViewModel.loadingLiveData.observe(viewLifecycleOwner, { })
 
         detailNoteViewModel.errorLiveData.observe(
@@ -74,17 +80,30 @@ class NoteDetailFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
+                segment.trackEvent(TrackActions.detailGoToHome)
                 onBackPress()
             }
             R.id.edit -> {
+                segment.trackEvent(TrackActions.detailInEditMode)
                 setEditMode()
             }
             R.id.editSave -> {
-                detailNoteViewModel.update(txt_title.text.toString(),txt_detail.text.toString(),uiNote.uuid)
+                segment.trackEvent(
+                    TrackActions.saveNote, mapOf(
+                        "title" to txt_title.text.toString(),
+                        "description" to txt_detail.text.toString()
+                    )
+                )
+                detailNoteViewModel.update(
+                    txt_title.text.toString(),
+                    txt_detail.text.toString(),
+                    uiNote.uuid
+                )
                 hideKeyboard()
                 requireView().findNavController().popBackStack()
             }
             R.id.delete -> {
+                segment.trackEvent(TrackActions.deleteNote, mapOf("uuid" to uiNote.uuid!!))
                 detailNoteViewModel.delete(uiNote.uuid)
                 hideKeyboard()
                 requireView().findNavController().popBackStack()

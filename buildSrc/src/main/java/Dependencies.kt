@@ -11,7 +11,8 @@ object Versions {
     const val timber = "4.7.1"
     const val firestore = "21.4.0"
     const val firebase_analytics = "17.4.3"
-    const val lottie = "3.4.1"
+    const val lottie = "3.5.0"
+    const val lottieCompose = "1.0.0-alpha01"
     const val corutines = "1.3.9"
     const val corutines_play_services = "1.3.0"
     const val androidx_fragment = "1.3.0-alpha06"
@@ -104,6 +105,7 @@ object Debug {
 
 object Animation {
     const val lottie = "com.airbnb.android:lottie:${Versions.lottie}"
+    const val lottieCompose = "com.airbnb.android:lottie-compose:${Versions.lottieCompose}"
 }
 
 

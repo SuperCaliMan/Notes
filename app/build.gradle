@@ -52,6 +52,7 @@ dependencies {
 
     implementation Debug.timber
 
+
     //Hilt DI
     implementation Di.hiltAndroid
     kapt Di.hiltCompiler

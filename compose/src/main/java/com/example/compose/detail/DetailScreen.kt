@@ -1,7 +1,6 @@
 package com.example.compose.detail
 
 import androidx.compose.foundation.ScrollableColumn
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +12,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.compose.NoteViewModel
@@ -108,8 +106,7 @@ fun bodyDetail(
                 errorColor = MaterialTheme.colors.onError,
                 isErrorValue = isInvalid,
                 modifier = Modifier.fillMaxWidth()
-                    .padding(top = Dimension.defaultMargin),
-                keyboardType = KeyboardType.Text,
+                    .padding(top = Dimension.defaultMargin)
             )
             OutlinedTextField(value = description.value, onValueChange = {
                 description.value = it
@@ -118,17 +115,16 @@ fun bodyDetail(
             },
                 modifier = Modifier.fillMaxWidth()
                     .padding(top = Dimension.defaultMargin, bottom = Dimension.defaultMargin)
-                    .fillMaxHeight(),
-                keyboardType = KeyboardType.Text
+                    .fillMaxHeight()
             )
         } else {
             note?.let {
-                ProvideEmphasis(emphasis = AmbientEmphasisLevels.current.medium) {
+                Providers(AmbientContentAlpha provides ContentAlpha.high, children = {
                     Text(
                         text = it.date, style = MaterialTheme.typography.subtitle2,
                         modifier = Modifier.padding(top = Dimension.largeMargin)
                     )
-                }
+                })
                 Divider(
                     Modifier.fillMaxWidth()
                         .padding(end = Dimension.defaultMargin, top = Dimension.smallMargin)

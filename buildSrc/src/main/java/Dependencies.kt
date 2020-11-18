@@ -20,7 +20,8 @@ object Versions {
     const val junit = "4.13"
     const val junitAndroid = "1.1.1"
     const val playServices = "1.8.1"
-    const val compose = "1.0.0-alpha06"
+    const val compose = "1.0.0-alpha07"
+    const val composeNavigation = "1.0.0-alpha02"
     const val firebase_config = "19.1.0"
     const val gson = "2.8.6"
     const val moshi = "1.11.0"
@@ -87,8 +88,8 @@ object Compose {
     const val uiTest = "androidx.ui:ui-test:${Versions.compose}"
 
     //Navigation
-    private const val nav_compose_version = "1.0.0-alpha01"
-    const val navigation = "androidx.navigation:navigation-compose:$nav_compose_version"
+    private const val nav_compose_version = "1.0.0-alpha02"
+    const val navigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
 
     //stuff
 

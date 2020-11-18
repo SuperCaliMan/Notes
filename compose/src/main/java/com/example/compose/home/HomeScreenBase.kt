@@ -1,7 +1,6 @@
 package com.example.compose.home
 
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bedtime
 import androidx.compose.material.icons.outlined.Bedtime
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Providers
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -89,14 +89,14 @@ fun noteList(
             lottieAnimation(
                 modifier = Modifier.fillMaxWidth()
             )
-            ProvideEmphasis(AmbientEmphasisLevels.current.medium) {
+            Providers(AmbientContentAlpha provides ContentAlpha.high, children = {
                 Text(
                     stringResource(R.string.no_data),
                     modifier = Modifier.padding(bottom = Dimension.largeMargin)
                         .align(Alignment.CenterHorizontally),
                     style = MaterialTheme.typography.body1
                 )
-            }
+            })
         }
 
     } else {
@@ -144,7 +144,7 @@ fun noteCard(note: UiNote, click: (UiNote) -> Unit) {
 
             ) {
                 Text(note.title, style = MaterialTheme.typography.h6)
-                ProvideEmphasis(AmbientEmphasisLevels.current.medium) {
+                Providers(AmbientContentAlpha provides ContentAlpha.high, children = {
                     Text(
                         note.date,
                         modifier = Modifier.padding(
@@ -153,7 +153,7 @@ fun noteCard(note: UiNote, click: (UiNote) -> Unit) {
                         ),
                         style = MaterialTheme.typography.subtitle1
                     )
-                }
+                })
             }
         }
     }

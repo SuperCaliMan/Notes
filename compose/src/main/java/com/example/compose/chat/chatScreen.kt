@@ -1,4 +1,4 @@
-package com.example.compose.animation
+package com.example.compose.chat
 
 
 import androidx.compose.foundation.Image
@@ -13,7 +13,7 @@ import com.example.compose.R
 
 
 @Composable
-fun animationScreen() {
+fun chatScreen() {
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
         Image(
             asset = imageResource(R.drawable.rick),

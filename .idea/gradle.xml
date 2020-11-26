@@ -17,6 +17,8 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/notification" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -3,9 +3,6 @@ plugins {
     id 'kotlin-android'
 }
 
-apply plugin: 'kotlin-kapt'
-apply plugin: 'dagger.hilt.android.plugin'
-
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -21,16 +18,11 @@ android {
     }
 
     buildTypes {
-        debug{
-            buildConfigField "java.lang.String", "SEGMENT_CONFIG", "\"02GoAdm8ehEIOVQuBGk2kHRR8NsE19cY\""
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "java.lang.String", "SEGMENT_CONFIG", ""
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -42,17 +34,12 @@ android {
 
 dependencies {
 
-    implementation Kotlin.stdlib
-    implementation AndroidX.coreKtx
-    implementation AndroidX.appcompat
-    implementation Material.core
-    testImplementation 'junit:junit:'+rootProject.junit_version
-    androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    //Hilt DI
-    implementation Di.hiltAndroid
-    kapt Di.hiltCompiler
-
-    implementation Analytics.segment
-    implementation Analytics.segmentFirebase
 }

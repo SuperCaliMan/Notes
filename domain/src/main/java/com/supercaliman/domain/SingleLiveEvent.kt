@@ -11,7 +11,6 @@ import java.util.concurrent.atomic.AtomicBoolean
 /**
  * Created by Yossi Segev on 16/02/2018.
  * This class is a Kotlin adaptions of the SingleLiveEvent by Google:
- * https://github.com/googlesamples/android-architecture/blob/dev-todo-mvvm-live/todoapp/app/src/main/java/com/example/android/architecture/blueprints/todoapp/SingleLiveEvent.java
  */
 class SingleLiveEvent<T> : MediatorLiveData<T>() {
 

@@ -24,6 +24,10 @@ object Versions {
     const val gson = "2.8.6"
     const val moshi = "1.11.0"
     const val segment = "4.+"
+    const val firebaseBom = "26.1.0"
+    const val retrofit = "2.1.0"
+    const val retrofitConverter = "2.9.0"
+    const val okhttpInterceptor = "4.3.1"
 
 }
 
@@ -126,9 +130,18 @@ object PlayService {
 
 }
 
+object Rest {
+    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    const val okHttpInterceptor =
+        "com.squareup.okhttp3:logging-interceptor:${Versions.okhttpInterceptor}"
+}
+
 object Serialization {
     const val gson = "  implementation 'com.google.code.gson:gson:${Versions.gson}'"
     const val moshi = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
+    const val retrofitConverter =
+        "com.squareup.retrofit2:converter-gson:${Versions.retrofitConverter}"
+
 }
 
 
@@ -145,8 +158,9 @@ object AndroidX {
 
 object Firebase {
     const val firestoreKtx = "com.google.firebase:firebase-firestore-ktx:${Versions.firestore}"
-    const val firebaseAnalytics =
-        "com.google.firebase:firebase-analytics:${Versions.firebase_analytics}"
+    const val analytics = "com.google.firebase:firebase-analytics:${Versions.firebase_analytics}"
+    const val messagingKtx = "com.google.firebase:firebase-messaging-ktx"
+    const val bom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
     const val config = "com.google.firebase:firebase-config-ktx:${Versions.firebase_config}"
 }
 

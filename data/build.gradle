@@ -46,7 +46,7 @@ dependencies {
 
     //Firebase
     implementation Firebase.firestoreKtx
-    implementation Firebase.firebaseAnalytics
+    implementation Firebase.analytics
     implementation Firebase.config
 
     //corutine

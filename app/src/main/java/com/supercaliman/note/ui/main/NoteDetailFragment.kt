@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.supercaliman.core.SegmentHelper
 import com.supercaliman.core.TrackActions
@@ -60,9 +60,8 @@ class NoteDetailFragment : Fragment() {
         //detailNoteViewModel.loadingLiveData.observe(viewLifecycleOwner, { })
 
         detailNoteViewModel.errorLiveData.observe(
-            viewLifecycleOwner
-        ) { activity?.renderErrorUi(it) }
-
+            viewLifecycleOwner,
+            Observer { activity?.renderErrorUi(it) })
 
     }
 

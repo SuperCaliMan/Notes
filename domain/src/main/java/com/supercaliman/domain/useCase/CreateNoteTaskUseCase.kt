@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.supercaliman.domain.Note
 import com.supercaliman.domain.Repository
 import com.supercaliman.domain.Result
+
 import javax.inject.Inject
 
 class CreateNoteTaskUseCase @Inject constructor(private var repo: Repository) {

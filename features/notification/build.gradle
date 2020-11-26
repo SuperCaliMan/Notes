@@ -7,30 +7,24 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
-        debug{
-            buildConfigField "java.lang.String", "SEGMENT_CONFIG", "\"02GoAdm8ehEIOVQuBGk2kHRR8NsE19cY\""
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "java.lang.String", "SEGMENT_CONFIG", ""
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -46,13 +40,21 @@ dependencies {
     implementation AndroidX.coreKtx
     implementation AndroidX.appcompat
     implementation Material.core
-    testImplementation 'junit:junit:'+rootProject.junit_version
-    androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version
+
+    //firebase fcm
+    implementation platform(Firebase.bom)
+    implementation Firebase.analytics
+    implementation Firebase.messagingKtx
+
+    //network
+    implementation Rest.retrofit
+    implementation Serialization.retrofitConverter
+    implementation Rest.okHttpInterceptor
 
     //Hilt DI
     implementation Di.hiltAndroid
     kapt Di.hiltCompiler
 
-    implementation Analytics.segment
-    implementation Analytics.segmentFirebase
+    //corutine
+    implementation Coroutines.android
 }

@@ -2,21 +2,19 @@ package com.supercaliman.notification.data
 
 import com.supercaliman.notification.api.FcmApi
 import com.supercaliman.notification.domain.FcmRepo
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import timber.log.Timber
 import java.net.ConnectException
 
 class FcmRepoImpl(private val api: FcmApi) : FcmRepo {
 
-    override fun sendRegistrationToServer(token: String) {
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                api.sendToken(token)
-            } catch (e: ConnectException) {
-                Timber.e(e)
-            }
+    override suspend fun sendRegistrationToServer(token: String) {
+        try {
+            api.sendToken(token)
+        } catch (e: ConnectException) {
+            Timber.e(e)
+        } catch (e: HttpException) {
+            Timber.e(e)
         }
     }
 }

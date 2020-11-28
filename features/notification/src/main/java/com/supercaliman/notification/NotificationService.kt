@@ -1,10 +1,14 @@
 package com.supercaliman.notification
 
-import android.util.Log
+
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.supercaliman.notification.domain.FcmRepo
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -20,8 +24,9 @@ class NotificationService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        // super.onNewToken(token)
-        Log.d("TAG", "token $token")
-        fcmRepo.sendRegistrationToServer(token)
+        Timber.d("TOKEN: $token")
+        GlobalScope.launch(Dispatchers.IO) {
+            fcmRepo.sendRegistrationToServer(token)
+        }
     }
 }

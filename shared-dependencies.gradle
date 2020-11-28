@@ -1,0 +1,46 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    buildTypes {
+        debug{
+            buildConfigField "java.lang.String", "SEGMENT_CONFIG", "\"02GoAdm8ehEIOVQuBGk2kHRR8NsE19cY\""
+            buildConfigField "java.lang.String", "NOTE_SERVER", "\"http://10.0.2.2:8080/\""
+        }
+
+        demo {
+            buildConfigField "java.lang.String", "SEGMENT_CONFIG", "\"02GoAdm8ehEIOVQuBGk2kHRR8NsE19cY\""
+            buildConfigField "java.lang.String", "NOTE_SERVER", "\"https://ktor-simple-app.herokuapp.com/\""
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "java.lang.String", "SEGMENT_CONFIG", ""
+        }
+    }
+}

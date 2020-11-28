@@ -1,5 +1,6 @@
 package com.supercaliman.notification.di
 
+import com.supercaliman.notification.BuildConfig
 import com.supercaliman.notification.api.FcmApi
 import com.supercaliman.notification.data.FcmRepoImpl
 import com.supercaliman.notification.domain.FcmRepo
@@ -30,7 +31,7 @@ object DataModule {
 
 
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/") //TODO aggiungere parametro per il server e creare una flavor di demo che punta a heroku
+            .baseUrl(BuildConfig.NOTE_SERVER)
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient.build())
             .build()

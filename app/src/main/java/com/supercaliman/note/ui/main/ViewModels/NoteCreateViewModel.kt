@@ -6,21 +6,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.supercaliman.domain.Note
-import com.supercaliman.domain.Result
-import com.supercaliman.domain.SingleLiveEvent
-import com.supercaliman.domain.useCase.CreateNoteTaskUseCase
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NoteCreateViewModel @ViewModelInject constructor(private var taskModel: CreateNoteTaskUseCase) :
+class NoteCreateViewModel @ViewModelInject constructor(private var taskModel: com.supercaliman.core.domain.useCase.CreateNoteTaskUseCase) :
     ViewModel() {
 
     private val formatter = SimpleDateFormat("EEE d, yyyy", Locale.getDefault())
     private val date = Calendar.getInstance().time
 
-    private val _errorLiveData = SingleLiveEvent<Exception>()
+    private val _errorLiveData = com.supercaliman.core.domain.SingleLiveEvent<Exception>()
     val errorLiveData: LiveData<Exception>
         get() = _errorLiveData
 
@@ -41,17 +37,17 @@ class NoteCreateViewModel @ViewModelInject constructor(private var taskModel: Cr
         _loadingLiveData.removeSource(observable)
 
         _errorLiveData.addSource(observable){
-            if(it is Result.Error) _errorLiveData.postValue(it.exception)
+            if (it is com.supercaliman.core.domain.Result.Error) _errorLiveData.postValue(it.exception)
         }
 
         _loadingLiveData.addSource(observable){
-            _loadingLiveData.postValue(it == Result.Loading)
+            _loadingLiveData.postValue(it == com.supercaliman.core.domain.Result.Loading)
         }
 
 
 
         viewModelScope.launch {
-            taskModel.execute(Note(null, title, description, date))
+            taskModel.execute(com.supercaliman.core.domain.Note(null, title, description, date))
         }
     }
 

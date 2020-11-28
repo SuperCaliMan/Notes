@@ -5,14 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.supercaliman.domain.UiNote
 import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
 
-class AdapterList(val listener: BindingRecycleView<UiNote>) :
+class AdapterList(val listener: BindingRecycleView<com.supercaliman.core.domain.UiNote>) :
     RecyclerView.Adapter<AdapterList.ItemViewHolder>() {
 
-    var data: List<UiNote> = emptyList()
+    var data: List<com.supercaliman.core.domain.UiNote> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -50,10 +49,10 @@ class AdapterList(val listener: BindingRecycleView<UiNote>) :
             }
         }
 
-        fun bind(data: UiNote) {
+        fun bind(data: com.supercaliman.core.domain.UiNote) {
             mTitleView.text = data.title
             mDataTextView.text = data.date
-            card.setBackgroundColor(colors[data.title.length%(colors.size-1)])
+            card.setBackgroundColor(colors[data.title.length % (colors.size - 1)])
 
 
         }

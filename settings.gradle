@@ -1,7 +1,6 @@
-include ':features:notification'
-include ':features'
 include ':core'
 include ':app'
 rootProject.name = "Note"
-include ':domain'
-include ':data'
+include ':features'
+include ':features:notification'
+include ':features:analytics'

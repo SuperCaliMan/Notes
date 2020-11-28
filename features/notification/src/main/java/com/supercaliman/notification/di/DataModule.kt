@@ -30,7 +30,7 @@ object DataModule {
 
 
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")
+            .baseUrl("http://10.0.2.2:8080/") //TODO aggiungere parametro per il server e creare una flavor di demo che punta a heroku
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient.build())
             .build()

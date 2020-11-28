@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.supercaliman.core.SegmentHelper
-import com.supercaliman.core.TrackActions
 import com.supercaliman.note.R
 import com.supercaliman.note.hideKeyboard
 import com.supercaliman.note.renderErrorUi
@@ -23,7 +21,7 @@ class NoteCreateFragment : Fragment() {
     private val noteDetailViewModel: NoteCreateViewModel by viewModels()
 
     @Inject
-    lateinit var segmentHelper: SegmentHelper
+    lateinit var segmentHelper: com.supercaliman.analytics.SegmentHelper
 
 
     override fun onCreateView(
@@ -42,7 +40,7 @@ class NoteCreateFragment : Fragment() {
         txt_date.text = noteDetailViewModel.getDate()
         txt_title.requestFocus()
         showKeyBoard()
-        segmentHelper.trackScreen(TrackActions.createOpen)
+        segmentHelper.trackScreen(com.supercaliman.analytics.TrackActions.createOpen)
 
         noteDetailViewModel.errorLiveData.observe(
             viewLifecycleOwner,
@@ -71,7 +69,7 @@ class NoteCreateFragment : Fragment() {
             R.id.save -> {
                 hideKeyboard()
                 segmentHelper.trackEvent(
-                    TrackActions.saveNote,
+                    com.supercaliman.analytics.TrackActions.saveNote,
                     mapOf(
                         "title" to txt_title.text.toString(),
                         "description" to txt_detail.text.toString()
@@ -84,7 +82,7 @@ class NoteCreateFragment : Fragment() {
             }
             android.R.id.home -> {
                 hideKeyboard()
-                segmentHelper.trackEvent(TrackActions.createToHome)
+                segmentHelper.trackEvent(com.supercaliman.analytics.TrackActions.createToHome)
                 requireView().findNavController().popBackStack()
             }
         }

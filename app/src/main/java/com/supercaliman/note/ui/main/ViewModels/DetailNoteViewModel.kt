@@ -6,17 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.supercaliman.domain.Note
-import com.supercaliman.domain.Result
-import com.supercaliman.domain.SingleLiveEvent
-import com.supercaliman.domain.useCase.DeleteNoteTaskUseCase
-import com.supercaliman.domain.useCase.UpdateNoteTaskUseCase
 import kotlinx.coroutines.launch
 import java.util.*
 
 class DetailNoteViewModel @ViewModelInject constructor(
-    private var deleteTaskModel: DeleteNoteTaskUseCase,
-    private var updateTaskModel: UpdateNoteTaskUseCase
+    private var deleteTaskModel: com.supercaliman.core.domain.useCase.DeleteNoteTaskUseCase,
+    private var updateTaskModel: com.supercaliman.core.domain.useCase.UpdateNoteTaskUseCase
 ) : ViewModel() {
 
 
@@ -24,7 +19,7 @@ class DetailNoteViewModel @ViewModelInject constructor(
     val loadingLiveData: LiveData<Boolean>
         get() = _loadingLiveData
 
-    private val _errorLiveData = SingleLiveEvent<Exception>()
+    private val _errorLiveData = com.supercaliman.core.domain.SingleLiveEvent<Exception>()
     val errorLiveData: LiveData<Exception>
         get() = _errorLiveData
 
@@ -34,12 +29,12 @@ class DetailNoteViewModel @ViewModelInject constructor(
 
         _errorLiveData.removeSource(observable)
         _errorLiveData.addSource(observable){
-            if(it is Result.Error) _errorLiveData.postValue(it.exception)
+            if (it is com.supercaliman.core.domain.Result.Error) _errorLiveData.postValue(it.exception)
         }
 
         _loadingLiveData.removeSource(observable)
         _loadingLiveData.addSource(observable){
-            _loadingLiveData.postValue(it == Result.Loading)
+            _loadingLiveData.postValue(it == com.supercaliman.core.domain.Result.Loading)
         }
 
 
@@ -56,18 +51,27 @@ class DetailNoteViewModel @ViewModelInject constructor(
 
         _errorLiveData.removeSource(observable)
         _errorLiveData.addSource(observable){
-            if(it is Result.Error) _errorLiveData.postValue(it.exception)
+            if (it is com.supercaliman.core.domain.Result.Error) _errorLiveData.postValue(it.exception)
         }
 
         _loadingLiveData.removeSource(observable)
         _loadingLiveData.addSource(observable){
-            _loadingLiveData.postValue(it == Result.Loading)
+            _loadingLiveData.postValue(it == com.supercaliman.core.domain.Result.Loading)
         }
 
 
 
         viewModelScope.launch {
-            uuid?.let { updateTaskModel.execute(Note(uuid,title,detail,date)) }
+            uuid?.let {
+                updateTaskModel.execute(
+                    com.supercaliman.core.domain.Note(
+                        uuid,
+                        title,
+                        detail,
+                        date
+                    )
+                )
+            }
         }
     }
 

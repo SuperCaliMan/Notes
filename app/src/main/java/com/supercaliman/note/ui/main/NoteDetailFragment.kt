@@ -10,9 +10,6 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import com.supercaliman.core.SegmentHelper
-import com.supercaliman.core.TrackActions
-import com.supercaliman.domain.UiNote
 import com.supercaliman.note.*
 import com.supercaliman.note.ui.main.ViewModels.DetailNoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,11 +20,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NoteDetailFragment : Fragment() {
 
-    private lateinit var uiNote: UiNote
+    private lateinit var uiNote: com.supercaliman.core.domain.UiNote
     private val detailNoteViewModel: DetailNoteViewModel by viewModels()
 
     @Inject
-    lateinit var segment: SegmentHelper
+    lateinit var segment: com.supercaliman.analytics.SegmentHelper
 
 
     override fun onCreateView(
@@ -52,11 +49,11 @@ class NoteDetailFragment : Fragment() {
         txt_detail.isEnabled = false
 
         setFragmentResultListener("data") { _, bundle ->
-            val res = bundle.getSerializable("data") as UiNote
+            val res = bundle.getSerializable("data") as com.supercaliman.core.domain.UiNote
             renderUi(res)
         }
 
-        segment.trackScreen(TrackActions.detailOpen)
+        segment.trackScreen(com.supercaliman.analytics.TrackActions.detailOpen)
         //detailNoteViewModel.loadingLiveData.observe(viewLifecycleOwner, { })
 
         detailNoteViewModel.errorLiveData.observe(
@@ -79,16 +76,16 @@ class NoteDetailFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                segment.trackEvent(TrackActions.detailGoToHome)
+                segment.trackEvent(com.supercaliman.analytics.TrackActions.detailGoToHome)
                 onBackPress()
             }
             R.id.edit -> {
-                segment.trackEvent(TrackActions.detailInEditMode)
+                segment.trackEvent(com.supercaliman.analytics.TrackActions.detailInEditMode)
                 setEditMode()
             }
             R.id.editSave -> {
                 segment.trackEvent(
-                    TrackActions.saveNote, mapOf(
+                    com.supercaliman.analytics.TrackActions.saveNote, mapOf(
                         "title" to txt_title.text.toString(),
                         "description" to txt_detail.text.toString()
                     )
@@ -102,7 +99,10 @@ class NoteDetailFragment : Fragment() {
                 requireView().findNavController().popBackStack()
             }
             R.id.delete -> {
-                segment.trackEvent(TrackActions.deleteNote, mapOf("uuid" to uiNote.uuid!!))
+                segment.trackEvent(
+                    com.supercaliman.analytics.TrackActions.deleteNote,
+                    mapOf("uuid" to uiNote.uuid!!)
+                )
                 detailNoteViewModel.delete(uiNote.uuid)
                 hideKeyboard()
                 requireView().findNavController().popBackStack()
@@ -112,7 +112,7 @@ class NoteDetailFragment : Fragment() {
     }
 
 
-    private fun renderUi(note:UiNote){
+    private fun renderUi(note: com.supercaliman.core.domain.UiNote) {
         uiNote = note
         txt_title.setText(note.title)
         txt_date.text = note.date

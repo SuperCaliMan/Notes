@@ -9,9 +9,6 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.supercaliman.core.SegmentHelper
-import com.supercaliman.core.TrackActions
-import com.supercaliman.domain.UiNote
 import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
 import com.supercaliman.note.renderErrorUi
@@ -22,13 +19,13 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class NotesFragment : Fragment(), BindingRecycleView<UiNote> {
+class NotesFragment : Fragment(), BindingRecycleView<com.supercaliman.core.domain.UiNote> {
 
     private val noteListViewModel: NoteListViewModel by viewModels()
     private lateinit var adapterList: AdapterList
 
     @Inject
-    lateinit var segment: SegmentHelper
+    lateinit var segment: com.supercaliman.analytics.SegmentHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +40,7 @@ class NotesFragment : Fragment(), BindingRecycleView<UiNote> {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        segment.trackScreen(TrackActions.homeOpen)
+        segment.trackScreen(com.supercaliman.analytics.TrackActions.homeOpen)
 
         noteListViewModel.getNotesList()
 
@@ -58,25 +55,28 @@ class NotesFragment : Fragment(), BindingRecycleView<UiNote> {
         noteListViewModel.errorLiveData.observe(viewLifecycleOwner) { activity?.renderErrorUi(it) }
 
         floatingActionButton.setOnClickListener {
-            segment.trackEvent(TrackActions.createNewNote)
+            segment.trackEvent(com.supercaliman.analytics.TrackActions.createNewNote)
             view.findNavController().navigate(R.id.action_notesFragment_to_noteCreateFragment)
         }
 
     }
 
 
-    override fun getObjClicked(data: UiNote) {
+    override fun getObjClicked(data: com.supercaliman.core.domain.UiNote) {
         setFragmentResult("data", bundleOf("data" to data))
-        segment.trackEvent(TrackActions.goToDetail, mapOf("uuid" to data.uuid!!))
+        segment.trackEvent(
+            com.supercaliman.analytics.TrackActions.goToDetail,
+            mapOf("uuid" to data.uuid!!)
+        )
         requireView().findNavController().navigate(R.id.action_notesFragment_to_detailFragment)
     }
 
 
-    private fun renderUi(data:List<UiNote>){
-        if(data.isEmpty()){
+    private fun renderUi(data: List<com.supercaliman.core.domain.UiNote>) {
+        if (data.isEmpty()) {
             notelist.visibility = View.GONE
             emptylist.visibility = View.VISIBLE
-        }else{
+        } else {
             notelist.visibility = View.VISIBLE
             emptylist.visibility = View.GONE
             adapterList.data = data

@@ -1,10 +1,10 @@
-package com.supercaliman.data
+package com.supercaliman.remoteparams.data
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import com.supercaliman.domain.RemoteConfigApp
+import com.supercaliman.remoteparams.domain.RemoteConfigApp
 import javax.inject.Inject
 
 class RemoteConfigImp @Inject constructor(private val moshi: Moshi) : RemoteConfigApp {

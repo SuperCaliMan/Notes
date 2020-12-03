@@ -13,8 +13,8 @@ object Versions {
     const val firebase_analytics = "17.4.3"
     const val lottie = "3.5.0"
     const val lottieCompose = "1.0.0-alpha01"
-    const val corutines = "1.3.9"
-    const val corutines_play_services = "1.3.0"
+    const val coroutines = "1.3.9"
+    const val coroutinesPlayServices = "1.3.0"
     const val androidx_fragment = "1.3.0-alpha06"
     const val espressoCore = "3.2.0"
     const val junit = "4.13"
@@ -37,11 +37,11 @@ object Kotlin {
 
 
 object Coroutines {
-    const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.corutines}"
-    const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.corutines}"
-    const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.corutines}"
+    const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
     const val playServices =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${Versions.corutines_play_services}"
+        "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${Versions.coroutinesPlayServices}"
 
 }
 

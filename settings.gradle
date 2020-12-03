@@ -1,3 +1,4 @@
+include ':remoteparams'
 include ':chat'
 include ':app'
 rootProject.name = "Note"

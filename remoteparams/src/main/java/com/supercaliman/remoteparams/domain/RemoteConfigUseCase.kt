@@ -1,6 +1,6 @@
-package com.supercaliman.domain.useCase
+package com.supercaliman.remoteparams.domain
 
-import com.supercaliman.domain.RemoteConfigApp
+
 import javax.inject.Inject
 
 class RemoteConfigUseCase @Inject constructor(private val remoteConfigApp: RemoteConfigApp) {

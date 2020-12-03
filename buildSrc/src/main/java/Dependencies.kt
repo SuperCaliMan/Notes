@@ -1,5 +1,5 @@
 object Versions {
-    const val kotlin = "1.4.0"
+    const val kotlin = "1.4.10"
     const val hilt = "2.28-alpha"
     const val hiltx = "1.0.0-alpha02"
     const val lifecycle = "2.2.0"
@@ -15,6 +15,9 @@ object Versions {
     const val lottieCompose = "1.0.0-alpha01"
     const val coroutines = "1.3.9"
     const val coroutinesPlayServices = "1.3.0"
+    const val lottie = "3.4.1"
+    const val corutines = "1.3.9"
+    const val corutines_play_services = "1.3.0"
     const val androidx_fragment = "1.3.0-alpha06"
     const val espressoCore = "3.2.0"
     const val junit = "4.13"
@@ -25,6 +28,15 @@ object Versions {
     const val firebase_config = "19.1.0"
     const val gson = "2.8.6"
     const val moshi = "1.11.0"
+    const val compose = "1.0.0-alpha06"
+    const val firebase_config = "19.1.0"
+    const val gson = "2.8.6"
+    const val moshi = "1.11.0"
+    const val segment = "4.+"
+    const val firebaseBom = "26.1.0"
+    const val retrofit = "2.1.0"
+    const val retrofitConverter = "2.9.0"
+    const val okhttpInterceptor = "4.3.1"
 
 }
 
@@ -43,6 +55,19 @@ object Coroutines {
     const val playServices =
         "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${Versions.coroutinesPlayServices}"
 
+}
+
+    const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.corutines}"
+    const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.corutines}"
+    const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.corutines}"
+    const val playServices =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${Versions.corutines_play_services}"
+
+}
+
+object Analytics {
+    const val segment = "com.segment.analytics.android:analytics:${Versions.segment}"
+    const val segmentFirebase = "com.segment.analytics.android.integrations:firebase:+@aar"
 }
 
 object Lifecycle {
@@ -91,8 +116,6 @@ object Compose {
     private const val nav_compose_version = "1.0.0-alpha02"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
 
-    //stuff
-
 
 }
 
@@ -123,6 +146,18 @@ object PlayService {
 
 }
 
+object Rest {
+    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    const val okHttpInterceptor =
+        "com.squareup.okhttp3:logging-interceptor:${Versions.okhttpInterceptor}"
+}
+
+object Serialization {
+    const val gson = "  implementation 'com.google.code.gson:gson:${Versions.gson}'"
+    const val moshi = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
+    const val retrofitConverter =
+        "com.squareup.retrofit2:converter-gson:${Versions.retrofitConverter}"
+
 object Serialization {
     const val gson = "  implementation 'com.google.code.gson:gson:${Versions.gson}'"
     const val moshi = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
@@ -142,8 +177,9 @@ object AndroidX {
 
 object Firebase {
     const val firestoreKtx = "com.google.firebase:firebase-firestore-ktx:${Versions.firestore}"
-    const val firebaseAnalytics =
-        "com.google.firebase:firebase-analytics:${Versions.firebase_analytics}"
+    const val analytics = "com.google.firebase:firebase-analytics:${Versions.firebase_analytics}"
+    const val messagingKtx = "com.google.firebase:firebase-messaging-ktx"
+    const val bom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
     const val config = "com.google.firebase:firebase-config-ktx:${Versions.firebase_config}"
 }
 

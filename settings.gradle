@@ -1,7 +1,8 @@
-include ':remoteparams'
-include ':chat'
+include ':core'
 include ':app'
-rootProject.name = "Note"
-include ':domain'
-include ':data'
 include ':compose'
+include ':remoteparams'
+rootProject.name = "Note"
+include ':features'
+include ':features:notification'
+include ':features:analytics'

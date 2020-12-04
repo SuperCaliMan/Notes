@@ -14,10 +14,10 @@ import javax.inject.Singleton
 object RemoteModule {
 
 
+
     @Provides
     @Singleton
     fun getRemoteConfig(): RemoteConfigApp {
-        val moshi = Moshi.Builder().build()
-        return RemoteConfigImp(moshi)
+        return RemoteConfigImp(Moshi.Builder().build())
     }
 }

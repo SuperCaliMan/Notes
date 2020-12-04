@@ -76,7 +76,8 @@ dependencies {
 
     implementation project(":core")
     implementation project(":compose")
-//    implementation project(":features:analytics")
+    implementation project(":features:analytics")
     implementation project(":features:notification")
+    implementation project(":features:remoteparams")
 
 }

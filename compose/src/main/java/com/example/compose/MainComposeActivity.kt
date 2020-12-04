@@ -15,6 +15,7 @@ import com.example.compose.home.newHomeScreen
 import com.example.compose.ui.NoteTheme
 import com.example.compose.ui.Screen
 import com.example.compose.ui.isDarkTheme
+import com.supercaliman.remoteparams.RemoteParamsVM
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
 
@@ -24,7 +25,7 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
 
 
     private val viewModel: NoteViewModel by viewModels()
-    // private val remoteParamsVM: RemoteParamsVM by viewModels()
+    private val remoteParamsVM: RemoteParamsVM by viewModels()
 
 
     @InternalCoroutinesApi
@@ -35,7 +36,7 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
                 val navController = rememberNavController()
                 NavHost(
                     navController,
-                    startDestination = if (true) Screen.NewHome.route else Screen.Home.route
+                    startDestination = if (remoteParamsVM.getNewFeature()) Screen.NewHome.route else Screen.Home.route
                 ) {
                     composable(Screen.Home.route) {
                         homeScreen(

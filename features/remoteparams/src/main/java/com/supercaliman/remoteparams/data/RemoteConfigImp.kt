@@ -5,9 +5,8 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.supercaliman.remoteparams.domain.RemoteConfigApp
-import javax.inject.Inject
 
-class RemoteConfigImp @Inject constructor(private val moshi: Moshi) : RemoteConfigApp {
+class RemoteConfigImp(private val moshi: Moshi) : RemoteConfigApp {
 
     override fun isNewFeature(): Boolean =
         read<Boolean>(ConfigParam.NEW_FEATURE, Boolean::class.java) ?: NEW_FEATURE

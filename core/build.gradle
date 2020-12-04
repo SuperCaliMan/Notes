@@ -27,7 +27,7 @@ dependencies {
     implementation Coroutines.playServices
 
     //Moshi
-    implementation Serialization.moshi
+    //implementation Serialization.moshi
 
     implementation Coroutines.android
 

@@ -69,7 +69,7 @@ dependencies {
     implementation Di.hiltViewModel
     kapt Di.hiltAndroidX
 
-    //Firebase messagin need this to service
+    //Firebase messaging need this to service
     implementation platform(Firebase.bom)
     implementation Firebase.messagingKtx
 

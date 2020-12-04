@@ -13,8 +13,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version
 
     //Firebase
-    implementation Firebase.firestoreKtx
-    implementation Firebase.analytics
     implementation Firebase.config
 
     //coroutine
@@ -30,6 +28,4 @@ dependencies {
     kapt Di.hiltCompiler
     implementation Di.hiltViewModel
     kapt Di.hiltAndroidX
-
-    implementation Lifecycle.viewmodel
 }

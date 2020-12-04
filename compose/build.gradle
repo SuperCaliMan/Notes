@@ -80,7 +80,6 @@ dependencies {
 
     //lottie
     implementation Animation.lottie
-    //implementation Animation.lottieCompose
 
     testImplementation 'junit:junit:'+rootProject.junit_version
     androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version

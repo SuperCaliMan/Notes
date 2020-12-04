@@ -3,6 +3,7 @@ package com.supercaliman.core.data
 import android.content.Context
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestoreSettings
 import com.supercaliman.core.domain.Note
@@ -35,16 +36,18 @@ class FireStoreAPI @Inject constructor(
 
     @ExperimentalCoroutinesApi
     @Throws(Exception::class)
-    fun getNotes(): Flow<List<Note>> = callbackFlow {
-        val subscription: ListenerRegistration =
-            db.collection(COLLECTION).addSnapshotListener { snapshot, _ ->
-                snapshot?.let {
-                    offer(
-                        snapshot.documents.map { data -> mapper.map(data) }.toList()
-                    )
+    suspend fun getNotes(): Flow<List<Note>> {
+        return callbackFlow {
+            val subscription: ListenerRegistration =
+                db.collection(COLLECTION).addSnapshotListener { snapshot, _ ->
+                    snapshot?.let {
+                        offer(
+                            snapshot.documents.map { data -> mapper.map(data) }.toList()
+                        )
+                    }
                 }
-            }
-        awaitClose { subscription.remove() }
+            awaitClose { subscription.remove() }
+        }
     }
 
     @Throws(Exception::class)
@@ -53,11 +56,12 @@ class FireStoreAPI @Inject constructor(
     @Throws(Exception::class)
     suspend fun createNote(note: Note) = db.collection(COLLECTION).add(note).await()
 
+    /*
     @Throws(Exception::class)
     suspend fun getNote(uuid: String): Note {
         val data = db.collection(COLLECTION).document(uuid).get().await()
         return mapper.mapNote(data)
-    }
+    }*/
 
     @Throws(Exception::class)
     suspend fun updateNote(note: Note) =
@@ -65,6 +69,12 @@ class FireStoreAPI @Inject constructor(
 
     companion object {
         const val COLLECTION = "Note"
+    }
+
+    @Throws(Exception::class)
+    suspend fun getNote(uuid: String): Note {
+        val data = db.collection(COLLECTION).document(uuid).get().await()
+        return mapper.map(data)
     }
 
 

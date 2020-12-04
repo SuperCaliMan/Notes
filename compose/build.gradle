@@ -86,7 +86,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version
 
 
-    implementation project(":domain")
-    implementation project(":data")
-    implementation project(":remoteparams")
+    implementation project(":features:remoteparams")
+    implementation project(":core")
 }

@@ -29,6 +29,7 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+        useIR = true
     }
 
     buildTypes {
@@ -74,7 +75,8 @@ dependencies {
 
 
     implementation project(":core")
-    implementation project(":features:analytics")
+    implementation project(":compose")
+//    implementation project(":features:analytics")
     implementation project(":features:notification")
 
 }

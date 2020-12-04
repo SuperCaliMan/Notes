@@ -17,6 +17,7 @@ object RemoteModule {
     @Provides
     @Singleton
     fun getRemoteConfig(): RemoteConfigApp {
-        return RemoteConfigImp(Moshi.Builder().build())
+        val moshi = Moshi.Builder().build()
+        return RemoteConfigImp(moshi)
     }
 }

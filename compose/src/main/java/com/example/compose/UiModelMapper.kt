@@ -1,8 +1,9 @@
 package com.example.compose
 
-import com.supercaliman.domain.Mapper
-import com.supercaliman.domain.Note
-import com.supercaliman.domain.UiNote
+
+import com.supercaliman.core.domain.Mapper
+import com.supercaliman.core.domain.Note
+import com.supercaliman.core.domain.UiNote
 import java.text.SimpleDateFormat
 import java.util.*
 

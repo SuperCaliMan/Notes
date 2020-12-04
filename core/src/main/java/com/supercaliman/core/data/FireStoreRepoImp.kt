@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 class FireStoreRepoImp(private var api: FireStoreAPI) : Repository {
 
+
     @ExperimentalCoroutinesApi
     override suspend fun getNotes(): Flow<List<Note>> {
         return try {
@@ -37,7 +38,15 @@ class FireStoreRepoImp(private var api: FireStoreAPI) : Repository {
     override suspend fun updateNote(note: Note) {
         try {
             api.updateNote(note)
-        }catch (e: Exception){
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun getNote(uuid: String): Note? {
+        return try {
+            api.getNote(uuid)
+        } catch (e: Exception) {
             throw e
         }
     }

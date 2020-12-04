@@ -18,7 +18,7 @@ import com.example.compose.NoteViewModel
 import com.example.compose.R
 import com.example.compose.ui.Dimension
 import com.example.compose.ui.progressBar
-import com.supercaliman.domain.UiNote
+import com.supercaliman.core.domain.UiNote
 
 interface OnSaveListener {
     fun onSave(title: String, description: String)
@@ -28,6 +28,7 @@ object Params {
     const val PANEL_MODE = "500"
     const val NOTE = "501"
 }
+
 
 @Composable
 fun detailScreen(

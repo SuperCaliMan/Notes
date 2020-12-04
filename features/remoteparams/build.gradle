@@ -9,27 +9,27 @@ dependencies {
     implementation Kotlin.stdlib
     implementation AndroidX.coreKtx
     implementation AndroidX.appcompat
-    implementation Material.core
     testImplementation 'junit:junit:'+rootProject.junit_version
     androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version
-
-    //Hilt DI
-    implementation Di.hiltAndroid
-    kapt Di.hiltCompiler
 
     //Firebase
     implementation Firebase.firestoreKtx
     implementation Firebase.analytics
     implementation Firebase.config
 
-    //corutine
+    //coroutine
     implementation Coroutines.android
     implementation Coroutines.playServices
 
     //Moshi
     implementation Serialization.moshi
 
-    implementation Coroutines.android
 
+    //Hilt DI
+    implementation Di.hiltAndroid
+    kapt Di.hiltCompiler
+    implementation Di.hiltViewModel
+    kapt Di.hiltAndroidX
 
+    implementation Lifecycle.viewmodel
 }

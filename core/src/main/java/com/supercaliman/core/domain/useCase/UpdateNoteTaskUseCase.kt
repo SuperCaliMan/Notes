@@ -2,9 +2,11 @@ package com.supercaliman.core.domain.useCase
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.supercaliman.domain.Note
-import com.supercaliman.domain.Repository
-import com.supercaliman.domain.Result
+import com.supercaliman.core.domain.Note
+import com.supercaliman.core.domain.Repository
+import com.supercaliman.core.domain.Result
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class UpdateNoteTaskUseCase @Inject constructor(private var repo: Repository) {

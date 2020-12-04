@@ -1,20 +1,24 @@
 package com.example.compose
 
+
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.supercaliman.domain.Note
-import com.supercaliman.domain.Result
-import com.supercaliman.domain.SingleLiveEvent
-import com.supercaliman.domain.UiNote
-import com.supercaliman.domain.useCase.CreateNoteTaskUseCase
-import com.supercaliman.domain.useCase.DeleteNoteTaskUseCase
-import com.supercaliman.domain.useCase.GetNoteTaskUseCase
-import com.supercaliman.domain.useCase.UpdateNoteTaskUseCase
+import com.supercaliman.core.domain.Note
+import com.supercaliman.core.domain.Result
+import com.supercaliman.core.domain.SingleLiveEvent
+import com.supercaliman.core.domain.UiNote
+import com.supercaliman.core.domain.useCase.CreateNoteTaskUseCase
+import com.supercaliman.core.domain.useCase.DeleteNoteTaskUseCase
+import com.supercaliman.core.domain.useCase.GetNoteTaskUseCase
+import com.supercaliman.core.domain.useCase.UpdateNoteTaskUseCase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
+
 
 class NoteViewModel @ViewModelInject constructor(
     private var getNoteUseCase: GetNoteTaskUseCase,
@@ -30,8 +34,8 @@ class NoteViewModel @ViewModelInject constructor(
     val errorStatus: LiveData<Exception>
         get() = _errorLiveData
 
-    private val _uiLiveData = MediatorLiveData<List<UiNote>>()
-    val uiLiveData: LiveData<List<UiNote>>
+    private val _uiLiveData = MediatorLiveData<Flow<List<UiNote>>>()
+    val uiLiveData: LiveData<Flow<List<UiNote>>>
         get() = _uiLiveData
 
     private val _uiNote = MediatorLiveData<UiNote>()
@@ -45,10 +49,6 @@ class NoteViewModel @ViewModelInject constructor(
     fun createNote(uuid: String?, title: String, description: String) {
         val date = Calendar.getInstance().time
         noteDetail = Note(uuid, title = title, description, date)
-    }
-
-    init {
-        getNotesList()
     }
 
     fun getNote(uuid: String?) {
@@ -130,6 +130,7 @@ class NoteViewModel @ViewModelInject constructor(
         }
     }
 
+
     fun getNotesList() {
         val observable = getNoteUseCase.observe()
 
@@ -147,8 +148,15 @@ class NoteViewModel @ViewModelInject constructor(
         _uiLiveData.addSource(observable) {
             if (it is Result.Success) {
                 _uiLiveData.postValue(
-                    it.data.sortedBy { data -> data.date.time }.map { note -> mapper.map(note) }
-                        .reversed()
+                    it.data.map { data ->
+                        data
+                            .sortedBy { d -> d.date.time }
+                            .map { note -> mapper.map(note) }
+                            .reversed()
+                    }
+                    /*
+            it.data.sortedBy { data -> data.date.time }.map { note -> mapper.map(note) }
+                .reversed()*/
                 )
             }
         }

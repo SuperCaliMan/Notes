@@ -25,7 +25,7 @@ import com.example.compose.R
 import com.example.compose.ui.Dimension
 import com.example.compose.ui.colorsArray
 import com.example.compose.ui.isDarkTheme
-import com.supercaliman.domain.UiNote
+import com.supercaliman.core.domain.UiNote
 
 /**
  * Display a lottie animation use android view because lottie doesn't support compose yet

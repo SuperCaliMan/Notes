@@ -25,7 +25,8 @@ import com.example.compose.R
 import com.example.compose.detail.Params
 import com.example.compose.detail.StateScreen
 import com.example.compose.ui.*
-import com.supercaliman.domain.UiNote
+import com.supercaliman.core.domain.UiNote
+
 
 @Composable
 fun newHomeScreen(

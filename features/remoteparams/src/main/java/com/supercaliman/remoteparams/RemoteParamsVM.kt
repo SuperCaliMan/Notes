@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.supercaliman.remoteparams.domain.RemoteConfigUseCase
 
 class RemoteParamsVM @ViewModelInject constructor(
-    private var remoteConfigUseCase: RemoteConfigUseCase
+    var remoteConfigUseCase: RemoteConfigUseCase
 ) : ViewModel() {
 
     fun getNewFeature(): Boolean = remoteConfigUseCase.isNewFeature()

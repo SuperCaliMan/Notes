@@ -3,24 +3,26 @@ package com.supercaliman.core.domain.useCase
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.supercaliman.domain.Note
-import com.supercaliman.domain.Repository
-import com.supercaliman.domain.Result
+import com.supercaliman.core.domain.Note
+import com.supercaliman.core.domain.Repository
+import com.supercaliman.core.domain.Result
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class GetNoteTaskUseCase @Inject constructor(private var repo: Repository) {
 
 
-    private val result = MediatorLiveData<Result<List<Note>>>()
+    private val result = MediatorLiveData<Result<Flow<List<Note>>>>()
     private val resultDetailNote = MediatorLiveData<Result<Note>>()
+
 
     suspend fun getNotes() = withContext(Dispatchers.IO) {
         result.postValue(Result.Loading)
         try {
             val res = repo.getNotes()
-            res.collect {
-                result.postValue(Result.Success(it))
-            }
+            result.postValue(Result.Success(res))
         } catch (e: Exception) {
             result.postValue(Result.Error(e))
         }
@@ -38,7 +40,7 @@ class GetNoteTaskUseCase @Inject constructor(private var repo: Repository) {
         }
     }
 
-    fun observe(): MutableLiveData<Result<List<Note>>> {
+    fun observe(): MutableLiveData<Result<Flow<List<Note>>>> {
         return result
     }
 

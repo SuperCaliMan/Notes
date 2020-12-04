@@ -1,8 +1,9 @@
 package com.supercaliman.core.di
 
-import com.supercaliman.data.FireStoreAPI
-import com.supercaliman.data.FireStoreRepoImp
-import com.supercaliman.domain.Repository
+
+import com.supercaliman.core.data.FireStoreAPI
+import com.supercaliman.core.data.FireStoreRepoImp
+import com.supercaliman.core.domain.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

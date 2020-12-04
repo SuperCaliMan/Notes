@@ -1,8 +1,8 @@
 include ':core'
 include ':app'
 include ':compose'
-include ':remoteparams'
 rootProject.name = "Note"
 include ':features'
 include ':features:notification'
 include ':features:analytics'
+include ':features:remoteparams'

@@ -14,8 +14,7 @@ import com.supercaliman.core.domain.useCase.CreateNoteTaskUseCase
 import com.supercaliman.core.domain.useCase.DeleteNoteTaskUseCase
 import com.supercaliman.core.domain.useCase.GetNoteTaskUseCase
 import com.supercaliman.core.domain.useCase.UpdateNoteTaskUseCase
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -34,8 +33,8 @@ class NoteViewModel @ViewModelInject constructor(
     val errorStatus: LiveData<Exception>
         get() = _errorLiveData
 
-    private val _uiLiveData = MediatorLiveData<Flow<List<UiNote>>>()
-    val uiLiveData: LiveData<Flow<List<UiNote>>>
+    private val _uiLiveData = MediatorLiveData<List<UiNote>>()
+    val uiLiveData: LiveData<List<UiNote>>
         get() = _uiLiveData
 
     private val _uiNote = MediatorLiveData<UiNote>()
@@ -131,6 +130,7 @@ class NoteViewModel @ViewModelInject constructor(
     }
 
 
+    @InternalCoroutinesApi
     fun getNotesList() {
         val observable = getNoteUseCase.observe()
 
@@ -148,16 +148,9 @@ class NoteViewModel @ViewModelInject constructor(
         _uiLiveData.addSource(observable) {
             if (it is Result.Success) {
                 _uiLiveData.postValue(
-                    it.data.map { data ->
-                        data
-                            .sortedBy { d -> d.date.time }
-                            .map { note -> mapper.map(note) }
-                            .reversed()
-                    }
-                    /*
-            it.data.sortedBy { data -> data.date.time }.map { note -> mapper.map(note) }
-                .reversed()*/
-                )
+                    it.data.sortedBy { data -> data.date.time }
+                        .map { note -> mapper.map(note) }
+                        .reversed())
             }
         }
         viewModelScope.launch { getNoteUseCase.getNotes() }

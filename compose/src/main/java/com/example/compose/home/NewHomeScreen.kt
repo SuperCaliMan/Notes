@@ -2,7 +2,6 @@ package com.example.compose.home
 
 
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -26,8 +25,10 @@ import com.example.compose.detail.Params
 import com.example.compose.detail.StateScreen
 import com.example.compose.ui.*
 import com.supercaliman.core.domain.UiNote
+import kotlinx.coroutines.InternalCoroutinesApi
 
 
+@InternalCoroutinesApi
 @Composable
 fun newHomeScreen(
     viewModel: NoteViewModel,

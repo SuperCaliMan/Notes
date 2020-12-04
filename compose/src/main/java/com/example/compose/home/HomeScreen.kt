@@ -16,15 +16,16 @@ import com.example.compose.ui.Screen
 import com.example.compose.ui.progressBar
 import com.example.compose.ui.renderError
 import com.supercaliman.core.domain.UiNote
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.InternalCoroutinesApi
 
 
+@InternalCoroutinesApi
 @Composable
 fun homeScreen(
     viewModel: NoteViewModel,
     navController: NavController,
 ) {
-    val data: Flow<List<UiNote>>? by viewModel.uiLiveData.observeAsState()
+    val data: List<UiNote> by viewModel.uiLiveData.observeAsState(listOf())
     val errorData: Exception? by viewModel.errorStatus.observeAsState()
     val loading: Boolean by viewModel.loadingStatus.observeAsState(true)
     viewModel.getNotesList()

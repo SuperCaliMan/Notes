@@ -7,22 +7,26 @@ import com.supercaliman.core.domain.Note
 import com.supercaliman.core.domain.Repository
 import com.supercaliman.core.domain.Result
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class GetNoteTaskUseCase @Inject constructor(private var repo: Repository) {
 
 
-    private val result = MediatorLiveData<Result<Flow<List<Note>>>>()
+    private val result = MediatorLiveData<Result<List<Note>>>()
     private val resultDetailNote = MediatorLiveData<Result<Note>>()
 
 
+    @InternalCoroutinesApi
     suspend fun getNotes() = withContext(Dispatchers.IO) {
         result.postValue(Result.Loading)
         try {
             val res = repo.getNotes()
-            result.postValue(Result.Success(res))
+            res.collect {
+                result.postValue(Result.Success(it))
+            }
         } catch (e: Exception) {
             result.postValue(Result.Error(e))
         }
@@ -40,7 +44,7 @@ class GetNoteTaskUseCase @Inject constructor(private var repo: Repository) {
         }
     }
 
-    fun observe(): MutableLiveData<Result<Flow<List<Note>>>> {
+    fun observe(): MutableLiveData<Result<List<Note>>> {
         return result
     }
 

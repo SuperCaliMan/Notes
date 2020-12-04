@@ -16,6 +16,7 @@ import com.example.compose.ui.NoteTheme
 import com.example.compose.ui.Screen
 import com.example.compose.ui.isDarkTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.InternalCoroutinesApi
 
 
 @AndroidEntryPoint
@@ -26,6 +27,7 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
     // private val remoteParamsVM: RemoteParamsVM by viewModels()
 
 
+    @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

@@ -1,0 +1,22 @@
+apply from: "$rootDir/shared-dependencies.gradle"
+
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
+dependencies {
+
+    implementation Kotlin.stdlib
+    implementation AndroidX.coreKtx
+    implementation AndroidX.appcompat
+    implementation Material.core
+    implementation AndroidX.constraintLayout
+    testImplementation 'junit:junit:'+rootProject.junit_version
+    androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version
+    implementation AndroidX.activityKtx
+
+    //Hilt DI
+    implementation Di.hiltAndroid
+    kapt Di.hiltCompiler
+
+    implementation project(":libraries:navigation")
+}

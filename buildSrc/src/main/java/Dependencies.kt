@@ -28,6 +28,7 @@ object Versions {
     const val retrofit = "2.1.0"
     const val retrofitConverter = "2.9.0"
     const val okhttpInterceptor = "4.3.1"
+    const val activityKtx = "1.2.0-beta02"
 
 }
 
@@ -148,6 +149,7 @@ object Serialization {
 object AndroidX {
     const val appcompat = "androidx.appcompat:appcompat:1.2.0-rc01"
     const val coreKtx = "androidx.core:core-ktx:1.5.0-alpha01"
+    const val activityKtx = "androidx.activity:activity-ktx:${Versions.activityKtx}"
     const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Versions.ConstraintLayout}"
     const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerview}"

@@ -5,6 +5,6 @@ import android.content.Intent
 
 object NavUtils {
 
-    fun openScreen(context: Context, action: String): Intent =
-        Intent().setClassName(context, action)
+    fun openScreen(context: Context, destination: String): Intent =
+        Intent().setClassName(context, destination)
 }

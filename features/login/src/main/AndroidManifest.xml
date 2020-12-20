@@ -3,7 +3,7 @@
     package="com.supercaliman.login">
 
     <application>
-        <activity android:name=".BaseActivity"></activity>
+        <activity android:name="com.supercaliman.core.base.BaseActivity"></activity>
     </application>
 
 </manifest>

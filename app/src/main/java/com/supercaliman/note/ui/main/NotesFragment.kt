@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
 import com.supercaliman.note.renderErrorUi
@@ -44,7 +44,7 @@ class NotesFragment : Fragment(), BindingRecycleView<com.supercaliman.core.domai
 
         noteListViewModel.getNotesList()
 
-        notelist.layoutManager = LinearLayoutManager(context)
+        notelist.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         adapterList = AdapterList(this)
         notelist.adapter = adapterList
 

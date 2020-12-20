@@ -42,13 +42,17 @@ dependencies {
     implementation Kotlin.stdlib
     implementation AndroidX.coreKtx
     implementation AndroidX.appcompat
+    implementation AndroidX.activityKtx
     implementation Material.core
+    implementation AndroidX.constraintLayout
     testImplementation 'junit:junit:'+rootProject.junit_version
     androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version
 
     //Hilt DI
     implementation Di.hiltAndroid
     kapt Di.hiltCompiler
+    implementation Di.hiltViewModel
+    kapt Di.hiltAndroidX
 
     //Firebase
     implementation Firebase.firestoreKtx

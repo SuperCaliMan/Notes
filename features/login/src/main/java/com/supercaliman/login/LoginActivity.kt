@@ -1,47 +1,39 @@
 package com.supercaliman.login
 
 import android.os.Bundle
-import android.view.View
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.auth.FirebaseAuth
-import com.supercaliman.login.databinding.ActivityLoginBinding
+import com.supercaliman.core.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 
-class LoginActivity : BaseActivity(), View.OnClickListener {
+@AndroidEntryPoint
+class LoginActivity : BaseActivity() {
 
-
-    private lateinit var auth: FirebaseAuth
-    private lateinit var binding: ActivityLoginBinding
     private lateinit var viewPager: ViewPager2
 
-    private lateinit var googleSignInClient: GoogleSignInClient
 
     fun goToPage(page: Int) {
         viewPager.setCurrentItem(page, true)
     }
 
+    override fun getLayoutResourceId(): Int = R.layout.activity_login
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        auth = FirebaseAuth.getInstance()
-
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        viewPager = binding.pager
+        viewPager = pager
         viewPager.adapter = FragmentAdapter(this)
 
-        val tabLayout: TabLayout = binding.tabLayout
+        val tabLayout: TabLayout = tab_layout
         TabLayoutMediator(tabLayout, pager) { tab, pos ->
             when (pos) {
                 0 -> tab.text = getString(R.string.signin).toUpperCase(Locale.ITALIAN)
                 1 -> tab.text = getString(R.string.signup).toUpperCase(Locale.ITALIAN)
             }
         }.attach()
-
 
         /*
         supportFragmentManager.beginTransaction().add(R.id.fragment_host,FragmentLogin())
@@ -92,9 +84,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         }
     }
     // [END onactivityresult]*/
-
+/*
     override fun onClick(v: View) {
-        /*
+
         when(v.id){
             R.id.login -> signIn(binding.loginMain.email.text.toString(),binding.loginMain.password.text.toString())
             R.id.signup -> {
@@ -102,8 +94,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     .addToBackStack(null)
                     .commit()
             }
-        }*/
-    }
+        }
+    }*/
 /*
     private fun signIn(email: String, password: String) {
         Timber.d("signIn: $email")

@@ -2,7 +2,6 @@ apply from: "$rootDir/shared-dependencies.gradle"
 
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
-apply plugin: 'kotlin-android'
 
 dependencies {
 
@@ -12,20 +11,20 @@ dependencies {
     implementation Material.core
     implementation AndroidX.constraintLayout
     implementation AndroidX.coordinatorLayout
-    implementation Material.core
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:'+rootProject.junit_version
-    androidTestImplementation 'androidx.test.ext:junit:'+rootProject.junit_android_version
     implementation AndroidX.activityKtx
+    implementation AndroidX.fragment
+    implementation AndroidX.fragmentKtx
 
     //Hilt DI
     implementation Di.hiltAndroid
     kapt Di.hiltCompiler
+    implementation Di.hiltViewModel
+    kapt Di.hiltAndroidX
 
     //auth
+    implementation platform(Firebase.bom)
     implementation Firebase.auth
-    implementation PlayService.auth
+
 
     implementation Log.timber
 
@@ -33,4 +32,5 @@ dependencies {
     implementation Animation.lottie
 
     implementation project(":libraries:navigation")
+    implementation project(":core")
 }

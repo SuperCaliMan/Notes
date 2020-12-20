@@ -170,7 +170,7 @@ object Firebase {
     const val messagingKtx = "com.google.firebase:firebase-messaging-ktx"
     const val bom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
     const val config = "com.google.firebase:firebase-config-ktx:${Versions.firebase_config}"
-    const val auth = "com.google.firebase:firebase-auth:${Versions.firebaeAuth}"
+    const val auth = "com.google.firebase:firebase-auth-ktx"
 }
 
 

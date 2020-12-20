@@ -11,6 +11,7 @@
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -90,7 +91,7 @@
                 android:layout_marginBottom="16dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/btnsignup"
+                app:layout_constraintBottom_toTopOf="@+id/BTN_sign_up"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_email"
@@ -104,7 +105,7 @@
                     android:text="@string/terms_check"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnsignup"
+                    app:layout_constraintTop_toBottomOf="@+id/BTN_sign_up"
                     tools:text="Don't have an account?" />
 
                 <TextView
@@ -123,7 +124,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btnsignup"
+                android:id="@+id/BTN_sign_up"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"

@@ -16,14 +16,14 @@ class LoginViewModel @ViewModelInject constructor(
     private val _userData = MutableLiveData<FirebaseUser>()
     val userData: LiveData<FirebaseUser> get() = _userData
 
-    private val _error = MutableLiveData<Exception>()
-    val error: LiveData<Exception> get() = _error
 
     init {
         authApi.alreadyLogin()?.let {
             _userData.postValue(it)
         }
     }
+
+    fun checkUserSignIn(): FirebaseUser? = authApi.alreadyLogin()
 
     fun signIn(email: String, password: String) {
         viewModelScope.launch {
@@ -41,12 +41,27 @@ class LoginViewModel @ViewModelInject constructor(
     fun createUser(username: String, email: String, password: String) {
         _loader.value = true
         viewModelScope.launch {
-            _loader.postValue(true)
             try {
                 val res = authApi.newUser(username, email, password)
-                _userData.value = res
+                res?.let {
+                    _userData.value = it
+                }
                 _loader.value = false
             } catch (e: Exception) {
+                _loader.value = false
+                _error.value = e
+            }
+        }
+    }
+
+    fun sendVerificationEmail() {
+        _loader.value = true
+        viewModelScope.launch {
+            try {
+                authApi.sendVerificationEmail()
+                _loader.value = false
+            } catch (e: java.lang.Exception) {
+                _loader.value = false
                 _error.value = e
             }
         }

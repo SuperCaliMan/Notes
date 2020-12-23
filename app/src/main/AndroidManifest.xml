@@ -26,6 +26,10 @@
 
         <activity
             android:name="com.supercaliman.login.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name="com.supercaliman.login.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

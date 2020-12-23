@@ -7,13 +7,16 @@ interface AuthRepo {
 
     suspend fun signIn(email: String, password: String): FirebaseUser?
 
+    /**
+     * if user is already log retrive in memory user, thanks Firebase
+     */
     fun alreadyLogin(): FirebaseUser?
 
     fun logout()
 
     suspend fun newUser(username: String, email: String, password: String): FirebaseUser?
 
-    suspend fun updateProfile(profileUpdate: UserProfileChangeRequest): Unit
+    suspend fun updateProfile(profileUpdate: UserProfileChangeRequest): FirebaseUser?
 
     suspend fun sendVerificationEmail(): Boolean
 }

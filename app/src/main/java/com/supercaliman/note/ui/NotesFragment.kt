@@ -1,4 +1,4 @@
-package com.supercaliman.note.ui.main
+package com.supercaliman.note.ui
 
 import android.os.Bundle
 import android.view.*
@@ -9,10 +9,11 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.supercaliman.analytics.SegmentHelper
+import com.supercaliman.core.NoteViewModel
+import com.supercaliman.core.renderErrorUi
 import com.supercaliman.note.BindingRecycleView
 import com.supercaliman.note.R
-import com.supercaliman.note.renderErrorUi
-import com.supercaliman.note.ui.main.ViewModels.NoteListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_notes.*
 import javax.inject.Inject
@@ -21,11 +22,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NotesFragment : Fragment(), BindingRecycleView<com.supercaliman.core.domain.UiNote> {
 
-    private val noteListViewModel: NoteListViewModel by viewModels()
+    private val noteListViewModel: NoteViewModel by viewModels()
     private lateinit var adapterList: AdapterList
 
     @Inject
-    lateinit var segment: com.supercaliman.analytics.SegmentHelper
+    lateinit var segment: SegmentHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +49,7 @@ class NotesFragment : Fragment(), BindingRecycleView<com.supercaliman.core.domai
         adapterList = AdapterList(this)
         notelist.adapter = adapterList
 
-        noteListViewModel.LoadingLiveData.observe(viewLifecycleOwner) { renderLoadingUi(it) }
+        noteListViewModel.loadingLiveData.observe(viewLifecycleOwner) { renderLoadingUi(it) }
 
         noteListViewModel.uiLiveData.observe(viewLifecycleOwner) { renderUi(it) }
 

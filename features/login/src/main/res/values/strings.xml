@@ -8,4 +8,6 @@
     <string name="terms_and_condition"><u>Terms &amp; Condition</u></string>
     <string name="terms_check">I have accepted the</string>
     <string name="back">Back</string>
+    <string name="notes">Notes</string>
+    <string name="verify_email">Verify your email! Do you want send new email?</string>
 </resources>

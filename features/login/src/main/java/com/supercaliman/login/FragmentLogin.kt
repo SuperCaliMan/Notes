@@ -1,5 +1,6 @@
 package com.supercaliman.login
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
@@ -8,11 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
+import com.supercaliman.core.base.ErrorNotesDialog
+import com.supercaliman.core.base.NotesDialog
 import com.supercaliman.navigation.Destinations
 import com.supercaliman.navigation.NavUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login.*
-import timber.log.Timber
 
 @AndroidEntryPoint
 class FragmentLogin : Fragment() {
@@ -32,6 +37,7 @@ class FragmentLogin : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        BTN_login.attachTextChangeAnimator()
         BTN_login.setOnClickListener {
             if (validateForm()) {
                 loginViewModel.signIn(LOGIN_email.text.toString(), LOGIN_password.text.toString())
@@ -40,13 +46,38 @@ class FragmentLogin : Fragment() {
 
         loginViewModel.userData.observe(viewLifecycleOwner) { user ->
             user?.let {
-                startActivity(NavUtils.openScreen(requireContext(), Destinations.MAIN_SCREEN))
-                mActivity.finish()
+                if (it.isEmailVerified) {
+                    startActivity(NavUtils.openScreen(requireContext(), Destinations.MAIN_SCREEN))
+                    mActivity.finish()
+                } else {
+                    NotesDialog(requireContext(), getString(R.string.verify_email),
+                        onPositiveClick = {
+                            loginViewModel.sendVerificationEmail()
+                            loginViewModel.logout()
+                        },
+                        { loginViewModel.logout() }).show()
+                }
             }
         }
 
         loginViewModel.error.observe(viewLifecycleOwner) {
-            Timber.e(it)
+            it?.let { e ->
+                BTN_login.hideProgress(R.string.signin)
+                ErrorNotesDialog(context = requireContext(), e.message!!).show()
+            }
+        }
+
+        loginViewModel.loader.observe(viewLifecycleOwner) {
+            if (it) {
+                BTN_login.showProgress {
+                    buttonText = "Loading"
+                    progressColor = Color.WHITE
+
+                }
+            } else {
+                BTN_login.hideProgress(R.string.signin)
+            }
+
         }
 
         BTN_sign_up.setOnClickListener {

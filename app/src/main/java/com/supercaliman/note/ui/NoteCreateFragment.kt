@@ -1,4 +1,4 @@
-package com.supercaliman.note.ui.main
+package com.supercaliman.note.ui
 
 import android.os.Bundle
 import android.view.*
@@ -6,11 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.supercaliman.analytics.SegmentHelper
+import com.supercaliman.core.NoteViewModel
+import com.supercaliman.core.hideKeyboard
+import com.supercaliman.core.renderErrorUi
+import com.supercaliman.core.showKeyBoard
 import com.supercaliman.note.R
-import com.supercaliman.note.hideKeyboard
-import com.supercaliman.note.renderErrorUi
-import com.supercaliman.note.showKeyBoard
-import com.supercaliman.note.ui.main.ViewModels.NoteCreateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_note_detail.*
 import javax.inject.Inject
@@ -18,10 +19,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NoteCreateFragment : Fragment() {
 
-    private val noteDetailViewModel: NoteCreateViewModel by viewModels()
+    private val noteDetailViewModel: NoteViewModel by viewModels()
 
     @Inject
-    lateinit var segmentHelper: com.supercaliman.analytics.SegmentHelper
+    lateinit var segmentHelper: SegmentHelper
 
 
     override fun onCreateView(

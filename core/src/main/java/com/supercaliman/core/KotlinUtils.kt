@@ -1,4 +1,4 @@
-package com.supercaliman.note
+package com.supercaliman.core
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -10,7 +10,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import java.lang.Exception
 
 fun Activity.hideKeyboard(): Boolean {
     return (getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)

@@ -1,4 +1,4 @@
-package com.supercaliman.note.ui.main
+package com.supercaliman.note.ui
 
 import android.view.LayoutInflater
 import android.view.View

@@ -31,7 +31,7 @@ object Versions {
     const val okhttpInterceptor = "4.3.1"
     const val activityKtx = "1.2.0-beta02"
     const val authGoogle = "19.0.0"
-    const val firebaeAuth = "20.0.1"
+    const val progressButton = "2.1.0"
 
 }
 
@@ -118,6 +118,8 @@ object Log {
 
 object Animation {
     const val lottie = "com.airbnb.android:lottie:${Versions.lottie}"
+    const val progressButton =
+        "com.github.razir.progressbutton:progressbutton:${Versions.progressButton}"
 }
 
 

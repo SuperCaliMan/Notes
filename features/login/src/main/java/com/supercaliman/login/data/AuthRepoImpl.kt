@@ -3,11 +3,9 @@ package com.supercaliman.login.data
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.supercaliman.login.domain.AuthRepo
-import kotlinx.coroutines.suspendCancellableCoroutine
-import timber.log.Timber
 import javax.security.auth.login.LoginException
+import kotlin.coroutines.suspendCoroutine
 
 class AuthRepoImpl constructor(private val auth: FirebaseAuth) : AuthRepo {
 
@@ -23,29 +21,19 @@ class AuthRepoImpl constructor(private val auth: FirebaseAuth) : AuthRepo {
         if (auth.currentUser != null) {
             return auth.currentUser!!
         } else {
-            return suspendCancellableCoroutine { cont ->
-                // [START sign_in_with_email]
+            return suspendCoroutine { cont ->
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Timber.d("signInWithEmail:success")
                             val user = auth.currentUser
-                            cont.resumeWith(kotlin.Result.success(user!!))
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Timber.w("signInWithEmail:failure ${task.exception}")
-                            cont.cancel(task.exception!!)
+                            cont.resumeWith(Result.success(user!!))
                         }
-
-                        // [START_EXCLUDE]
                         if (!task.isSuccessful) {
-                            cont.cancel(task.exception!!)
+                            cont.resumeWith(Result.failure(task.exception!!))
                         }
                     }
             }
         }
-        // [END sign_in_with_email]
     }
 
     override fun logout() {
@@ -53,35 +41,30 @@ class AuthRepoImpl constructor(private val auth: FirebaseAuth) : AuthRepo {
     }
 
     override suspend fun newUser(username: String, email: String, password: String): FirebaseUser? {
-        val user: FirebaseUser? = suspendCancellableCoroutine { cont ->
+        return suspendCoroutine { cont ->
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Timber.d("createUserWithEmail:success")
                         val user = auth.currentUser
                         auth.currentUser!!.sendEmailVerification()
-                        cont.resumeWith(kotlin.Result.success(user!!))
+                        logout() //logout user because i want test if user's email is verified
+                        cont.resumeWith(Result.success(user!!))
                     } else {
-                        // If sign in fails, display a message to the user.
-                        Timber.w("createUserWithEmail:failure ${task.exception}")
-                        cont.cancel(task.exception!!)
+                        cont.resumeWith(Result.failure(task.exception!!))
                     }
 
                 }
         }
-        updateProfile(userProfileChangeRequest {
-            displayName = username
-        })
-        return user
     }
 
-    override suspend fun updateProfile(profileUpdate: UserProfileChangeRequest) {
-        return suspendCancellableCoroutine {
+    override suspend fun updateProfile(profileUpdate: UserProfileChangeRequest): FirebaseUser? {
+        return suspendCoroutine {
             auth.currentUser!!.updateProfile(profileUpdate)
                 .addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
-                        it.cancel(Exception("failed to set user profile name"))
+                        it.resumeWith(Result.failure(Exception("failed to set user profile name")))
+                    } else {
+                        it.resumeWith(Result.success(auth.currentUser))
                     }
 
                 }
@@ -89,14 +72,14 @@ class AuthRepoImpl constructor(private val auth: FirebaseAuth) : AuthRepo {
     }
 
     override suspend fun sendVerificationEmail(): Boolean {
-        return suspendCancellableCoroutine { cont ->
+        return suspendCoroutine { cont ->
             auth.currentUser?.let { user ->
                 user.sendEmailVerification()
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            cont.resumeWith(kotlin.Result.success(true))
+                            cont.resumeWith(Result.success(true))
                         } else {
-                            cont.cancel(LoginException("Ops i don't send verification email"))
+                            cont.resumeWith(Result.failure(LoginException("Ops i don't send verification email")))
                         }
                     }
             }

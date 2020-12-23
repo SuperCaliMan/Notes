@@ -1,4 +1,4 @@
-package com.supercaliman.note.ui.main
+package com.supercaliman.note.ui
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -10,8 +10,9 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import com.supercaliman.note.*
-import com.supercaliman.note.ui.main.ViewModels.DetailNoteViewModel
+import com.supercaliman.analytics.SegmentHelper
+import com.supercaliman.core.*
+import com.supercaliman.note.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_note_detail.*
 import javax.inject.Inject
@@ -21,10 +22,10 @@ import javax.inject.Inject
 class NoteDetailFragment : Fragment() {
 
     private lateinit var uiNote: com.supercaliman.core.domain.UiNote
-    private val detailNoteViewModel: DetailNoteViewModel by viewModels()
+    private val detailNoteViewModel: NoteViewModel by viewModels()
 
     @Inject
-    lateinit var segment: com.supercaliman.analytics.SegmentHelper
+    lateinit var segment: SegmentHelper
 
 
     override fun onCreateView(

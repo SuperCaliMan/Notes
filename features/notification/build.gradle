@@ -28,4 +28,5 @@ dependencies {
 
     //corutine
     implementation Coroutines.android
+    implementation Coroutines.core
 }

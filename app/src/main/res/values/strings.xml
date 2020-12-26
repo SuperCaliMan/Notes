@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Notes</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="insert_your_note_here">Insert your note here&#8230;</string>
+    <string name="insert_your_note_here">Type something &#8230;</string>
     <string name="save">save</string>
     <string name="no_data">There is no note, press \"+\" button to add new note</string>
     <string name="title">Title</string>

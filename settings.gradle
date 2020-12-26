@@ -1,8 +1,11 @@
+include ':features:login'
+include ':libraries:navigation'
 include ':core'
 include ':app'
 include ':compose'
 rootProject.name = "Note"
 include ':features'
+include ':libraries'
 include ':features:notification'
 include ':features:analytics'
 include ':features:remoteparams'

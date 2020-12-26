@@ -1,0 +1,9 @@
+apply from: "$rootDir/shared-dependencies.gradle"
+
+
+dependencies {
+    implementation Kotlin.stdlib
+    implementation AndroidX.coreKtx
+    implementation AndroidX.appcompat
+    implementation Material.core
+}

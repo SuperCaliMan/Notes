@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 
-
+    <!--TODO fix usesClearTextTraffic -->
     <application
         android:fullBackupContent="true"
         android:allowBackup="true"
@@ -17,7 +17,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Note">
-        <activity android:name=".MainActivity">
+
+        <activity
+            android:name="com.example.compose.MainComposeActivity"
+            android:theme="@style/Theme.Note" />
+
+        <activity
+            android:name="com.supercaliman.login.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name="com.supercaliman.login.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

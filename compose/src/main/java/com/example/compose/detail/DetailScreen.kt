@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.example.compose.NoteViewModel
 import com.example.compose.R
 import com.example.compose.ui.Dimension
 import com.example.compose.ui.progressBar
+import com.supercaliman.core.NoteViewModel
 import com.supercaliman.core.domain.UiNote
 
 interface OnSaveListener {

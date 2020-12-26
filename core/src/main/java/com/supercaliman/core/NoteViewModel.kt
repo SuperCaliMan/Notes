@@ -1,4 +1,4 @@
-package com.example.compose
+package com.supercaliman.core
 
 
 import androidx.hilt.lifecycle.ViewModelInject
@@ -6,10 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.supercaliman.core.domain.Note
-import com.supercaliman.core.domain.Result
-import com.supercaliman.core.domain.SingleLiveEvent
-import com.supercaliman.core.domain.UiNote
+import com.supercaliman.core.domain.*
 import com.supercaliman.core.domain.useCase.CreateNoteTaskUseCase
 import com.supercaliman.core.domain.useCase.DeleteNoteTaskUseCase
 import com.supercaliman.core.domain.useCase.GetNoteTaskUseCase

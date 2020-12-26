@@ -9,12 +9,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
-import com.example.compose.NoteViewModel
 import com.example.compose.detail.Params
 import com.example.compose.detail.StateScreen
 import com.example.compose.ui.Screen
 import com.example.compose.ui.progressBar
 import com.example.compose.ui.renderError
+import com.supercaliman.core.NoteViewModel
 import com.supercaliman.core.domain.UiNote
 import kotlinx.coroutines.InternalCoroutinesApi
 

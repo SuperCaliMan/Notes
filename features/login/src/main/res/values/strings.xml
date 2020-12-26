@@ -1,0 +1,13 @@
+<resources>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="signup">sign up</string>
+    <string name="dont_have_an_account">Don\'t have an account ?</string>
+    <string name="signin">sign in</string>
+    <string name="username">username</string>
+    <string name="terms_and_condition"><u>Terms &amp; Condition</u></string>
+    <string name="terms_check">I have accepted the</string>
+    <string name="back">Back</string>
+    <string name="notes">Notes</string>
+    <string name="verify_email">Verify your email! Do you want send new email?</string>
+</resources>

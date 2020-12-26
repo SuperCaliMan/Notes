@@ -19,11 +19,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
-import com.example.compose.NoteViewModel
 import com.example.compose.R
 import com.example.compose.detail.Params
 import com.example.compose.detail.StateScreen
 import com.example.compose.ui.*
+import com.supercaliman.core.NoteViewModel
 import com.supercaliman.core.domain.UiNote
 import kotlinx.coroutines.InternalCoroutinesApi
 

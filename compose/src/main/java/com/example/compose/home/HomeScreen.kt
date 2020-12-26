@@ -45,7 +45,7 @@ fun homeScreen(
                     onClick = {
                         navController.navigate(Screen.Detail.route + "/${StateScreen.INSERT}")
                     },
-                    icon = { Icon(asset = Icons.Outlined.Edit) },
+                    icon = { Icon(Icons.Outlined.Edit) },
                     text = { Text(text = "Compose") },
                     backgroundColor = MaterialTheme.colors.surface,
                     contentColor = MaterialTheme.colors.secondary

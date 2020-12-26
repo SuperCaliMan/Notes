@@ -1,5 +1,5 @@
 object Versions {
-    const val kotlin = "1.4.10"
+    const val kotlin = "1.4.21"
     const val hilt = "2.28-alpha"
     const val hiltx = "1.0.0-alpha02"
     const val lifecycle = "2.2.0"
@@ -24,8 +24,8 @@ object Versions {
     const val junit = "4.13"
     const val junitAndroid = "1.1.1"
     const val playServices = "1.8.1"
-    const val compose = "1.0.0-alpha07"
-    const val composeNavigation = "1.0.0-alpha02"
+    const val compose = "1.0.0-alpha09"
+    const val composeNavigation = "1.0.0-alpha04"
     const val FirebaseConfig = "19.1.0"
     const val gson = "2.8.6"
     const val moshi = "1.11.0"
@@ -44,7 +44,8 @@ object Kotlin {
 
     const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
     const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-    const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:${Versions.kotlin}"
+    const val extensions =
+        "org.jetbrains.kotlin:kotlin-android-extensions:${Versions.kotlin}" //@Deprecate
 }
 
 

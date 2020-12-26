@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -15,7 +15,7 @@ import androidx.compose.runtime.Providers
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -57,14 +57,14 @@ fun appBarHome() {
             )
         },
         actions = {
-            val isDarkTheme = isDarkTheme(ContextAmbient.current)
+            val isDarkTheme = isDarkTheme(AmbientContext.current)
             IconButton(
                 onClick = {
                     if (isDarkTheme) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     } else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 },
-                icon = {
+                content = {
                     if (isDarkTheme) {
                         Icon(Icons.Default.Bedtime)
                     } else Icon(Icons.Outlined.Bedtime)
@@ -89,7 +89,7 @@ fun noteList(
             lottieAnimation(
                 modifier = Modifier.fillMaxWidth()
             )
-            Providers(AmbientContentAlpha provides ContentAlpha.high, children = {
+            Providers(AmbientContentAlpha provides ContentAlpha.high, content = {
                 Text(
                     stringResource(R.string.no_data),
                     modifier = Modifier.padding(bottom = Dimension.largeMargin)
@@ -101,14 +101,15 @@ fun noteList(
 
     } else {
         Surface(Modifier.fillMaxSize()) {
-            LazyColumnFor(
-                items,
+            LazyColumn(
                 contentPadding = PaddingValues(
                     top = Dimension.defaultMargin,
                     bottom = Dimension.largeMargin * 2
                 )
             ) {
-                noteCard(it, onItemClick)
+                items(items) {
+                    noteCard(it, onItemClick)
+                }
             }
         }
     }
@@ -144,7 +145,7 @@ fun noteCard(note: UiNote, click: (UiNote) -> Unit) {
 
             ) {
                 Text(note.title, style = MaterialTheme.typography.h6)
-                Providers(AmbientContentAlpha provides ContentAlpha.high, children = {
+                Providers(AmbientContentAlpha provides ContentAlpha.high, content = {
                     Text(
                         note.date,
                         modifier = Modifier.padding(

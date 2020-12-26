@@ -120,7 +120,7 @@ fun bodyDetail(
             )
         } else {
             note?.let {
-                Providers(AmbientContentAlpha provides ContentAlpha.high, children = {
+                Providers(AmbientContentAlpha provides ContentAlpha.high, content = {
                     Text(
                         text = it.date, style = MaterialTheme.typography.subtitle2,
                         modifier = Modifier.padding(top = Dimension.largeMargin)
@@ -160,7 +160,7 @@ fun appBar(
                 onClick = {
                     backStack()
                 },
-                icon = { Icon(Icons.Default.ArrowBack) }
+                content = { Icon(Icons.Default.ArrowBack) }
             )
         },
         title = {
@@ -186,7 +186,7 @@ fun appBar(
                 StateScreen.INSERT -> {
                     IconButton(
                         onClick = { onSave() },
-                        icon = { Icon(Icons.Default.Save) }
+                        content = { Icon(Icons.Default.Save) }
                     )
                 }
                 StateScreen.READ -> {
@@ -194,14 +194,14 @@ fun appBar(
                         onClick = {
                             appBarState.value = StateScreen.EDIT
                         },
-                        icon = { Icon(Icons.Default.Edit) }
+                        content = { Icon(Icons.Default.Edit) }
                     )
                     IconButton(
                         onClick = {
                             viewModel.delete(note?.uuid)
                             backStack()
                         },
-                        icon = { Icon(Icons.Default.Delete) }
+                        content = { Icon(Icons.Default.Delete) }
                     )
                 }
                 StateScreen.EDIT -> {
@@ -209,14 +209,14 @@ fun appBar(
                         onClick = {
                             appBarState.value = StateScreen.READ
                         },
-                        icon = { Icon(Icons.Default.Undo) }
+                        content = { Icon(Icons.Default.Undo) }
                     )
                     IconButton(
                         onClick = {
                             viewModel.updateNote()
                             backStack()
                         },
-                        icon = { Icon(Icons.Default.Save) }
+                        content = { Icon(Icons.Default.Save) }
                     )
                 }
             }

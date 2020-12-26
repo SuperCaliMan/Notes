@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -64,14 +64,14 @@ fun newHomeScreen(
                     Icon(Icons.Filled.Menu)
                 }
                 Spacer(Modifier.weight(1f, true))
-                val isDarkTheme = isDarkTheme(ContextAmbient.current)
+                val isDarkTheme = isDarkTheme(AmbientContext.current)
                 IconButton(
                     onClick = {
                         if (isDarkTheme) {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                         } else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     },
-                    icon = {
+                    content = {
                         if (isDarkTheme) {
                             Icon(Icons.Default.Bedtime)
                         } else Icon(Icons.Outlined.Bedtime)
@@ -88,7 +88,7 @@ fun newHomeScreen(
                     onClick = {
                         navController.navigate(Screen.Detail.route + "/${StateScreen.INSERT}")
                     },
-                    icon = { Icon(asset = Icons.Outlined.Edit) },
+                    content = { Icon(imageVector = Icons.Outlined.Edit) },
                     backgroundColor = MaterialTheme.colors.surface,
                     contentColor = MaterialTheme.colors.secondary
                 )

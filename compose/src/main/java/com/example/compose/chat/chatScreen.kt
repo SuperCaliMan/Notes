@@ -16,7 +16,7 @@ import com.example.compose.R
 fun chatScreen() {
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
         Image(
-            asset = imageResource(R.drawable.rick),
+            imageResource(R.drawable.rick),
             contentScale = ContentScale.Fit,
             modifier = Modifier
                 .preferredWidth(200.dp)

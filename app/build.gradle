@@ -59,7 +59,7 @@ dependencies {
     androidTestImplementation "androidx.test:runner:1.3.0"
 
 
-    implementation Debug.timber
+    implementation Log.timber
 
 
     //Hilt DI
@@ -76,5 +76,7 @@ dependencies {
     implementation project(":core")
     implementation project(":features:analytics")
     implementation project(":features:notification")
+    implementation project(":features:login")
+    implementation project(":libraries:navigation")
 
 }

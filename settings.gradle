@@ -1,6 +1,9 @@
+include ':features:login'
+include ':libraries:navigation'
 include ':core'
 include ':app'
 rootProject.name = "Note"
 include ':features'
+include ':libraries'
 include ':features:notification'
 include ':features:analytics'

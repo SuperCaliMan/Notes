@@ -2,7 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    tools:context=".ui.main.NotesFragment"
+    tools:context=".ui.NotesFragment"
     android:layout_height="match_parent">
 
     <include
@@ -18,17 +18,16 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/floatingActionButton"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:contentDescription="@string/app_name"
-    android:layout_gravity="right|bottom"
-    android:layout_margin="16dp"
-    android:backgroundTintMode="add"
-    android:src="@drawable/add_note"
-    android:clickable="true"
-    tools:srcCompat="@drawable/abc_vector_test" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/add_note"
+        tools:srcCompat="@drawable/add_note"
+        android:focusable="true" />
 
     <ProgressBar
         android:id="@+id/progressBar"

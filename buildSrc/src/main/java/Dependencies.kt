@@ -5,7 +5,8 @@ object Versions {
     const val lifecycle = "2.2.0"
     const val recyclerview = "1.1.0"
     const val material = "1.2.0"
-    const val ConstraintLayout = "1.1.3"
+    const val constraintLayout = "2.0.4"
+    const val coordinatorLayout = "1.1.0"
     const val legacySupport = "1.0.0"
     const val navigation = "2.3.0"
     const val timber = "4.7.1"
@@ -14,7 +15,7 @@ object Versions {
     const val lottie = "3.4.1"
     const val corutines = "1.3.9"
     const val corutines_play_services = "1.3.0"
-    const val androidx_fragment = "1.3.0-alpha06"
+    const val fragmentX = "1.3.0-alpha06"
     const val espressoCore = "3.2.0"
     const val junit = "4.13"
     const val junitAndroid = "1.1.1"
@@ -24,10 +25,13 @@ object Versions {
     const val gson = "2.8.6"
     const val moshi = "1.11.0"
     const val segment = "4.+"
-    const val firebaseBom = "26.1.0"
+    const val firebaseBom = "26.1.1"
     const val retrofit = "2.1.0"
     const val retrofitConverter = "2.9.0"
     const val okhttpInterceptor = "4.3.1"
+    const val activityKtx = "1.2.0-beta02"
+    const val authGoogle = "19.0.0"
+    const val progressButton = "2.1.0"
 
 }
 
@@ -108,12 +112,14 @@ object Material {
     const val core = "com.google.android.material:material:${Versions.material}"
 }
 
-object Debug {
+object Log {
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 }
 
 object Animation {
     const val lottie = "com.airbnb.android:lottie:${Versions.lottie}"
+    const val progressButton =
+        "com.github.razir.progressbutton:progressbutton:${Versions.progressButton}"
 }
 
 
@@ -127,6 +133,7 @@ object Di {
 
 object PlayService {
     const val core = "com.google.android.play:core-ktx:${Versions.playServices}"
+    const val auth = "com.google.android.gms:play-services-auth:${Versions.authGoogle}"
 
 }
 
@@ -148,12 +155,15 @@ object Serialization {
 object AndroidX {
     const val appcompat = "androidx.appcompat:appcompat:1.2.0-rc01"
     const val coreKtx = "androidx.core:core-ktx:1.5.0-alpha01"
+    const val activityKtx = "androidx.activity:activity-ktx:${Versions.activityKtx}"
     const val constraintLayout =
-        "androidx.constraintlayout:constraintlayout:${Versions.ConstraintLayout}"
+        "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerview}"
     const val legacySupport = "androidx.legacy:legacy-support-v4:${Versions.legacySupport}"
-    const val fragment = "androidx.fragment:fragment:${Versions.androidx_fragment}"
-    const val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.androidx_fragment}"
+    const val fragment = "androidx.fragment:fragment:${Versions.fragmentX}"
+    const val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.fragmentX}"
+    const val coordinatorLayout =
+        "androidx.coordinatorlayout:coordinatorlayout:${Versions.coordinatorLayout}"
 }
 
 object Firebase {
@@ -162,6 +172,7 @@ object Firebase {
     const val messagingKtx = "com.google.firebase:firebase-messaging-ktx"
     const val bom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
     const val config = "com.google.firebase:firebase-config-ktx:${Versions.firebase_config}"
+    const val auth = "com.google.firebase:firebase-auth-ktx"
 }
 
 

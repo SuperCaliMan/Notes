@@ -17,7 +17,10 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/analytics" />
+            <option value="$PROJECT_DIR$/features/login" />
             <option value="$PROJECT_DIR$/features/notification" />
+            <option value="$PROJECT_DIR$/libraries" />
+            <option value="$PROJECT_DIR$/libraries/navigation" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

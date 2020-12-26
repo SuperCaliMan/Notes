@@ -24,8 +24,9 @@ dependencies {
     implementation Di.hiltAndroid
     kapt Di.hiltCompiler
 
-    implementation Debug.timber
+    implementation Log.timber
 
     //corutine
     implementation Coroutines.android
+    implementation Coroutines.core
 }

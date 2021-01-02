@@ -1,18 +1,18 @@
 package com.supercaliman.core.domain.useCase
 
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.supercaliman.core.domain.Note
 import com.supercaliman.core.domain.Repository
 import com.supercaliman.core.domain.Result
+import com.supercaliman.core.domain.dto.Note
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class UpdateNoteTaskUseCase @Inject constructor(private var repo: Repository) {
+class UpdateNoteTaskUseCase @Inject constructor(
+    private var repo: Repository
+) {
 
-    private val result = MediatorLiveData<Result<Boolean>>()
-
+    private val result = MutableLiveData<Result<Boolean>>()
 
     suspend fun execute(note: Note) = withContext(Dispatchers.IO) {
         result.postValue(Result.Loading)

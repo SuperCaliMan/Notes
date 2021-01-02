@@ -1,4 +1,4 @@
-package com.supercaliman.core.domain
+package com.example.compose.domain
 
 import java.io.Serializable
 

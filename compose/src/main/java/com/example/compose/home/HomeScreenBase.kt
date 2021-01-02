@@ -22,10 +22,10 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.example.compose.R
+import com.example.compose.domain.UiNote
 import com.example.compose.ui.Dimension
 import com.example.compose.ui.colorsArray
 import com.example.compose.ui.isDarkTheme
-import com.supercaliman.core.domain.UiNote
 
 /**
  * Display a lottie animation use android view because lottie doesn't support compose yet

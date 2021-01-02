@@ -1,4 +1,4 @@
-package com.supercaliman.login
+package com.supercaliman.login.ui
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

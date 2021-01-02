@@ -2,7 +2,8 @@ package com.supercaliman.core.data
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.supercaliman.core.domain.Mapper
-import com.supercaliman.core.domain.Note
+import com.supercaliman.core.domain.dto.Note
+import com.supercaliman.core.domain.dto.Visibility
 import javax.inject.Inject
 
 class ModelMapperDataSource @Inject constructor() : Mapper<DocumentSnapshot, Note> {
@@ -12,7 +13,9 @@ class ModelMapperDataSource @Inject constructor() : Mapper<DocumentSnapshot, Not
             data.id,
             data["title"].toString(),
             data["description"].toString(),
-            data.getTimestamp("date")!!.toDate()
+            data.getTimestamp("date")!!.toDate(),
+            author = data["author"].toString(),
+            visibility = Visibility.valueOf(data["visibility"].toString().toUpperCase())
         )
     }
 }

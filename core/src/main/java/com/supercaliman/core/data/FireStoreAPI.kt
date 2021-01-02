@@ -6,7 +6,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestoreSettings
-import com.supercaliman.core.domain.Note
+import com.supercaliman.core.domain.dto.Note
+import com.supercaliman.core.domain.dto.User
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -19,9 +20,8 @@ import javax.inject.Inject
 class FireStoreAPI @Inject constructor(
     @ApplicationContext private var context: Context,
     private var mapper: ModelMapperDataSource
-) {
+) : NotesApi {
 
-    private val COLLECTION = "Note"
     private val db: FirebaseFirestore
 
     init {
@@ -36,45 +36,33 @@ class FireStoreAPI @Inject constructor(
 
     @ExperimentalCoroutinesApi
     @Throws(Exception::class)
-    suspend fun getNotes(): Flow<List<Note>> {
+    override suspend fun getNotes(user: User): Flow<List<Note>> {
         return callbackFlow {
             val subscription: ListenerRegistration =
-                db.collection(COLLECTION).addSnapshotListener { snapshot, _ ->
-                    snapshot?.let {
-                        offer(
-                            snapshot.documents.map { data -> mapper.map(data) }.toList()
-                        )
+                db.collection(COLLECTION)
+                    .whereEqualTo("author", user.uuid)
+                    .addSnapshotListener { snapshot, _ ->
+                        snapshot?.let {
+                            offer(it.documents.map { data -> mapper.map(data) }.toList())
+                        }
                     }
-                }
             awaitClose { subscription.remove() }
         }
     }
 
     @Throws(Exception::class)
-    suspend fun deleteNote(uuid: String) = db.collection(COLLECTION).document(uuid).delete().await()
+    override suspend fun deleteNote(uuid: String) =
+        db.collection(COLLECTION).document(uuid).delete().await()
 
     @Throws(Exception::class)
-    suspend fun createNote(note: Note) = db.collection(COLLECTION).add(note).await()
-
-    /*
-    @Throws(Exception::class)
-    suspend fun getNote(uuid: String): Note {
-        val data = db.collection(COLLECTION).document(uuid).get().await()
-        return mapper.mapNote(data)
-    }*/
+    override suspend fun createNote(note: Note) = db.collection(COLLECTION).add(note).await()
 
     @Throws(Exception::class)
-    suspend fun updateNote(note: Note) =
+    override suspend fun updateNote(note: Note) =
         db.collection(COLLECTION).document(note.uuid!!).set(note, SetOptions.merge()).await()
 
     companion object {
         const val COLLECTION = "Note"
-    }
-
-    @Throws(Exception::class)
-    suspend fun getNote(uuid: String): Note {
-        val data = db.collection(COLLECTION).document(uuid).get().await()
-        return mapper.map(data)
     }
 
 

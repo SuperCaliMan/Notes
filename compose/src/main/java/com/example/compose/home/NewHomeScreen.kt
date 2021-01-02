@@ -19,12 +19,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
+import com.example.compose.NoteViewModel
 import com.example.compose.R
 import com.example.compose.detail.Params
 import com.example.compose.detail.StateScreen
+import com.example.compose.domain.UiNote
 import com.example.compose.ui.*
-import com.supercaliman.core.NoteViewModel
-import com.supercaliman.core.domain.UiNote
 import kotlinx.coroutines.InternalCoroutinesApi
 
 
@@ -35,9 +35,9 @@ fun newHomeScreen(
     navController: NavController,
     scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
-    val data: List<UiNote> by viewModel.uiLiveData.observeAsState(listOf())
-    val errorData: Exception? by viewModel.errorStatus.observeAsState()
-    val loading: Boolean by viewModel.loadingStatus.observeAsState(true)
+    val data: List<UiNote> by viewModel.uiNoteList.observeAsState(listOf())
+    val errorData: Exception? by viewModel.error.observeAsState()
+    val loading: Boolean by viewModel.loader.observeAsState(true)
     viewModel.getNotesList()
 
     errorData?.let {

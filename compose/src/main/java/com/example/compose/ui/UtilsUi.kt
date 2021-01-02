@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import com.example.compose.R
 
 
@@ -110,7 +109,7 @@ fun AppDrawer(
         TextButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
-                navController.navigate(Screen.Animation.route)
+                //navController.navigate(Screen.Animation.route)
                 closeDrawer()
             }
         ) {

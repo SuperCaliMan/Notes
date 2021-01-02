@@ -1,6 +1,5 @@
 package com.supercaliman.core.domain.useCase
 
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.supercaliman.core.domain.Repository
 import com.supercaliman.core.domain.Result
@@ -10,7 +9,7 @@ import javax.inject.Inject
 
 class DeleteNoteTaskUseCase @Inject constructor(private var repo: Repository) {
 
-    private val result = MediatorLiveData<Result<Boolean>>()
+    private val result = MutableLiveData<Result<Boolean>>()
 
     suspend fun execute(uuid: String) = withContext(Dispatchers.IO) {
         result.postValue(Result.Loading)

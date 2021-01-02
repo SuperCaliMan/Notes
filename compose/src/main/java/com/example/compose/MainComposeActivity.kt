@@ -6,7 +6,6 @@ import androidx.compose.ui.platform.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.compose.chat.chatScreen
 import com.example.compose.detail.Params
 import com.example.compose.detail.StateScreen
 import com.example.compose.detail.detailScreen
@@ -15,7 +14,7 @@ import com.example.compose.home.newHomeScreen
 import com.example.compose.ui.NoteTheme
 import com.example.compose.ui.Screen
 import com.example.compose.ui.isDarkTheme
-import com.supercaliman.core.NoteViewModel
+import com.supercaliman.core.domain.dto.User
 import com.supercaliman.remoteparams.RemoteParamsVM
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -32,6 +31,9 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
     @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel.setUser(intent.getSerializableExtra("User") as User)
+
         setContent {
             NoteTheme(isDarkTheme(this)) {
                 val navController = rememberNavController()
@@ -64,7 +66,7 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
                             navController = navController
                         )
                     }
-                    composable(Screen.Animation.route) { chatScreen() }
+                    //composable(Screen.Animation.route) { chatScreen() }
                 }
             }
         }

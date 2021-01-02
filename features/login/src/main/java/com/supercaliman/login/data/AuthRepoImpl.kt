@@ -1,32 +1,37 @@
 package com.supercaliman.login.data
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.supercaliman.core.domain.dto.User
 import com.supercaliman.login.domain.AuthRepo
+import com.supercaliman.login.domain.UserMapper
 import javax.security.auth.login.LoginException
 import kotlin.coroutines.suspendCoroutine
 
-class AuthRepoImpl constructor(private val auth: FirebaseAuth) : AuthRepo {
+class AuthRepoImpl constructor(
+    private val auth: FirebaseAuth,
+    private val mapper: UserMapper
+) : AuthRepo {
 
-    override fun alreadyLogin(): FirebaseUser? {
+
+    override fun alreadyLogin(): User? {
         return if (auth.currentUser != null) {
-            auth.currentUser!!
+            mapper.map(auth.currentUser!!)
         } else {
             null
         }
     }
 
-    override suspend fun signIn(email: String, password: String): FirebaseUser? {
+    override suspend fun signIn(email: String, password: String): User? {
         if (auth.currentUser != null) {
-            return auth.currentUser!!
+            return mapper.map(auth.currentUser!!)
         } else {
             return suspendCoroutine { cont ->
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             val user = auth.currentUser
-                            cont.resumeWith(Result.success(user!!))
+                            cont.resumeWith(Result.success(mapper.map(user!!)))
                         }
                         if (!task.isSuccessful) {
                             cont.resumeWith(Result.failure(task.exception!!))
@@ -40,7 +45,7 @@ class AuthRepoImpl constructor(private val auth: FirebaseAuth) : AuthRepo {
         auth.signOut()
     }
 
-    override suspend fun newUser(username: String, email: String, password: String): FirebaseUser? {
+    override suspend fun newUser(username: String, email: String, password: String): User? {
         return suspendCoroutine { cont ->
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
@@ -48,7 +53,7 @@ class AuthRepoImpl constructor(private val auth: FirebaseAuth) : AuthRepo {
                         val user = auth.currentUser
                         auth.currentUser!!.sendEmailVerification()
                         logout() //logout user because i want test if user's email is verified
-                        cont.resumeWith(Result.success(user!!))
+                        cont.resumeWith(Result.success(mapper.map(user!!)))
                     } else {
                         cont.resumeWith(Result.failure(task.exception!!))
                     }
@@ -57,14 +62,14 @@ class AuthRepoImpl constructor(private val auth: FirebaseAuth) : AuthRepo {
         }
     }
 
-    override suspend fun updateProfile(profileUpdate: UserProfileChangeRequest): FirebaseUser? {
+    override suspend fun updateProfile(profileUpdate: UserProfileChangeRequest): User? {
         return suspendCoroutine {
             auth.currentUser!!.updateProfile(profileUpdate)
                 .addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         it.resumeWith(Result.failure(Exception("failed to set user profile name")))
                     } else {
-                        it.resumeWith(Result.success(auth.currentUser))
+                        it.resumeWith(Result.success(mapper.map(auth.currentUser)))
                     }
 
                 }

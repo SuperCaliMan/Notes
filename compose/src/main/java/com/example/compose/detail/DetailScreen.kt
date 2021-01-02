@@ -14,11 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.example.compose.NoteViewModel
 import com.example.compose.R
+import com.example.compose.domain.UiNote
 import com.example.compose.ui.Dimension
 import com.example.compose.ui.progressBar
-import com.supercaliman.core.NoteViewModel
-import com.supercaliman.core.domain.UiNote
 
 interface OnSaveListener {
     fun onSave(title: String, description: String)
@@ -37,13 +37,10 @@ fun detailScreen(
     backStack: () -> Unit,
     uuid: String?
 ) {
-    val loading: Boolean by viewModel.loadingStatus.observeAsState(false)
-    val note: UiNote? by viewModel.uiNote.observeAsState(null)
+    val loading: Boolean by viewModel.loader.observeAsState(false)
+    val note: UiNote? = viewModel.getNote(uuid)
     val state = remember { mutableStateOf(initialState) }
 
-    uuid?.let {
-        viewModel.getNote(uuid)
-    }
 
     val onSaveObj = object : OnSaveListener {
         override fun onSave(title: String, description: String) {

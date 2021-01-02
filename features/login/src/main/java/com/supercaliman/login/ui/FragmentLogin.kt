@@ -1,4 +1,4 @@
-package com.supercaliman.login
+package com.supercaliman.login.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -17,6 +17,9 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.supercaliman.core.base.ErrorNotesDialog
 import com.supercaliman.core.base.NotesDialog
+import com.supercaliman.login.LoginViewModel
+import com.supercaliman.login.R
+import com.supercaliman.login.domain.UiUserMapper
 import com.supercaliman.navigation.Destinations
 import com.supercaliman.navigation.NavUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +37,7 @@ class FragmentLogin : Fragment() {
     private lateinit var txtPsw: TextInputLayout
     private lateinit var mActivity: LoginActivity
 
+    private val userModelMapper = UiUserMapper()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +65,10 @@ class FragmentLogin : Fragment() {
         loginViewModel.userData.observe(viewLifecycleOwner) { user ->
             user?.let {
                 if (it.isEmailVerified) {
-                    startActivity(NavUtils.openScreen(requireContext(), Destinations.MAIN_SCREEN))
+                    startActivity(
+                        NavUtils.openScreen(requireContext(), Destinations.MAIN_SCREEN).apply {
+                            putExtra("User", userModelMapper.toDTOModel(it))
+                        })
                     mActivity.finish()
                 } else {
                     NotesDialog(requireContext(), getString(R.string.verify_email),

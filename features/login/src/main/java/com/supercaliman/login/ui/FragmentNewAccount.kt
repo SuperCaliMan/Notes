@@ -1,4 +1,4 @@
-package com.supercaliman.login
+package com.supercaliman.login.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -16,6 +16,8 @@ import com.github.razir.progressbutton.showProgress
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.supercaliman.core.base.ErrorNotesDialog
+import com.supercaliman.login.LoginViewModel
+import com.supercaliman.login.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

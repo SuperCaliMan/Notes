@@ -4,6 +4,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.supercaliman.login.data.AuthRepoImpl
 import com.supercaliman.login.domain.AuthRepo
+import com.supercaliman.login.domain.UserMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +21,6 @@ object FirebaseAuthModule {
     @Singleton
     fun getAuthRepo(): AuthRepo {
         val firebase = Firebase.auth
-        return AuthRepoImpl(firebase)
+        return AuthRepoImpl(firebase, UserMapper())
     }
 }

@@ -1,5 +1,6 @@
 package com.supercaliman.login.domain
 
+import android.net.Uri
 import com.supercaliman.core.domain.dto.User
 import javax.inject.Inject
 
@@ -10,7 +11,7 @@ class UiUserMapper @Inject constructor() {
             uuid = data.uuid,
             providerId = data.providerId,
             displayName = data.displayName,
-            photoUrl = data.photoUrl,
+            photoUrl = Uri.parse(data.photoUrl),
             isEmailVerified = data.isEmailVerified,
             email = data.email
         )
@@ -23,7 +24,7 @@ class UiUserMapper @Inject constructor() {
             uuid = data.uuid,
             providerId = data.providerId,
             displayName = data.displayName,
-            photoUrl = data.photoUrl,
+            photoUrl = data.photoUrl.toString(),
             isEmailVerified = data.isEmailVerified,
             email = data.email
         )

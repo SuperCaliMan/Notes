@@ -13,7 +13,7 @@ class UserMapper @Inject constructor() : Mapper<FirebaseUser?, User?> {
                 uuid = data.uid,
                 providerId = data.providerId,
                 displayName = data.displayName,
-                photoUrl = data.photoUrl,
+                photoUrl = data.photoUrl.toString(),
                 isEmailVerified = data.isEmailVerified,
                 email = data.email
             )

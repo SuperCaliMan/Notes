@@ -8,11 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.supercaliman.core.base.ErrorNotesDialog
@@ -28,7 +28,7 @@ class FragmentNewAccount : Fragment() {
     private lateinit var email: TextInputEditText
     private lateinit var password: TextInputEditText
     private lateinit var btnSignUp: Button
-    private lateinit var checkTherm: CheckBox
+    private lateinit var checkTherm: MaterialCheckBox
     private lateinit var txtEmail: TextInputLayout
     private lateinit var txtPsw: TextInputLayout
     private lateinit var txtUsername: TextInputLayout
@@ -105,7 +105,7 @@ class FragmentNewAccount : Fragment() {
 
         val username = username.text.toString()
         if (TextUtils.isEmpty(username)) {
-            txtUsername.error = "Check your username!"
+            txtUsername.error = getString(R.string.checl_username)
             valid = false
         } else {
             txtUsername.error = null
@@ -115,29 +115,27 @@ class FragmentNewAccount : Fragment() {
         if (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             txtEmail.error = null
         } else {
-            txtEmail.error = "Check your email!"
+            txtEmail.error = getString(R.string.check_email)
             valid = false
         }
 
         val password = password.text.toString()
         if (TextUtils.isEmpty(password)) {
-            txtPsw.error = "Required."
+            txtPsw.error = getString(R.string.required)
             valid = false
         } else if (password.length < 6) {
-            txtPsw.error = "Password is too short."
+            txtPsw.error = getString(R.string.psw_short)
             valid = false
         } else {
             txtPsw.error = null
         }
 
-        val checkTherm = !checkTherm.isChecked
-        /*
-        if (checkTherm) {
-            //checkTherm.error = "Required."
+        if (!checkTherm.isChecked) {
+            checkTherm.error = getString(R.string.required)
             valid = false
         } else {
-            //checkTherm.error = null
-        }*/
+            checkTherm.error = null
+        }
 
         return valid
     }

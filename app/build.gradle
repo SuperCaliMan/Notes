@@ -72,11 +72,11 @@ dependencies {
 
 
     implementation project(":core")
-    implementation project(":compose")
-    implementation project(":features:analytics")
-    implementation project(":features:notification")
-    implementation project(":features:remoteparams")
+    implementation project(":features:home")
     implementation project(":features:login")
     implementation project(":libraries:navigation")
+    implementation project(":libraries:analytics")
+    implementation project(":libraries:notification")
+    implementation project(":libraries:remoteparams")
 
 }

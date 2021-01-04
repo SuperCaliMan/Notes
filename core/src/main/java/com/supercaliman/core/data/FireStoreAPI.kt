@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestoreSettings
+import com.supercaliman.core.domain.NotesApi
 import com.supercaliman.core.domain.dto.Note
 import com.supercaliman.core.domain.dto.User
 import dagger.hilt.android.qualifiers.ApplicationContext

@@ -38,6 +38,7 @@ dependencies {
     //button
     implementation Animation.progressButton
 
-    implementation project(":libraries:navigation")
     implementation project(":core")
+    implementation project(":libraries:navigation")
+
 }

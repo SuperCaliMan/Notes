@@ -10,4 +10,8 @@
     <string name="back">Back</string>
     <string name="notes">Notes</string>
     <string name="verify_email">Verify your email! Do you want send new email?</string>
+    <string name="required">Required.</string>
+    <string name="psw_short">Password is too short.</string>
+    <string name="check_email">Check your email!</string>
+    <string name="checl_username">Check your username!</string>
 </resources>

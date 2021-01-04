@@ -14,15 +14,15 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
-            <option value="$PROJECT_DIR$/compose" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/features" />
-            <option value="$PROJECT_DIR$/features/analytics" />
+            <option value="$PROJECT_DIR$/features/home" />
             <option value="$PROJECT_DIR$/features/login" />
-            <option value="$PROJECT_DIR$/features/notification" />
-            <option value="$PROJECT_DIR$/features/remoteparams" />
             <option value="$PROJECT_DIR$/libraries" />
+            <option value="$PROJECT_DIR$/libraries/analytics" />
             <option value="$PROJECT_DIR$/libraries/navigation" />
+            <option value="$PROJECT_DIR$/libraries/notification" />
+            <option value="$PROJECT_DIR$/libraries/remoteparams" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -94,7 +94,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txt_psw">
 
 
-                <CheckBox
+                <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/check_therm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

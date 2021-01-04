@@ -5,13 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.supercaliman.core.base.BaseViewModel
+import com.supercaliman.core.data.CoreRepository
 import com.supercaliman.login.domain.AuthRepo
 import com.supercaliman.login.domain.UiUser
 import com.supercaliman.login.domain.UiUserMapper
 import kotlinx.coroutines.launch
 
 class LoginViewModel @ViewModelInject constructor(
-    private val authApi: AuthRepo
+    private val authApi: AuthRepo,
+    private val coreRepository: CoreRepository
 ) : BaseViewModel() {
 
     private val _userData = MutableLiveData<UiUser>()
@@ -20,20 +22,15 @@ class LoginViewModel @ViewModelInject constructor(
     private val mapper = UiUserMapper()
 
 
-    init {
-        authApi.alreadyLogin()?.let {
-            _userData.postValue(mapper.toUiModel(it))
-        }
-    }
-
-    fun checkUserSignIn(): UiUser? = authApi.alreadyLogin()?.let { mapper.toUiModel(it) }
-
     fun signIn(email: String, password: String) {
         viewModelScope.launch {
             _loader.postValue(true)
             try {
                 val res = authApi.signIn(email, password)
-                _userData.value = res?.let { mapper.toUiModel(it) }
+                res?.let {
+                    coreRepository.setUser(it)
+                    _userData.value = mapper.toUiModel(it)
+                }
                 _loader.postValue(false)
             } catch (e: Exception) {
                 _error.value = e
@@ -47,6 +44,7 @@ class LoginViewModel @ViewModelInject constructor(
             try {
                 val res = authApi.newUser(username, email, password)
                 res?.let {
+                    coreRepository.setUser(it)
                     _userData.value = mapper.toUiModel(it)
                 }
                 _loader.value = false

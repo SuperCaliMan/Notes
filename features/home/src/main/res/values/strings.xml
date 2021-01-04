@@ -1,0 +1,12 @@
+<resources>
+    <string name="title_activity_main_compose">Notes</string>
+    <string name="no_data">Tell me something</string>
+    <string name="warning">Oh no!</string>
+    <string name="close">Close</string>
+    <string name="new_note">New note</string>
+    <string name="insert_title">Insert title</string>
+    <string name="insert_description">Insert description</string>
+    <string name="animation_screen">Animation</string>
+    <string name="update_note">Update note</string>
+    <string name="drawer_logout">Logout</string>
+</resources>

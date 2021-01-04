@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.supercaliman.core.domain.Repository
 import com.supercaliman.core.domain.Result
 import com.supercaliman.core.domain.dto.Note
-import com.supercaliman.core.domain.dto.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -19,10 +18,10 @@ class GetNoteTaskUseCase @Inject constructor(
     private val result = MutableLiveData<Result<List<Note>>>()
 
     @InternalCoroutinesApi
-    suspend fun getNotes(user: User) = withContext(Dispatchers.IO) {
+    suspend fun getNotes() = withContext(Dispatchers.IO) {
         result.postValue(Result.Loading)
         try {
-            val res = repo.getNotes(user)
+            val res = repo.getNotes()
             res.collect {
                 result.postValue(Result.Success(
                     it.sortedBy { data -> data.date.time }

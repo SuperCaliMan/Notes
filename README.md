@@ -2,7 +2,7 @@
 
 <div align="center">
   <p align="center">
-  <img src="screen/video.gif" width="30%"; heigth="30%">
+  <img src="screen/video.gif">
     </p>
  </div>
 <br>

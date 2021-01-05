@@ -1,7 +1,12 @@
+
+
 <div align="center">
-  <img src="screen/video.gif">
+  <p align="center">
+  <img src="screen/video.gif" width="30%"; heigth="30%">
+    </p>
  </div>
 <br>
+
 <p align="center">Notes application is sample app based on MVVM architecture.</p>
 
 

@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - 'master'
-      - 'development'
+      - 'compose'
   pull_request:
     branches:
       - 'master'
+      - 'compose'
 
 jobs:
   build:

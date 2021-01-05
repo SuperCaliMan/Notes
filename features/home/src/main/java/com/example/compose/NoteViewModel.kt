@@ -4,16 +4,15 @@ package com.example.compose
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.compose.domain.UiNote
 import com.example.compose.domain.UiNoteMapper
+import com.example.compose.domain.useCase.*
+import com.example.compose.home.EventHome
 import com.supercaliman.core.base.BaseViewModel
-import com.supercaliman.core.data.CoreRepository
 import com.supercaliman.core.domain.Result
-import com.supercaliman.core.domain.useCase.CreateNoteTaskUseCase
-import com.supercaliman.core.domain.useCase.DeleteNoteTaskUseCase
-import com.supercaliman.core.domain.useCase.GetNoteTaskUseCase
-import com.supercaliman.core.domain.useCase.UpdateNoteTaskUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 
@@ -23,7 +22,7 @@ class NoteViewModel @ViewModelInject constructor(
     private var createNoteUseCase: CreateNoteTaskUseCase,
     private var deleteNoteTaskUseCase: DeleteNoteTaskUseCase,
     private var updateNoteTaskUseCase: UpdateNoteTaskUseCase,
-    var coreRepository: CoreRepository,
+    private var userOperationsUseCase: UserOperationsUseCase,
     private var uiNoteMapper: UiNoteMapper
 ) : BaseViewModel() {
 
@@ -34,6 +33,10 @@ class NoteViewModel @ViewModelInject constructor(
     private val _uiNoteList = MediatorLiveData<List<UiNote>>()
     val uiNoteList: LiveData<List<UiNote>>
         get() = _uiNoteList
+
+    private val _homeState = MutableLiveData<EventHome>()
+    val homeState: LiveData<EventHome>
+        get() = _homeState
 
     fun createNote(uuid: String?, title: String, description: String) {
         noteDetail = UiNote(uuid, title, description, "")
@@ -62,11 +65,11 @@ class NoteViewModel @ViewModelInject constructor(
 
 
         if (this::noteDetail.isInitialized) {
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 createNoteUseCase.execute(
                     uiNoteMapper.toDTOModel(
                         noteDetail,
-                        coreRepository.currentUser!!
+                        userOperationsUseCase.getUser()!!
                     )
                 )
             }
@@ -88,12 +91,12 @@ class NoteViewModel @ViewModelInject constructor(
             _loader.postValue(it == Result.Loading)
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             noteDetail.uuid?.let {
                 updateNoteTaskUseCase.execute(
                     uiNoteMapper.toDTOModel(
                         noteDetail,
-                        coreRepository.currentUser!!
+                        userOperationsUseCase.getUser()!!
                     )
                 )
             }
@@ -123,7 +126,7 @@ class NoteViewModel @ViewModelInject constructor(
 
             }
         }
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getNoteUseCase.getNotes()
         }
     }
@@ -143,10 +146,19 @@ class NoteViewModel @ViewModelInject constructor(
 
 
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             uuid?.let {
                 deleteNoteTaskUseCase.execute(it)
             }
         }
+    }
+
+
+    fun logout() {
+        _homeState.postValue(EventHome.LOGOUT)
+        viewModelScope.launch(Dispatchers.IO) {
+            userOperationsUseCase.logout()
+        }
+
     }
 }

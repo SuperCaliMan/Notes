@@ -9,6 +9,7 @@ import com.supercaliman.core.data.CoreRepository
 import com.supercaliman.login.domain.AuthRepo
 import com.supercaliman.login.domain.UiUser
 import com.supercaliman.login.domain.UiUserMapper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginViewModel @ViewModelInject constructor(
@@ -23,47 +24,47 @@ class LoginViewModel @ViewModelInject constructor(
 
 
     fun signIn(email: String, password: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _loader.postValue(true)
             try {
                 val res = authApi.signIn(email, password)
                 res?.let {
                     coreRepository.setUser(it)
-                    _userData.value = mapper.toUiModel(it)
+                    _userData.postValue(mapper.toUiModel(it))
                 }
                 _loader.postValue(false)
             } catch (e: Exception) {
-                _error.value = e
+                _error.postValue(e)
             }
         }
     }
 
     fun createUser(username: String, email: String, password: String) {
-        _loader.value = true
-        viewModelScope.launch {
+        _loader.postValue(true)
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val res = authApi.newUser(username, email, password)
                 res?.let {
                     coreRepository.setUser(it)
-                    _userData.value = mapper.toUiModel(it)
+                    _userData.postValue(mapper.toUiModel(it))
                 }
-                _loader.value = false
+                _loader.postValue(false)
             } catch (e: Exception) {
-                _loader.value = false
-                _error.value = e
+                _loader.postValue(false)
+                _error.postValue(e)
             }
         }
     }
 
     fun sendVerificationEmail() {
-        _loader.value = true
-        viewModelScope.launch {
+        _loader.postValue(true)
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 authApi.sendVerificationEmail()
-                _loader.value = false
+                _loader.postValue(false)
             } catch (e: java.lang.Exception) {
-                _loader.value = false
-                _error.value = e
+                _loader.postValue(false)
+                _error.postValue(e)
             }
         }
     }

@@ -1,6 +1,6 @@
 package com.example.compose.detail
 
-enum class StateScreen {
+enum class StateScreenDetail {
     READ,
     INSERT,
     EDIT

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0000FF"
-    tools:context="com.supercaliman.note.SplashActivity">
+    android:theme="@style/AppTheme.NoActionBar"
+    tools:context=".SplashActivity">
 
     <TextView
         android:id="@+id/textView4"

@@ -1,4 +1,4 @@
-package com.supercaliman.core.domain.useCase
+package com.example.compose.domain.useCase
 
 
 import androidx.lifecycle.MutableLiveData

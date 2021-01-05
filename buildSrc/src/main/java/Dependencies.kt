@@ -12,7 +12,7 @@ object Versions {
     const val timber = "4.7.1"
     const val firestore = "21.4.0"
     const val firebase_analytics = "17.4.3"
-    const val lottieCompose = "1.0.0-alpha01"
+    const val lottieCompose = "1.0.0-alpha02"
     const val coroutines = "1.3.9"
     const val coroutinesPlayServices = "1.3.0"
     const val lottie = "3.4.1"
@@ -37,6 +37,7 @@ object Versions {
     const val activityKtx = "1.2.0-beta02"
     const val authGoogle = "19.0.0"
     const val progressButton = "2.1.0"
+    const val dataStore = "1.0.0-alpha01"
 
 }
 
@@ -167,6 +168,7 @@ object AndroidX {
     const val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.fragmentX}"
     const val coordinatorLayout =
         "androidx.coordinatorlayout:coordinatorlayout:${Versions.coordinatorLayout}"
+    const val dataStore = "androidx.datastore:datastore-preferences:${Versions.dataStore}"
 }
 
 object Firebase {

@@ -68,7 +68,6 @@ dependencies {
 
     //Hilt
     implementation Di.hiltAndroid
-    implementation project(path: ':libraries:navigation')
     kapt Di.hiltCompiler
     implementation Di.hiltViewModel
     kapt Di.hiltAndroidX

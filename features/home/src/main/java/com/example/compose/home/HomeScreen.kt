@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.example.compose.NoteViewModel
 import com.example.compose.detail.Params
-import com.example.compose.detail.StateScreen
+import com.example.compose.detail.StateScreenDetail
 import com.example.compose.domain.UiNote
 import com.example.compose.ui.Screen
 import com.example.compose.ui.progressBar
@@ -43,7 +43,7 @@ fun homeScreen(
             if (!loading) {
                 ExtendedFloatingActionButton(
                     onClick = {
-                        navController.navigate(Screen.Detail.route + "/${StateScreen.INSERT}")
+                        navController.navigate(Screen.Detail.route + "/${StateScreenDetail.INSERT}")
                     },
                     icon = { Icon(Icons.Outlined.Edit) },
                     text = { Text(text = "Compose") },
@@ -60,7 +60,7 @@ fun homeScreen(
                     items = data,
                     onItemClick = {
                         navController.navigate(
-                            Screen.Detail.route + "/${StateScreen.READ}"
+                            Screen.Detail.route + "/${StateScreenDetail.READ}"
                                     + "?${Params.NOTE}=${it.uuid}"
                         )
                     }

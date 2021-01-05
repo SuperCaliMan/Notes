@@ -1,6 +1,7 @@
 package com.example.compose.home
 
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.shape.CircleShape
@@ -19,12 +20,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
+import com.example.compose.MainComposeActivity
 import com.example.compose.NoteViewModel
 import com.example.compose.R
 import com.example.compose.detail.Params
-import com.example.compose.detail.StateScreen
+import com.example.compose.detail.StateScreenDetail
 import com.example.compose.domain.UiNote
 import com.example.compose.ui.*
+import com.supercaliman.navigation.Destinations
+import com.supercaliman.navigation.NavUtils
 import kotlinx.coroutines.InternalCoroutinesApi
 
 
@@ -38,9 +42,25 @@ fun newHomeScreen(
     val data: List<UiNote> by noteViewModel.uiNoteList.observeAsState(listOf())
     val errorData: Exception? by noteViewModel.error.observeAsState()
     val loading: Boolean by noteViewModel.loader.observeAsState(true)
+    val stateScreen: EventHome? by noteViewModel.homeState.observeAsState()
     noteViewModel.getNotesList()
 
-
+    stateScreen?.let {
+        when (it) {
+            EventHome.LOGOUT -> {
+                val activity = AmbientContext.current as MainComposeActivity
+                activity.startActivity(
+                    NavUtils.openScreen(
+                        AmbientContext.current,
+                        Destinations.LOGIN_SCREEN
+                    ).apply {
+                        flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
+                    })
+                activity.overridePendingTransition(0, 0)
+                activity.finish()
+            }
+        }
+    }
 
     errorData?.let {
         renderError(it)
@@ -55,6 +75,9 @@ fun newHomeScreen(
         drawerContent = {
 
             AppDrawer(
+                onClose = {
+                    noteViewModel.logout()
+                },
                 navController = navController,
                 closeDrawer = { scaffoldState.drawerState.close() })
         },
@@ -90,7 +113,7 @@ fun newHomeScreen(
             if (!loading) {
                 FloatingActionButton(
                     onClick = {
-                        navController.navigate(Screen.Detail.route + "/${StateScreen.INSERT}")
+                        navController.navigate(Screen.Detail.route + "/${StateScreenDetail.INSERT}")
                     },
                     content = { Icon(imageVector = Icons.Outlined.Edit) },
                     backgroundColor = MaterialTheme.colors.surface,
@@ -106,7 +129,7 @@ fun newHomeScreen(
                     items = data,
                     onItemClick = {
                         navController.navigate(
-                            Screen.Detail.route + "/${StateScreen.READ}"
+                            Screen.Detail.route + "/${StateScreenDetail.READ}"
                                     + "?${Params.NOTE}=${it.uuid}"
                         )
                     }

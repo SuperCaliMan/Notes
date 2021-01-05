@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.detail.Params
-import com.example.compose.detail.StateScreen
+import com.example.compose.detail.StateScreenDetail
 import com.example.compose.detail.detailScreen
 import com.example.compose.home.homeScreen
 import com.example.compose.home.newHomeScreen
@@ -51,7 +51,7 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
                     ) {
                         detailScreen(
                             noteViewModel,
-                            it.arguments?.getSerializable(Params.PANEL_MODE) as StateScreen,
+                            it.arguments?.getSerializable(Params.PANEL_MODE) as StateScreenDetail,
                             backStack = {
                                 navController.popBackStack()
                             },

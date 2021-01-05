@@ -4,17 +4,5 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainComposeActivity"
-    style="@style/Theme.Note">
-
-    <!--
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph" />-->
-
-
-</FrameLayout>
+    android:theme="@style/Theme.Note"
+    tools:context=".MainComposeActivity"></FrameLayout>

@@ -4,7 +4,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NamedNavArgument
 import androidx.navigation.compose.navArgument
 import com.example.compose.detail.Params
-import com.example.compose.detail.StateScreen
+import com.example.compose.detail.StateScreenDetail
 
 
 sealed class Screen(val route: String, var params: List<NamedNavArgument>) {
@@ -12,7 +12,7 @@ sealed class Screen(val route: String, var params: List<NamedNavArgument>) {
     object Detail : Screen(
         "DETAIL", mutableListOf(
             navArgument(Params.PANEL_MODE) {
-                type = NavType.EnumType(StateScreen::class.java)
+                type = NavType.EnumType(StateScreenDetail::class.java)
             },
             navArgument(Params.NOTE) {
                 type = NavType.StringType

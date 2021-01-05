@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.supercaliman.core.base.BaseViewModel
 import com.supercaliman.core.data.CoreRepository
 import com.supercaliman.core.domain.dto.User
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SplashViewModel @ViewModelInject constructor(
@@ -16,14 +17,15 @@ class SplashViewModel @ViewModelInject constructor(
     private val _alreadyLogin = MutableLiveData<User?>()
     val alreadyLogin: LiveData<User?> get() = _alreadyLogin
 
+
     init {
         userAlreadyLogin()
     }
 
 
     private fun userAlreadyLogin() {
-        viewModelScope.launch {
-            _alreadyLogin.postValue(coreRepository.currentUser)
+        viewModelScope.launch(Dispatchers.IO) {
+            _alreadyLogin.postValue(coreRepository.getUser())
         }
     }
 

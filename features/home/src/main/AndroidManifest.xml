@@ -1,12 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.compose">
-
-    <application>
-        <activity
-            android:name=".MainComposeActivity"
-            android:label="@string/title_activity_main_compose"
-            android:theme="@style/Theme.Note" />
-    </application>
-
-</manifest>
+<manifest package="com.example.compose"></manifest>

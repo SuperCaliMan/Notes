@@ -35,6 +35,9 @@ dependencies {
 
     implementation Coroutines.android
 
+    //DataStore persistence layer
+    implementation AndroidX.dataStore
+
     implementation project(":libraries:navigation")
 
 

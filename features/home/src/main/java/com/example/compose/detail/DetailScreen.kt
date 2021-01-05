@@ -33,13 +33,13 @@ object Params {
 @Composable
 fun detailScreen(
     viewModel: NoteViewModel,
-    initialState: StateScreen,
+    initialStateDetail: StateScreenDetail,
     backStack: () -> Unit,
     uuid: String?
 ) {
     val loading: Boolean by viewModel.loader.observeAsState(false)
     val note: UiNote? = viewModel.getNote(uuid)
-    val state = remember { mutableStateOf(initialState) }
+    val state = remember { mutableStateOf(initialStateDetail) }
 
 
     val onSaveObj = object : OnSaveListener {
@@ -62,11 +62,11 @@ fun detailScreen(
                 progressBar()
             } else {
                 when (state.value) {
-                    StateScreen.READ -> {
+                    StateScreenDetail.READ -> {
                         bodyDetail(true, note, onSaveObj)
                     }
-                    StateScreen.INSERT -> bodyDetail(false, null, onSaveObj)
-                    StateScreen.EDIT -> {
+                    StateScreenDetail.INSERT -> bodyDetail(false, null, onSaveObj)
+                    StateScreenDetail.EDIT -> {
                         bodyDetail(false, note, onSaveObj)
                     }
                 }
@@ -144,7 +144,7 @@ fun bodyDetail(
 @Composable
 fun appBar(
     viewModel: NoteViewModel,
-    appBarState: MutableState<StateScreen>,
+    appBarStateDetail: MutableState<StateScreenDetail>,
     note: UiNote?,
     backStack: () -> Unit,
     onSave: () -> Unit
@@ -161,16 +161,16 @@ fun appBar(
             )
         },
         title = {
-            when (appBarState.value) {
-                StateScreen.EDIT -> Text(
+            when (appBarStateDetail.value) {
+                StateScreenDetail.EDIT -> Text(
                     stringResource(R.string.update_note),
                     style = MaterialTheme.typography.h5
                 )
-                StateScreen.INSERT -> Text(
+                StateScreenDetail.INSERT -> Text(
                     stringResource(R.string.new_note),
                     style = MaterialTheme.typography.h5
                 )
-                StateScreen.READ -> note?.title?.let {
+                StateScreenDetail.READ -> note?.title?.let {
                     Text(
                         it,
                         style = MaterialTheme.typography.h5
@@ -179,17 +179,17 @@ fun appBar(
             }
         },
         actions = {
-            when (appBarState.value) {
-                StateScreen.INSERT -> {
+            when (appBarStateDetail.value) {
+                StateScreenDetail.INSERT -> {
                     IconButton(
                         onClick = { onSave() },
                         content = { Icon(Icons.Default.Save) }
                     )
                 }
-                StateScreen.READ -> {
+                StateScreenDetail.READ -> {
                     IconButton(
                         onClick = {
-                            appBarState.value = StateScreen.EDIT
+                            appBarStateDetail.value = StateScreenDetail.EDIT
                         },
                         content = { Icon(Icons.Default.Edit) }
                     )
@@ -201,10 +201,10 @@ fun appBar(
                         content = { Icon(Icons.Default.Delete) }
                     )
                 }
-                StateScreen.EDIT -> {
+                StateScreenDetail.EDIT -> {
                     IconButton(
                         onClick = {
-                            appBarState.value = StateScreen.READ
+                            appBarStateDetail.value = StateScreenDetail.READ
                         },
                         content = { Icon(Icons.Default.Undo) }
                     )

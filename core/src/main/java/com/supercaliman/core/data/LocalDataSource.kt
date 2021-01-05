@@ -1,6 +1,7 @@
 package com.supercaliman.core.data
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.squareup.moshi.Moshi
 import com.supercaliman.core.domain.LocalRepository
 import com.supercaliman.core.domain.dto.User
@@ -27,6 +28,12 @@ class LocalDataSource @Inject constructor(
             jsonAdapterUser.fromJson(jsonUser)
         } else {
             null
+        }
+    }
+
+    override fun deleteUser() {
+        sharedPreferences.edit(commit = true) {
+            clear()
         }
     }
 }

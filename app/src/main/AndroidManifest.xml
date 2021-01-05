@@ -21,14 +21,17 @@
 
         <activity
             android:name="com.example.compose.MainComposeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Note" />
 
         <activity
             android:name="com.supercaliman.login.ui.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

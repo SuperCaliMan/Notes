@@ -40,8 +40,7 @@ fun lottieAnimation(modifier: Modifier) {
                 scale = 0.9F
                 playAnimation()
             }
-        },
-        modifier = modifier.background(Color.White),
+        }
     )
 }
 

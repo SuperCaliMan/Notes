@@ -15,7 +15,7 @@ class CoreRepository @Inject constructor(
     private var localDataSource: LocalRepository
 ) : Repository {
 
-    var currentUser: User? = null
+    private var currentUser: User? = null
 
     override fun setUser(user: User) {
         localDataSource.saveUser(user)
@@ -26,6 +26,12 @@ class CoreRepository @Inject constructor(
         currentUser = localDataSource.retriveSavedUser()
     }
 
+
+    override fun getUser(): User? = currentUser
+
+    override fun logout() {
+        localDataSource.deleteUser()
+    }
 
     @ExperimentalCoroutinesApi
     override suspend fun getNotes(): Flow<List<Note>> {

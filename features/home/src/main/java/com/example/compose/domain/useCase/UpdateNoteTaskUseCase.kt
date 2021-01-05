@@ -1,4 +1,4 @@
-package com.supercaliman.core.domain.useCase
+package com.example.compose.domain.useCase
 
 import androidx.lifecycle.MutableLiveData
 import com.supercaliman.core.domain.Repository
@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class CreateNoteTaskUseCase @Inject constructor(
+class UpdateNoteTaskUseCase @Inject constructor(
     private var repo: Repository
 ) {
 
@@ -17,7 +17,7 @@ class CreateNoteTaskUseCase @Inject constructor(
     suspend fun execute(note: Note) = withContext(Dispatchers.IO) {
         result.postValue(Result.Loading)
         try {
-            repo.createNote(note)
+            repo.updateNote(note)
             result.postValue(Result.Success(true))
         } catch (e: Exception) {
             result.postValue(Result.Error(e))

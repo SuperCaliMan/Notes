@@ -15,4 +15,8 @@ interface Repository {
     suspend fun updateNote(note: Note)
 
     fun setUser(user: User)
+
+    fun getUser(): User?
+
+    fun logout()
 }

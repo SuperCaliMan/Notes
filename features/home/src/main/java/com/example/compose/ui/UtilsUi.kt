@@ -100,6 +100,7 @@ fun showMessageDialog(title: String, msg: String, onClose: () -> Unit) {
 
 @Composable
 fun AppDrawer(
+    onClose: () -> Unit = {},
     navController: NavController,
     closeDrawer: () -> Unit
 ) {
@@ -109,6 +110,7 @@ fun AppDrawer(
         TextButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
+                onClose()
                 closeDrawer()
             }
         ) {

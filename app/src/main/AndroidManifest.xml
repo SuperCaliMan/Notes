@@ -22,7 +22,7 @@
         <activity
             android:name="com.example.compose.MainComposeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Note" />
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name="com.supercaliman.login.ui.LoginActivity"

@@ -2,9 +2,9 @@ package com.supercaliman.core.di
 
 
 import android.content.Context
+import androidx.datastore.preferences.createDataStore
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.supercaliman.core.R
 import com.supercaliman.core.data.CoreRepository
 import com.supercaliman.core.data.FireStoreAPI
 import com.supercaliman.core.data.LocalDataSource
@@ -40,10 +40,7 @@ object RepositoryModule {
     @Singleton
     fun getLocalDataSource(@ApplicationContext context: Context): LocalRepository {
         return LocalDataSource(
-            context.getSharedPreferences(
-                context.getString(R.string.shared_pref),
-                Context.MODE_PRIVATE
-            ),
+            context.createDataStore("user_setting"),
             Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
                 .build()

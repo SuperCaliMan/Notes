@@ -5,9 +5,9 @@ import com.supercaliman.core.domain.dto.User
 interface LocalRepository {
 
 
-    fun saveUser(user: User): Boolean
+    suspend fun saveUser(user: User)
 
-    fun getSavedUser(): User?
+    suspend fun getSavedUser(): User?
 
-    fun deleteUser()
+    suspend fun deleteUser()
 }

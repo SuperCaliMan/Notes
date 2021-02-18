@@ -53,6 +53,7 @@ class FragmentLogin : Fragment() {
         txtEmail = view.findViewById(R.id.txt_email)
         txtPsw = view.findViewById(R.id.txt_psw)
 
+
         loginViewModel.logout()
 
         btnLogin.attachTextChangeAnimator()

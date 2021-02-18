@@ -37,6 +37,8 @@ dependencies {
 
     implementation Debug.timber
 
+    implementation AndroidX.dataStore
+
     //DataStore persistence layer
     implementation AndroidX.dataStore
 

@@ -9,5 +9,5 @@ class UserOperationsUseCase @Inject constructor(
     private var localDataSource: LocalRepository,
 ) {
 
-    fun getUser(): User? = localDataSource.getSavedUser()
+    suspend fun getUser(): User? = localDataSource.getSavedUser()
 }

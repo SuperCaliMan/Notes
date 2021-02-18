@@ -33,7 +33,7 @@ What i used:
  - Firestore db
  - LiveData
  - ViewModel
- - SharedPreferences
+ - Datastore
 
 
 

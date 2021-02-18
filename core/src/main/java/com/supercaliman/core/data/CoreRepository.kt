@@ -14,13 +14,6 @@ class CoreRepository @Inject constructor(
     private var localDataSource: LocalRepository
 ) : Repository {
 
-
-//    private var currentUser: User? = null
-//
-//    init {
-//        currentUser = localDataSource.retriveSavedUser()
-//    }
-
     @ExperimentalCoroutinesApi
     override suspend fun getNotes(): Flow<List<Note>> {
         return try {

@@ -70,8 +70,10 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     fun logout() {
-        localDataSource.deleteUser()
-        authApi.logout()
+        viewModelScope.launch {
+            localDataSource.deleteUser()
+            authApi.logout()
+        }
     }
 
 

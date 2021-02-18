@@ -1,7 +1,6 @@
 package com.supercaliman.core.domain
 
 import com.supercaliman.core.domain.dto.Note
-import com.supercaliman.core.domain.dto.User
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
@@ -14,9 +13,9 @@ interface Repository {
 
     suspend fun updateNote(note: Note)
 
-    fun setUser(user: User)
-
-    fun getUser(): User?
-
-    fun logout()
+//    fun setUser(user: User)
+//
+//    fun getUser(): User?
+//
+//    fun logout()
 }

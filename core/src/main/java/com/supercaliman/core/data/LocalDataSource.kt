@@ -22,7 +22,7 @@ class LocalDataSource @Inject constructor(
         return true
     }
 
-    override fun retriveSavedUser(): User? {
+    override fun getSavedUser(): User? {
         val jsonUser = sharedPreferences.getString("User", null)
         return if (jsonUser != null) {
             jsonAdapterUser.fromJson(jsonUser)

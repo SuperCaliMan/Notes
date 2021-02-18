@@ -75,7 +75,7 @@ fun newHomeScreen(
         drawerContent = {
 
             AppDrawer(
-                onClose = {
+                onLogout = {
                     noteViewModel.logout()
                 },
                 navController = navController,

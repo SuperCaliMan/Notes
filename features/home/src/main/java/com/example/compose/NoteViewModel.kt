@@ -156,9 +156,5 @@ class NoteViewModel @ViewModelInject constructor(
 
     fun logout() {
         _homeState.postValue(EventHome.LOGOUT)
-        viewModelScope.launch(Dispatchers.IO) {
-            userOperationsUseCase.logout()
-        }
-
     }
 }

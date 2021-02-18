@@ -100,7 +100,7 @@ fun showMessageDialog(title: String, msg: String, onClose: () -> Unit) {
 
 @Composable
 fun AppDrawer(
-    onClose: () -> Unit = {},
+    onLogout: () -> Unit = {},
     navController: NavController,
     closeDrawer: () -> Unit
 ) {
@@ -110,8 +110,8 @@ fun AppDrawer(
         TextButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
-                onClose()
-                closeDrawer()
+                onLogout()
+                //closeDrawer()
             }
         ) {
             Text(stringResource(R.string.drawer_logout))

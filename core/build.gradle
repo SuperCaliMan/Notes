@@ -35,6 +35,8 @@ dependencies {
 
     implementation Coroutines.android
 
+    implementation Debug.timber
+
     //DataStore persistence layer
     implementation AndroidX.dataStore
 

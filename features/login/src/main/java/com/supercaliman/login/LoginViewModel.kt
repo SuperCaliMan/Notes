@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.supercaliman.core.base.BaseViewModel
-import com.supercaliman.core.data.CoreRepository
+import com.supercaliman.core.domain.LocalRepository
 import com.supercaliman.login.domain.AuthRepo
 import com.supercaliman.login.domain.UiUser
 import com.supercaliman.login.domain.UiUserMapper
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel @ViewModelInject constructor(
     private val authApi: AuthRepo,
-    private val coreRepository: CoreRepository
+    private val localDataSource: LocalRepository
 ) : BaseViewModel() {
 
     private val _userData = MutableLiveData<UiUser>()
@@ -29,7 +29,7 @@ class LoginViewModel @ViewModelInject constructor(
             try {
                 val res = authApi.signIn(email, password)
                 res?.let {
-                    coreRepository.setUser(it)
+                    localDataSource.saveUser(it)
                     _userData.postValue(mapper.toUiModel(it))
                 }
                 _loader.postValue(false)
@@ -45,7 +45,7 @@ class LoginViewModel @ViewModelInject constructor(
             try {
                 val res = authApi.newUser(username, email, password)
                 res?.let {
-                    coreRepository.setUser(it)
+                    localDataSource.saveUser(it)
                     _userData.postValue(mapper.toUiModel(it))
                 }
                 _loader.postValue(false)
@@ -70,6 +70,7 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     fun logout() {
+        localDataSource.deleteUser()
         authApi.logout()
     }
 

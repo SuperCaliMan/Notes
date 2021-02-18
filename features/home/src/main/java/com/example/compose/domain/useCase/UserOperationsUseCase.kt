@@ -1,19 +1,13 @@
 package com.example.compose.domain.useCase
 
 
-import com.supercaliman.core.domain.Repository
+import com.supercaliman.core.domain.LocalRepository
 import com.supercaliman.core.domain.dto.User
 import javax.inject.Inject
 
 class UserOperationsUseCase @Inject constructor(
-    private var repo: Repository,
+    private var localDataSource: LocalRepository,
 ) {
 
-    fun logout() {
-        repo.logout()
-    }
-
-    fun getUser(): User? = repo.getUser()
-
-
+    fun getUser(): User? = localDataSource.getSavedUser()
 }

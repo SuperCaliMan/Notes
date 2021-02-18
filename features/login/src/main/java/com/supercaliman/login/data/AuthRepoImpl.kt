@@ -23,9 +23,6 @@ class AuthRepoImpl constructor(
     }
 
     override suspend fun signIn(email: String, password: String): User? {
-        if (auth.currentUser != null) {
-            return mapper.map(auth.currentUser!!)
-        } else {
             return suspendCoroutine { cont ->
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
@@ -38,7 +35,6 @@ class AuthRepoImpl constructor(
                         }
                     }
             }
-        }
     }
 
     override fun logout() {

@@ -5,7 +5,6 @@ import com.supercaliman.core.domain.LocalRepository
 import com.supercaliman.core.domain.NotesApi
 import com.supercaliman.core.domain.Repository
 import com.supercaliman.core.domain.dto.Note
-import com.supercaliman.core.domain.dto.User
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -15,27 +14,17 @@ class CoreRepository @Inject constructor(
     private var localDataSource: LocalRepository
 ) : Repository {
 
-    private var currentUser: User? = null
 
-    override fun setUser(user: User) {
-        localDataSource.saveUser(user)
-    }
-
-
-    init {
-        currentUser = localDataSource.retriveSavedUser()
-    }
-
-
-    override fun getUser(): User? = currentUser
-
-    override fun logout() {
-        localDataSource.deleteUser()
-    }
+//    private var currentUser: User? = null
+//
+//    init {
+//        currentUser = localDataSource.retriveSavedUser()
+//    }
 
     @ExperimentalCoroutinesApi
     override suspend fun getNotes(): Flow<List<Note>> {
         return try {
+            val currentUser = localDataSource.getSavedUser()
             val data = api.getNotes(currentUser!!)
             data
         } catch (e: Exception) {

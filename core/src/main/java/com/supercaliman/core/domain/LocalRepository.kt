@@ -7,7 +7,7 @@ interface LocalRepository {
 
     fun saveUser(user: User): Boolean
 
-    fun retriveSavedUser(): User?
+    fun getSavedUser(): User?
 
     fun deleteUser()
 }

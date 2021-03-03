@@ -1,10 +1,9 @@
 package com.example.compose.detail
 
-import androidx.compose.foundation.ScrollableColumn
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -18,7 +17,7 @@ import com.example.compose.NoteViewModel
 import com.example.compose.R
 import com.example.compose.domain.UiNote
 import com.example.compose.ui.Dimension
-import com.example.compose.ui.progressBar
+import com.example.compose.ui.ProgressBar
 
 interface OnSaveListener {
     fun onSave(title: String, description: String)
@@ -31,7 +30,7 @@ object Params {
 
 
 @Composable
-fun detailScreen(
+fun DetailScreen(
     viewModel: NoteViewModel,
     initialStateDetail: StateScreenDetail,
     backStack: () -> Unit,
@@ -50,24 +49,25 @@ fun detailScreen(
 
 
     Scaffold(
+
         topBar = {
-            appBar(viewModel, state, note, backStack,
+            AppBar(viewModel, state, note, backStack,
                 onSave = {
                     viewModel.saveNote()
                     backStack()
                 })
         },
-        bodyContent = {
+        content = {
             if (loading) {
-                progressBar()
+                ProgressBar()
             } else {
                 when (state.value) {
                     StateScreenDetail.READ -> {
-                        bodyDetail(true, note, onSaveObj)
+                        BodyDetail(true, note, onSaveObj)
                     }
-                    StateScreenDetail.INSERT -> bodyDetail(false, null, onSaveObj)
+                    StateScreenDetail.INSERT -> BodyDetail(false, null, onSaveObj)
                     StateScreenDetail.EDIT -> {
-                        bodyDetail(false, note, onSaveObj)
+                        BodyDetail(false, note, onSaveObj)
                     }
                 }
             }
@@ -77,7 +77,7 @@ fun detailScreen(
 
 
 @Composable
-fun bodyDetail(
+fun BodyDetail(
     isReadable: Boolean = false,
     note: UiNote?,
     onSaveListener: OnSaveListener
@@ -88,10 +88,14 @@ fun bodyDetail(
         remember { mutableStateOf(TextFieldValue(if (note?.description != null) note.description else "")) }
     onSaveListener.onSave(title.value.text, description.value.text)
 
+
     val isInvalid = title.value.text.count() > 10
 
-    ScrollableColumn(
-        modifier = Modifier.fillMaxSize().padding(horizontal = Dimension.defaultMargin),
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState(0))
+            .padding(horizontal = Dimension.defaultMargin),
     ) {
 
         if (!isReadable) {
@@ -99,32 +103,35 @@ fun bodyDetail(
                 value = title.value,
                 onValueChange = { title.value = it },
                 placeholder = {
-                    Text(text = stringResource(R.string.insert_title))
+                    Text(stringResource(R.string.insert_title))
                 },
-                errorColor = MaterialTheme.colors.onError,
-                isErrorValue = isInvalid,
-                modifier = Modifier.fillMaxWidth()
+                /*errorColor = MaterialTheme.colors.onError,
+                isErrorValue = isInvalid,*/
+                isError = isInvalid,
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(top = Dimension.defaultMargin)
             )
-            OutlinedTextField(value = description.value, onValueChange = {
-                description.value = it
-            }, placeholder = {
-                Text(stringResource(R.string.insert_description))
-            },
-                modifier = Modifier.fillMaxWidth()
+            OutlinedTextField(
+                value = description.value,
+                singleLine = false,
+                onValueChange = { description.value = it },
+                placeholder = { Text(stringResource(R.string.insert_description)) },
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(top = Dimension.defaultMargin, bottom = Dimension.defaultMargin)
                     .fillMaxHeight()
             )
         } else {
             note?.let {
-                Providers(AmbientContentAlpha provides ContentAlpha.high, content = {
-                    Text(
-                        text = it.date, style = MaterialTheme.typography.subtitle2,
-                        modifier = Modifier.padding(top = Dimension.largeMargin)
-                    )
-                })
+                Text(
+                    text = it.date,
+                    style = MaterialTheme.typography.subtitle2,
+                    modifier = Modifier.padding(top = Dimension.largeMargin)
+                )
                 Divider(
-                    Modifier.fillMaxWidth()
+                    Modifier
+                        .fillMaxWidth()
                         .padding(end = Dimension.defaultMargin, top = Dimension.smallMargin)
                 )
                 Text(
@@ -142,7 +149,7 @@ fun bodyDetail(
 
 
 @Composable
-fun appBar(
+fun AppBar(
     viewModel: NoteViewModel,
     appBarStateDetail: MutableState<StateScreenDetail>,
     note: UiNote?,
@@ -157,7 +164,7 @@ fun appBar(
                 onClick = {
                     backStack()
                 },
-                content = { Icon(Icons.Default.ArrowBack) }
+                content = { Icon(Icons.Default.ArrowBack, stringResource(R.string.back)) }
             )
         },
         title = {
@@ -183,7 +190,8 @@ fun appBar(
                 StateScreenDetail.INSERT -> {
                     IconButton(
                         onClick = { onSave() },
-                        content = { Icon(Icons.Default.Save) }
+                        content = { Icon(Icons.Default.Save, stringResource(R.string.save)) }
+
                     )
                 }
                 StateScreenDetail.READ -> {
@@ -191,14 +199,14 @@ fun appBar(
                         onClick = {
                             appBarStateDetail.value = StateScreenDetail.EDIT
                         },
-                        content = { Icon(Icons.Default.Edit) }
+                        content = { Icon(Icons.Default.Edit, stringResource(R.string.edit)) }
                     )
                     IconButton(
                         onClick = {
                             viewModel.delete(note?.uuid)
                             backStack()
                         },
-                        content = { Icon(Icons.Default.Delete) }
+                        content = { Icon(Icons.Default.Delete, stringResource(R.string.delete)) }
                     )
                 }
                 StateScreenDetail.EDIT -> {
@@ -206,14 +214,14 @@ fun appBar(
                         onClick = {
                             appBarStateDetail.value = StateScreenDetail.READ
                         },
-                        content = { Icon(Icons.Default.Undo) }
+                        content = { Icon(Icons.Default.Undo, stringResource(R.string.undo)) }
                     )
                     IconButton(
                         onClick = {
                             viewModel.updateNote()
                             backStack()
                         },
-                        content = { Icon(Icons.Default.Save) }
+                        content = { Icon(Icons.Default.Save, stringResource(id = R.string.save)) }
                     )
                 }
             }

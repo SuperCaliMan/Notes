@@ -1,16 +1,16 @@
 package com.example.compose
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.platform.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.detail.DetailScreen
 import com.example.compose.detail.Params
 import com.example.compose.detail.StateScreenDetail
-import com.example.compose.detail.detailScreen
-import com.example.compose.home.homeScreen
-import com.example.compose.home.newHomeScreen
+import com.example.compose.home.HomeScreen
+import com.example.compose.home.NewHomeScreen
 import com.example.compose.ui.NoteTheme
 import com.example.compose.ui.Screen
 import com.example.compose.ui.isDarkTheme
@@ -40,7 +40,7 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
                     startDestination = if (remoteParamsVM.getNewFeature()) Screen.NewHome.route else Screen.Home.route
                 ) {
                     composable(Screen.Home.route) {
-                        homeScreen(
+                        HomeScreen(
                             viewModel = noteViewModel,
                             navController = navController
                         )
@@ -49,7 +49,7 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
                         Screen.Detail.route + "/{${Params.PANEL_MODE}}?${Params.NOTE}={${Params.NOTE}}",
                         arguments = Screen.Detail.params
                     ) {
-                        detailScreen(
+                        DetailScreen(
                             noteViewModel,
                             it.arguments?.getSerializable(Params.PANEL_MODE) as StateScreenDetail,
                             backStack = {
@@ -59,7 +59,7 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
                         )
                     }
                     composable(Screen.NewHome.route) {
-                        newHomeScreen(
+                        NewHomeScreen(
                             noteViewModel = noteViewModel,
                             navController = navController
                         )

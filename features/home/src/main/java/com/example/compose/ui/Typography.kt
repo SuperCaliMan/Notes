@@ -1,12 +1,12 @@
 package com.example.compose.ui
 
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.font.font
-import androidx.compose.ui.text.font.fontFamily
 import com.example.compose.R
 
-val Euclid = fontFamily(
-    font(R.font.euclid_circular_regular),
-    font(R.font.euclid_circular_medium, FontWeight.Medium),
-    font(R.font.euclid_circular_light, FontWeight.Light)
+val Euclid = FontFamily(
+    Font(R.font.euclid_circular_regular),
+    Font(R.font.euclid_circular_medium, FontWeight.Medium),
+    Font(R.font.euclid_circular_light, FontWeight.Light)
 )

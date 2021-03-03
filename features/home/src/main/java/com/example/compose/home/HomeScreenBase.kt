@@ -5,17 +5,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bedtime
 import androidx.compose.material.icons.outlined.Bedtime
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Providers
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -31,9 +31,9 @@ import com.example.compose.ui.isDarkTheme
  * Display a lottie animation use android view because lottie doesn't support compose yet
  */
 @Composable
-fun lottieAnimation(modifier: Modifier) {
+fun LottieAnimation(modifier: Modifier) {
     AndroidView(
-        viewBlock = {
+        factory = {
             LottieAnimationView(it).apply {
                 setAnimation(R.raw.creativity)
                 repeatCount = LottieDrawable.INFINITE
@@ -45,7 +45,7 @@ fun lottieAnimation(modifier: Modifier) {
 }
 
 @Composable
-fun appBarHome() {
+fun AppBarHome() {
     TopAppBar(
         backgroundColor = MaterialTheme.colors.surface,
         elevation = 0.dp,
@@ -56,7 +56,7 @@ fun appBarHome() {
             )
         },
         actions = {
-            val isDarkTheme = isDarkTheme(AmbientContext.current)
+            val isDarkTheme = isDarkTheme(LocalContext.current)
             IconButton(
                 onClick = {
                     if (isDarkTheme) {
@@ -65,8 +65,8 @@ fun appBarHome() {
                 },
                 content = {
                     if (isDarkTheme) {
-                        Icon(Icons.Default.Bedtime)
-                    } else Icon(Icons.Outlined.Bedtime)
+                        Icon(Icons.Default.Bedtime, stringResource(id = R.string.bedtime))
+                    } else Icon(Icons.Outlined.Bedtime, stringResource(id = R.string.bedtime))
 
                 }
             )
@@ -75,7 +75,7 @@ fun appBarHome() {
 }
 
 @Composable
-fun noteList(
+fun NoteList(
     items: List<UiNote>,
     onItemClick: (UiNote) -> Unit
 ) {
@@ -85,17 +85,16 @@ fun noteList(
                 .fillMaxHeight()
                 .background(Color.White)
         ) {
-            lottieAnimation(
+            LottieAnimation(
                 modifier = Modifier.fillMaxWidth()
             )
-            Providers(AmbientContentAlpha provides ContentAlpha.high, content = {
-                Text(
-                    stringResource(R.string.no_data),
-                    modifier = Modifier.padding(bottom = Dimension.largeMargin)
-                        .align(Alignment.CenterHorizontally),
-                    style = MaterialTheme.typography.body1
-                )
-            })
+            Text(
+                stringResource(R.string.no_data),
+                modifier = Modifier
+                    .padding(bottom = Dimension.largeMargin)
+                    .align(Alignment.CenterHorizontally),
+                style = MaterialTheme.typography.body1
+            )
         }
 
     } else {
@@ -107,7 +106,7 @@ fun noteList(
                 )
             ) {
                 items(items) {
-                    noteCard(it, onItemClick)
+                    NoteCard(it, onItemClick)
                 }
             }
         }
@@ -116,7 +115,7 @@ fun noteList(
 
 
 @Composable
-fun noteCard(note: UiNote, click: (UiNote) -> Unit) {
+fun NoteCard(note: UiNote, click: (UiNote) -> Unit) {
     Card(
         backgroundColor = MaterialTheme.colors.surface,
         shape = RoundedCornerShape(8.dp),
@@ -126,34 +125,36 @@ fun noteCard(note: UiNote, click: (UiNote) -> Unit) {
                 start = Dimension.defaultMargin,
                 end = Dimension.defaultMargin,
                 bottom = Dimension.defaultMargin
-            ).fillMaxWidth()
+            )
+            .fillMaxWidth()
             .clickable(onClick = { click(note) }),
 
         ) {
         Row {
             Box(
                 modifier = Modifier
-                    .preferredSize(15.dp, 100.dp)
+                    .size(15.dp, 100.dp)
                     .background(colorsArray[note.title.length % colorsArray.size]),
             )
             Column(
-                modifier = Modifier.padding(
-                    start = Dimension.defaultMargin,
-                    top = Dimension.defaultMargin
-                ).align(Alignment.CenterVertically)
+                modifier = Modifier
+                    .padding(
+                        start = Dimension.defaultMargin,
+                        top = Dimension.defaultMargin
+                    )
+                    .align(Alignment.CenterVertically)
 
             ) {
                 Text(note.title, style = MaterialTheme.typography.h6)
-                Providers(AmbientContentAlpha provides ContentAlpha.high, content = {
-                    Text(
-                        note.date,
-                        modifier = Modifier.padding(
-                            top = Dimension.defaultMargin,
-                            bottom = Dimension.defaultMargin
-                        ),
-                        style = MaterialTheme.typography.subtitle1
-                    )
-                })
+
+                Text(
+                    note.date,
+                    modifier = Modifier.padding(
+                        top = Dimension.defaultMargin,
+                        bottom = Dimension.defaultMargin
+                    ),
+                    style = MaterialTheme.typography.subtitle1
+                )
             }
         }
     }

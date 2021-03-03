@@ -7,6 +7,7 @@ import com.supercaliman.core.domain.Repository
 import com.supercaliman.core.domain.dto.Note
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import javax.inject.Inject
 
 class CoreRepository @Inject constructor(
@@ -16,10 +17,13 @@ class CoreRepository @Inject constructor(
 
     @ExperimentalCoroutinesApi
     override suspend fun getNotes(): Flow<List<Note>> {
-        return try {
+        try {
             val currentUser = localDataSource.getSavedUser()
-            val data = api.getNotes(currentUser!!)
-            data
+            return if (currentUser != null) {
+                api.getNotes(currentUser)
+            } else {
+                listOf<List<Note>>().asFlow()
+            }
         } catch (e: Exception) {
             throw e
         }

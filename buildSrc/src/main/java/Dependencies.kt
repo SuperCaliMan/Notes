@@ -2,14 +2,12 @@ object Versions {
     const val activityKtx = "1.2.0-beta02"
     const val androidx_fragment = "1.3.0-alpha06"
     const val authGoogle = "19.0.0"
-    const val compose = "1.0.0-alpha09"
-    const val composeNavigation = "1.0.0-alpha04"
+    const val compose = "1.0.0-beta01"
+    const val composeNavigation = "1.0.0-alpha08"
     const val constraintLayout = "2.0.4"
     const val coordinatorLayout = "1.1.0"
     const val coroutines = "1.3.9"
     const val coroutinesPlayServices = "1.3.0"
-    const val corutines = "1.3.9"
-    const val corutines_play_services = "1.3.0"
     const val dataStore = "1.0.0-alpha06"
     const val espressoCore = "3.2.0"
     const val firebase_analytics = "17.4.3"
@@ -37,7 +35,7 @@ object Versions {
     const val retrofitConverter = "2.9.0"
     const val segment = "4.+"
     const val timber = "4.7.1"
-    const val kotlin = "1.4.21"
+    const val kotlin = "1.4.30"
 
 }
 

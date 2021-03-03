@@ -14,8 +14,9 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -30,11 +31,12 @@ import com.example.compose.ui.*
 import com.supercaliman.navigation.Destinations
 import com.supercaliman.navigation.NavUtils
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.launch
 
 
 @InternalCoroutinesApi
 @Composable
-fun newHomeScreen(
+fun NewHomeScreen(
     noteViewModel: NoteViewModel,
     navController: NavController,
     scaffoldState: ScaffoldState = rememberScaffoldState()
@@ -43,15 +45,16 @@ fun newHomeScreen(
     val errorData: Exception? by noteViewModel.error.observeAsState()
     val loading: Boolean by noteViewModel.loader.observeAsState(true)
     val stateScreen: EventHome? by noteViewModel.homeState.observeAsState()
+    val coroutineScope = rememberCoroutineScope()
     noteViewModel.getNotesList()
 
     stateScreen?.let {
         when (it) {
             EventHome.LOGOUT -> {
-                val activity = AmbientContext.current as MainComposeActivity
+                val activity = LocalContext.current as MainComposeActivity
                 activity.startActivity(
                     NavUtils.openScreen(
-                        AmbientContext.current,
+                        LocalContext.current,
                         Destinations.LOGIN_SCREEN
                     ).apply {
                         flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
@@ -63,7 +66,7 @@ fun newHomeScreen(
     }
 
     errorData?.let {
-        renderError(it)
+        RenderError(it)
     }
 
 
@@ -79,19 +82,23 @@ fun newHomeScreen(
                     noteViewModel.logout()
                 },
                 navController = navController,
-                closeDrawer = { scaffoldState.drawerState.close() })
+                closeDrawer = {
+                    coroutineScope.launch {
+                        scaffoldState.drawerState.close()
+                    }
+                })
         },
         bottomBar = {
             BottomAppBar(
                 cutoutShape = CircleShape
             ) {
                 IconButton(onClick = {
-                    scaffoldState.drawerState.open()
+                    coroutineScope.launch { scaffoldState.drawerState.open() }
                 }) {
-                    Icon(Icons.Filled.Menu)
+                    Icon(Icons.Filled.Menu, stringResource(R.string.menu))
                 }
                 Spacer(Modifier.weight(1f, true))
-                val isDarkTheme = isDarkTheme(AmbientContext.current)
+                val isDarkTheme = isDarkTheme(LocalContext.current)
                 IconButton(
                     onClick = {
                         if (isDarkTheme) {
@@ -100,8 +107,8 @@ fun newHomeScreen(
                     },
                     content = {
                         if (isDarkTheme) {
-                            Icon(Icons.Default.Bedtime)
-                        } else Icon(Icons.Outlined.Bedtime)
+                            Icon(Icons.Default.Bedtime, stringResource(R.string.bedtime))
+                        } else Icon(Icons.Outlined.Bedtime, stringResource(id = R.string.bedtime))
 
                     }
                 )
@@ -115,17 +122,22 @@ fun newHomeScreen(
                     onClick = {
                         navController.navigate(Screen.Detail.route + "/${StateScreenDetail.INSERT}")
                     },
-                    content = { Icon(imageVector = Icons.Outlined.Edit) },
+                    content = {
+                        Icon(
+                            imageVector = Icons.Outlined.Edit,
+                            stringResource(id = R.string.edit)
+                        )
+                    },
                     backgroundColor = MaterialTheme.colors.surface,
                     contentColor = MaterialTheme.colors.secondary
                 )
             }
         },
-        bodyContent = {
+        content = {
             if (loading) {
-                progressBar()
+                ProgressBar()
             } else {
-                noteList(
+                NoteList(
                     items = data,
                     onItemClick = {
                         navController.navigate(

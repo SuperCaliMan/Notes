@@ -7,21 +7,23 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.example.compose.NoteViewModel
+import com.example.compose.R
 import com.example.compose.detail.Params
 import com.example.compose.detail.StateScreenDetail
 import com.example.compose.domain.UiNote
+import com.example.compose.ui.ProgressBar
+import com.example.compose.ui.RenderError
 import com.example.compose.ui.Screen
-import com.example.compose.ui.progressBar
-import com.example.compose.ui.renderError
 import kotlinx.coroutines.InternalCoroutinesApi
 
 
 @InternalCoroutinesApi
 @Composable
-fun homeScreen(
+fun HomeScreen(
     viewModel: NoteViewModel,
     navController: NavController,
 ) {
@@ -31,13 +33,13 @@ fun homeScreen(
     viewModel.getNotesList()
 
     errorData?.let {
-        renderError(it)
+        RenderError(it)
     }
 
 
     Scaffold(
         topBar = {
-            appBarHome()
+            AppBarHome()
         },
         floatingActionButton = {
             if (!loading) {
@@ -45,18 +47,18 @@ fun homeScreen(
                     onClick = {
                         navController.navigate(Screen.Detail.route + "/${StateScreenDetail.INSERT}")
                     },
-                    icon = { Icon(Icons.Outlined.Edit) },
+                    icon = { Icon(Icons.Outlined.Edit, stringResource(R.string.edit)) },
                     text = { Text(text = "Compose") },
                     backgroundColor = MaterialTheme.colors.surface,
                     contentColor = MaterialTheme.colors.secondary
                 )
             }
         },
-        bodyContent = {
+        content = {
             if (loading) {
-                progressBar()
+                ProgressBar()
             } else {
-                noteList(
+                NoteList(
                     items = data,
                     onItemClick = {
                         navController.navigate(

@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -17,28 +18,34 @@ import com.example.compose.R
 
 
 @Composable
-fun renderError(error: Exception) {
+fun RenderError(error: Exception) {
     error.message?.let {
-        showErrorDialog(it)
+        ShowErrorDialog(it)
     }
 }
 
 @Composable
-fun progressBar() {
+fun ProgressBar() {
     Column(
-        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CircularProgressIndicator(
-            color = MaterialTheme.colors.primary
+            color = Color.White
+        )
+        CircularProgressIndicator(
+            color = MaterialTheme.colors.primary,
+            strokeWidth = 5.dp
         )
     }
 }
 
 
 @Composable
-fun showErrorDialog(msg: String) {
+fun ShowErrorDialog(msg: String) {
     val showingDialog = remember { mutableStateOf(true) }
     if (showingDialog.value) {
         AlertDialog(
@@ -58,9 +65,11 @@ fun showErrorDialog(msg: String) {
                 ) {
                     Text(
                         text = stringResource(R.string.close),
-                        modifier = Modifier.padding(Dimension.defaultMargin).clickable(onClick = {
-                            showingDialog.value = false
-                        })
+                        modifier = Modifier
+                            .padding(Dimension.defaultMargin)
+                            .clickable(onClick = {
+                                showingDialog.value = false
+                            })
                     )
                 }
             })
@@ -68,7 +77,7 @@ fun showErrorDialog(msg: String) {
 }
 
 @Composable
-fun showMessageDialog(title: String, msg: String, onClose: () -> Unit) {
+fun ShowMessageDaialog(title: String, msg: String, onClose: () -> Unit) {
     val showingDialog = remember { mutableStateOf(true) }
     if (showingDialog.value) {
         AlertDialog(
@@ -88,10 +97,12 @@ fun showMessageDialog(title: String, msg: String, onClose: () -> Unit) {
                 ) {
                     Text(
                         text = stringResource(R.string.close),
-                        modifier = Modifier.padding(Dimension.defaultMargin).clickable(onClick = {
-                            showingDialog.value = false
-                            onClose()
-                        })
+                        modifier = Modifier
+                            .padding(Dimension.defaultMargin)
+                            .clickable(onClick = {
+                                showingDialog.value = false
+                                onClose()
+                            })
                     )
                 }
             })
@@ -105,7 +116,7 @@ fun AppDrawer(
     closeDrawer: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        Spacer(Modifier.preferredHeight(24.dp))
+        Spacer(Modifier.height(24.dp))
         Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
         TextButton(
             modifier = Modifier.fillMaxWidth(),

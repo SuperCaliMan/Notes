@@ -9,4 +9,11 @@
     <string name="animation_screen">Animation</string>
     <string name="update_note">Update note</string>
     <string name="drawer_logout">Logout</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="undo">Undo</string>
+    <string name="back">Back</string>
+    <string name="bedtime">bedtime</string>
+    <string name="menu">Menu</string>
 </resources>

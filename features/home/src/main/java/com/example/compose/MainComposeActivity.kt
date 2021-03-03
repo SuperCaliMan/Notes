@@ -32,9 +32,11 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
         super.onCreate(savedInstanceState)
 
 
+
         setContent {
             NoteTheme(isDarkTheme(this)) {
                 val navController = rememberNavController()
+                noteViewModel.getNotesList()
                 NavHost(
                     navController,
                     startDestination = if (remoteParamsVM.getNewFeature()) Screen.NewHome.route else Screen.Home.route
@@ -61,7 +63,7 @@ class MainComposeActivity : AppCompatActivity(R.layout.compose_activity) {
                     composable(Screen.NewHome.route) {
                         NewHomeScreen(
                             noteViewModel = noteViewModel,
-                            navController = navController
+                            navController = navController,
                         )
                     }
                     //composable(Screen.Animation.route) { chatScreen() }

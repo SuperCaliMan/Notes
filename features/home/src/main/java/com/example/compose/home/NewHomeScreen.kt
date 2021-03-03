@@ -39,14 +39,14 @@ import kotlinx.coroutines.launch
 fun NewHomeScreen(
     noteViewModel: NoteViewModel,
     navController: NavController,
-    scaffoldState: ScaffoldState = rememberScaffoldState()
-) {
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
+
+    ) {
     val data: List<UiNote> by noteViewModel.uiNoteList.observeAsState(listOf())
     val errorData: Exception? by noteViewModel.error.observeAsState()
     val loading: Boolean by noteViewModel.loader.observeAsState(true)
     val stateScreen: EventHome? by noteViewModel.homeState.observeAsState()
     val coroutineScope = rememberCoroutineScope()
-    noteViewModel.getNotesList()
 
     stateScreen?.let {
         when (it) {

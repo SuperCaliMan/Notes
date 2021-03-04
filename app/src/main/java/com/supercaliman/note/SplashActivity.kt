@@ -9,14 +9,12 @@ import com.supercaliman.navigation.NavUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
 
     private val splashViewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
-
 
 
         splashViewModel.alreadyLogin.observe(this) { user ->

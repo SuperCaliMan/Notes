@@ -19,7 +19,7 @@ dependencies {
     implementation Di.hiltAndroid
     kapt Di.hiltCompiler
     implementation Di.hiltViewModel
-    kapt Di.hiltAndroidX
+    //kapt Di.hiltAndroidX
 
     //Firebase
     implementation Firebase.firestoreKtx

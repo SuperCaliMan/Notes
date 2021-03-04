@@ -20,13 +20,13 @@
         tools:targetApi="n">
 
         <activity
-            android:name="com.example.compose.MainComposeActivity"
+            android:name="com.supercaliman.home.MainComposeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name="com.supercaliman.login.ui.LoginActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity

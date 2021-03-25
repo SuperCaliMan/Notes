@@ -55,8 +55,6 @@ dependencies {
     implementation AndroidX.fragment
     implementation AndroidX.fragmentKtx
     implementation AndroidX.constraintLayout
-
-
     implementation Debug.timber
 
 

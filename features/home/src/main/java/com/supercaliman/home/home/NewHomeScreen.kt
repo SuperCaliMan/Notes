@@ -73,7 +73,7 @@ fun NewHomeScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            newAppBarHome()
+            NewAppBarHome()
         },
         drawerContent = {
 
@@ -153,7 +153,7 @@ fun NewHomeScreen(
 
 
 @Composable
-fun newAppBarHome() {
+fun NewAppBarHome() {
     TopAppBar(
         backgroundColor = MaterialTheme.colors.surface,
         elevation = 0.dp,

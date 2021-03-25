@@ -1,7 +1,10 @@
 package com.supercaliman.note
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.supercaliman.navigation.Destinations
@@ -15,6 +18,11 @@ class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+    }
+
+    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
 
 
         splashViewModel.alreadyLogin.observe(this) { user ->
@@ -32,6 +40,8 @@ class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
                 finish()
             }
         }
+
+        return super.onCreateView(name, context, attrs)
 
     }
 
